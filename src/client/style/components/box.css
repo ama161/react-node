@@ -1,0 +1,36 @@
+.container-box{
+    margin: 7% 0 0;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 2px 3px 0 rgba(0,0,0,0.41);
+    padding: 1em 1em 1em 1em;
+}
+
+.box-blue{
+    width: 50%;
+    margin: auto;
+    background: #97C6E1;
+    padding-top: 4em;
+}
+
+.box-brown{
+    background: #E1C0A2;
+    width: 240px;
+    margin: 1em;
+    max-height: 180px;
+    text-align: center;
+}
+
+.box-white{
+    background: white;
+    border: solid 1px #4C6370;
+    width: 200px;
+    padding-top: 4em;
+}
+
+.box-brown p:nth-child(2) {
+    margin: 20px 0 0 0;
+}

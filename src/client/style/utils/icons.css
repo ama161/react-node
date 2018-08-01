@@ -1,0 +1,48 @@
+.icon-selected{
+    border: solid 1px #4C6370;
+}
+
+.icon{
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: auto;
+    z-index: auto;
+    background-size: contain;
+}
+
+.icon-chat{background-image: url("../../img/icons/chat.png");}
+.icon-test{background-image: url("../../img/icons/test.png");}
+.icon-statistics{background-image: url("../../img/icons/statistics.png");}
+.icon-calendar{background-image: url("../../img/icons/calendar.png");}
+.icon-blackboard{background-image: url("../../img/icons/blackboard.png");}
+.icon-file{background-image: url("../../img/icons/file.png");}
+
+.icon-bat{background-image: url("../../img/animals/bat.png");}
+.icon-bee{background-image: url("../../img/animals/bee.png");}
+.icon-cat{background-image: url("../../img/animals/cat.png");}
+.icon-cow{background-image: url("../../img/animals/cow.png");}
+.icon-crab{background-image: url("../../img/animals/crab.png");}
+.icon-dog{background-image: url("../../img/animals/dog.png");}
+.icon-elephant{background-image: url("../../img/animals/elephant.png");}
+.icon-fish{background-image: url("../../img/animals/fish.png");}
+.icon-owl{background-image: url("../../img/animals/owl.png");}
+.icon-pig{background-image: url("../../img/animals/pig.png");}
+.icon-tiger{background-image: url("../../img/animals/tiger.png");}
+.icon-toucan{background-image: url("../../img/animals/toucan.png");}
+
+.icon-avatar-1{background-image: url("../../img/avatars/avatar-1.png");}
+.icon-avatar-2{background-image: url("../../img/avatars/avatar-2.png");}
+.icon-avatar-3{background-image: url("../../img/avatars/avatar-3.png");}
+.icon-avatar-4{background-image: url("../../img/avatars/avatar-4.png");}
+.icon-avatar-5{background-image: url("../../img/avatars/avatar-5.png");}
+.icon-avatar-6{background-image: url("../../img/avatars/avatar-6.png");}
+.icon-avatar-7{background-image: url("../../img/avatars/avatar-7.png");}
+.icon-avatar-8{background-image: url("../../img/avatars/avatar-8.png");}
+.icon-avatar-9{background-image: url("../../img/avatars/avatar-9.png");}
+.icon-avatar-10{background-image: url("../../img/avatars/avatar-10.png");}
+.icon-avatar-11{background-image: url("../../img/avatars/avatar-11.png");}
+.icon-avatar-12{background-image: url("../../img/avatars/avatar-12.png");}
+.icon-avatar-13{background-image: url("../../img/avatars/avatar-13.png");}
+.icon-avatar-14{background-image: url("../../img/avatars/avatar-14.png");}

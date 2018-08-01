@@ -1,0 +1,9 @@
+@import url("components/all.css");
+@import url("utils/all.css");
+@import '~antd/dist/antd.css';
+
+html{
+    font-family: HiraKakuPro-W3;
+    font-size: 16px;
+    color: #4C6370;
+}
