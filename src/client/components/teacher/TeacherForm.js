@@ -1,19 +1,13 @@
 import React from 'react'
 import Input from '../utils/Input'
 
-class Add extends React.Component{
+class TeacherForm extends React.Component{
     constructor(props){
         super(props);
 
-        this.handleRegister = this.handleRegister.bind(this);
-
         this.state = {
-            email: ''
+            email: '',
         }
-    }
-
-    handleRegister(){
-        // sendLinkToEmail(this.state.email);
     }
 
     render(){
@@ -24,12 +18,16 @@ class Add extends React.Component{
                     value={this.state.email}
                     type="text" 
                     label="email" 
-                    onChange={(event) => this.setState({email: event.target.value})}
+                    onChange={(event) => 
+                        this.setState({email: event.target.value}
+                        , () => {
+                            this.props.onHandleChange(this.state)
+                        })
+                    }
                 />
-                <button onClick={() => this.handleRegister()}>Registrar</button>
             </div>
         )
     }
 }
 
-export default Add
+export default TeacherForm

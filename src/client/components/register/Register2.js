@@ -1,11 +1,12 @@
 import React from 'react';
 import { message } from 'antd';
+import { withRouter } from 'react-router'
 
 import Box from '../utils/Box'
 import Input from '../utils/Input'
-import {post} from '../../services/user'
+import {get, put} from '../../services/user'
 
-class Register extends React.Component{
+class Register2 extends React.Component{
     constructor(props){
         super(props);
 
@@ -16,27 +17,30 @@ class Register extends React.Component{
           username: ''
         }
     }
-    
-    componentWillReceiveProps(){
-        console.log(this.props.user);
-        if(this.props.user){
-          this.setState({user: this.props.user})
-        }
+
+    componentWillMount(){
+        console.log(this.props.location.search.split('?'));
+        let idU = this.props.location.search.split('?')[2];
+        get(idU).then(result => {
+            this.setState({email: result[0].email, user: result[0]})
+        })
+        .catch(err => this.props.history.push('/login'));
     }
 
-    handleRegister(){
+    handleUpdated(){
       if(!this.state.email || !this.state.username || !this.state.password){
         message.error('Incompleted fields');
         return;
       }
 
       let newUser = {
-          email: this.state.email,
+          email: this.state.user.email,
           username: this.state.username,
-          password: this.state.password
+          password: this.state.password,
+          role: this.state.user.role,
       }
-      post(newUser, 'admin')
-      .then(result => console.log(result))
+      put(newUser, this.state.user.id_users)
+      .then(result => this.props.history.push('/login'))
       .catch(err => console.log(err));
     }
 
@@ -48,7 +52,8 @@ class Register extends React.Component{
               value={this.state.email}
               type="text" 
               label="email" 
-              onChange={(event) => this.setState({email: event.target.value})}
+              onChange={(event) => {}}
+              disabled={true}
               />
             <Input 
               className="form-item"
@@ -67,7 +72,7 @@ class Register extends React.Component{
             <div className="button-container">
               <button 
                 className="button-border" 
-                onClick={() => this.handleRegister()}
+                onClick={() => this.handleUpdated()}
               >Registrarse
               </button>
             </div>
@@ -76,4 +81,4 @@ class Register extends React.Component{
     }
 }
 
-export default Register;
+export default withRouter(Register2);

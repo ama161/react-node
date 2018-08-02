@@ -7,11 +7,11 @@ import {
 
 import Home from './components/home/Home';
 import Register from './components/register/Register';
+import Register2 from './components/register/Register2';
 import Login from './components/register/Login';
 // import HomeUser from './components/homeUser/HomeUserContainer';
 // import HomeTeacher from './components/homeTeacher/HomeTeacher';
 import HomeAdmin from './components/homeAdmin/HomeAdmin';
-import Add from './components/homeAdmin/Add';
 // import LoginTeacher from './components/register/LoginTeacherContainer';
 
 class Router extends React.Component{
@@ -27,10 +27,9 @@ class Router extends React.Component{
         <div>
           <Route exact path="/" component={Home}/>
           <Route exact path="/register" component={Register}/>
+          <Route exact path="/register2" component={Register2}/>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/homeAdmin" component={HomeAdmin}/>
-          <Route exact path="/login" component={Login}/>
-          <Route exact path="/add" component={Add}/>
           
           {/*      
           <Route exact path="/homeUser" component={HomeUser}/>

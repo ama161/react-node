@@ -6,6 +6,7 @@ import webpackConfig from '../webpack.config';
 
 import usersRoutes from './services/users';
 import loginRoutes from './services/login';
+import classRoutes from './services/class';
 
 //init packages
 const app = express();
@@ -25,6 +26,7 @@ app.get('/api', (req, res)=>{
 
 app.use('/api/users', usersRoutes);
 app.use('/api/login', loginRoutes);
+app.use('/api/class', classRoutes);
 
 //start server
 app.listen(app.get('port'), ()=>{

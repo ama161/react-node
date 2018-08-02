@@ -37,6 +37,7 @@
     "jsonwebtoken": "^8.3.0",
     "morgan": "^1.9.0",
     "mysql": "^2.16.0",
+    "nodemailer": "^4.6.7",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router-dom": "^4.3.1"

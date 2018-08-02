@@ -1,16 +1,15 @@
-const ROUTE = '/api/users';
+const ROUTE = '/api/class';
 
 const headers = new Headers({
     'Content-Type': 'application/json'
 });
 
-export function post(newUser, role){
-    console.log(newUser);
-    const route = ROUTE + '/' + role;        
-    const request = new Request(route, {
+export function post(newClass){
+    console.log(newClass);
+    const request = new Request(ROUTE, {
         method: 'POST',
         mode: 'same-origin',
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(newClass),
         credentials: 'same-origin',
         headers: headers
     });
@@ -32,14 +31,14 @@ export function post(newUser, role){
     });
 }
 
-export function put(newUser, idUser){
-    console.log('put user');
-    console.log(newUser);
-    const route = ROUTE + '/' + idUser;    
+export function put(newClass, idClass){
+    console.log('put class');
+    console.log(newClass);
+    const route = ROUTE + '/' + idClass;    
     const request = new Request(route, {
         method: 'PUT',
         mode: 'same-origin',
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(newClass),
         credentials: 'same-origin',
         headers: headers
     });
@@ -61,9 +60,34 @@ export function put(newUser, idUser){
     });
 }
 
-export function get(idUser){
-    const route = ROUTE + '/' + idUser;
+export function get(idClass){
+    const route = ROUTE + '/' + idClass;
     const request = new Request(route, {
+        method: 'GET',
+        mode: 'same-origin',
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}
+
+export function getAll(){
+    const request = new Request(ROUTE, {
         method: 'GET',
         mode: 'same-origin',
         credentials: 'same-origin',

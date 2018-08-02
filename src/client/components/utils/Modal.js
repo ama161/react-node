@@ -5,20 +5,40 @@ class Modal extends React.Component{
     constructor(props){
         super(props);
 
+        this.handleOk = this.handleOk.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+ 
         this.state = {
             visible: false,
+            title: ''
         }
+    }
+
+    handleOk(){
+        this.props.onHandleOk()
+    }
+
+    componentWillMount(){
+        this.setState({visible: this.props.visible, title: this.props.title})
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState({visible: nextProps.visible, title: nextProps.title})
+    }
+
+    handleCancel(){
+        this.setState({visible: false})
+        this.props.onHandleCancel()
     }
 
     render(){
         return(
             <div>
-                <button onClick={() => this.setState({visible: true})}>{this.props.title}</button>
                 <AntModal 
                     onOk={this.handleOk}
-                    okText={this.props.title}
+                    okText={this.state.title}
                     visible={this.state.visible}
-                    onCancel={() => this.setState({visible: false})}
+                    onCancel={this.handleCancel}
                 >
                     {this.props.children}
                 </AntModal>
