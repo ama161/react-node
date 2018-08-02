@@ -4,6 +4,7 @@ import { message } from 'antd';
 import Modal from '../utils/Modal'
 import TeacherForm from './TeacherForm';
 import language from '../../language/language'
+import {post} from '../../services/user';
 
 class TeacherModal extends React.Component{
     constructor(props){
@@ -33,6 +34,12 @@ class TeacherModal extends React.Component{
 
     onHandleOk(){
         console.log(this.state.newTeacher);
+        post(this.state.newStudent, 'teacher')
+        .then(result => {
+            if(result.hasOwnProperty('msg'))
+                message[result.type](result.msg)
+            if(result.type === 'success') this.setState({viewModal: false});
+        })
     }
 
     render(){

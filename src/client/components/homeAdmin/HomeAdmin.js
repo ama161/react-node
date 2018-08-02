@@ -22,7 +22,8 @@ class HomeAdmin extends React.Component{
             viewModalTeacher: false,
             viewModalParent: false,
             viewModalClass: false,
-            viewClass: false
+            viewClass: false,
+            class: {}
         }
     }
 
@@ -33,6 +34,10 @@ class HomeAdmin extends React.Component{
                 this.props.history.push("/login")
             }
         });
+    }
+
+    componentWillReceiveProps(){
+        console.log('HOME ADMIN componentWillReceiveProps')
     }
 
     render(){

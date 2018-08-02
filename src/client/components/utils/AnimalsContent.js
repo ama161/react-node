@@ -14,7 +14,7 @@ class AnimalsContent extends React.Component{
     handleClick(icon){
         let oldIcon = this.state.iconSelected;
         if(oldIcon !== ''){
-            document.getElementsByClassName(oldIcon)[0].className = oldIcon + " icon";
+            document.getElementsByClassName(oldIcon)[0].className = "icon " + oldIcon;
         }
         this.setState({iconSelected: icon})
         document.getElementsByClassName(icon)[0].className = icon + " icon icon-selected";

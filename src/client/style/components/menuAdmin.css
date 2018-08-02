@@ -1,0 +1,12 @@
+.ant-menu-item:hover, .ant-menu-submenu-title:hover{
+    color: #97C6E1 !important;
+}
+
+.ant-menu-item-selected{
+    background-color: #97C6E1 !important;
+    color: rgba(0, 0, 0, 0.65) !important;
+}
+
+.ant-menu-item-selected::after{
+    border-right-color: #4C6370 !important;
+}

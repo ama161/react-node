@@ -14,7 +14,7 @@ class AvatarsContent extends React.Component{
     handleClick(avatar){
         let oldavatar = this.state.avatarSelected;
         if(oldavatar !== ''){
-            document.getElementsByClassName(oldavatar)[0].className = oldavatar + " icon";
+            document.getElementsByClassName(oldavatar)[0].className = "icon " + oldavatar;
         }
         this.setState({avatarSelected: avatar})
         document.getElementsByClassName(avatar)[0].className = avatar + " icon icon-selected";
