@@ -32,7 +32,6 @@ class Login extends React.Component{
                 sessionStorage.setItem('token', result.token);
                 sessionStorage.setItem('idUser', result.idUser);
                 this.props.history.push("/homeAdmin");
-                console.log(result)
             }
         })
         .catch(err => console.log(err));

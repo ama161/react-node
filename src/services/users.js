@@ -8,70 +8,87 @@ import {sendEmailAdmin, sendEmailParent, sendEmailStudent, sendEmailTeacher} fro
 var Cryptr = require('cryptr'); 
 var cryptr = new Cryptr(secrets.cryptSecret);
 
-router.get('/:id', (req, res)=>{
-    connection.query('SELECT * FROM users WHERE id_users = ' + req.params.id, (err, result)=>{
+router.get('/', (req, res)=>{
+    connection.query('SELECT * FROM USER', (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
     });
 });
 
-router.get('/', (req, res)=>{
-    connection.query('SELECT * FROM users', (err, result)=>{
+router.get('/:id', (req, res)=>{
+    connection.query('SELECT * FROM USER WHERE id_user = ' + req.params.id, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/admin', (req, res)=>{
+    connection.query('SELECT * FROM ADMINISTRATOR', (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/teacher', (req, res)=>{
+    connection.query('SELECT * FROM TEACHER', (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/student', (req, res)=>{
+    connection.query('SELECT * FROM STUDENT', (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/parent', (req, res)=>{
+    connection.query('SELECT * FROM PARENT', (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
     });
 });
 
 router.post('/:role', (req, res) => {
-    console.log(req.params);
-    console.log(req.params);
-
     if(req.params.role !== 'admin' && req.params.role !== 'teacher' && req.params.role !== 'student' && req.params.role !== 'parent'){
         res.json({
             msg: 'role invalid'
         })
     }  
     else{
-        let {email, username, password, role} = req.body;
-        const sql = `INSERT INTO users SET 
-            username = ${connection.escape(req.body.username)},
-            password = '${(!req.body.password) ? null : cryptr.encrypt(req.body.password)}',
+        const sql = `INSERT INTO USER SET
             email = ${connection.escape(req.body.email)},
-            role = '${req.params.role}',
-            icon = ${connection.escape(req.body.icon)}
+            password = '${(!req.body.password) ? null : cryptr.encrypt(req.body.password)}',
+            id_center = 1
         `;
         console.log(sql);
         
         connection.query(sql, (err, result)=>{
-            if(err) res.json({msg: 'email duplicate', type: 'error'});
+            if(err) res.json({msg: 'email duplicate', type: 'error', err: err});
             else {
-                connection.query('SELECT * FROM users WHERE id_users = ' + result.insertId, (err, result)=>{
-                    if(err) res.json(err);
-                    else {
-                        if(req.params.role === 'admin')
-                            sendEmailAdmin(result, (err, result) => {
-                                console.log(err)
-                                console.log(result)
-                            });
-                        if(req.params.role === 'teacher')
-                            sendEmailTeacher(result, (err, result) => {
-                                console.log(err)
-                                console.log(result)
-                            });
-                        if(req.params.role === 'student')
-                            sendEmailStudent(result, (err, result) => {
-                                console.log(err)
-                                console.log(result)
-                            });
-                        if(req.params.role === 'parent')
-                            sendEmailParent(result, (err, result) => {
-                                console.log(err)
-                                console.log(result)
-                            });
-                    }
-                    res.json({msg: 'registrated', type: 'success'});
-                    
-                });
+                if(req.params.role === 'teacher'){
+                    connection.query('INSERT INTO TEACHER SET id_teacher = ' + result.insertId + ', name = ' + req.body.name, (err, result)=>{
+                        res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                    })
+                }
+                else if(req.params.role === 'admin'){
+                    connection.query('INSERT INTO ADMINISTRATOR SET id_admin = ' + result.insertId, (err, result)=>{
+                        res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                    })
+                }
+                else if(req.params.role === 'parent'){
+                    connection.query('INSERT INTO PARENT SET id_admin = ' + result.insertId, (err, result)=>{
+                        res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                    })
+                }
+                else if(req.params.role === 'student'){
+                    connection.query(
+                        'INSERT INTO STUDENT SET id_admin = ' + result.insertId + ', username = ' + req.body.username + ', icon = ' + req.body.icon + ', id_class = ' + req.body.class
+                        , (err, result)=>{
+                            res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                        })
+                }
             }
         }); 
     }  
@@ -79,10 +96,8 @@ router.post('/:role', (req, res) => {
 
 router.put('/:id', (req, res) => {
     console.log(req.body);    
-    const sql = `UPDATE users SET 
-        username = ${connection.escape(req.body.username)},
-        password = '${cryptr.encrypt(req.body.password)}',
-        email = ${connection.escape(req.body.email)}
+    const sql = `UPDATE USERS SET 
+        password = '${cryptr.encrypt(req.body.password)}'
         WHERE id_users = ${connection.escape(req.params.id)}
     `;
     console.log(sql);
@@ -90,25 +105,11 @@ router.put('/:id', (req, res) => {
     (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
-    });
+    })
 });
 
 router.delete('/:id', (req, res) => {
-    let sql = `SELECT * FROM users WHERE id_users = ${connection.escape(req.params.id)}`;
     
-    connection.query(sql, 
-    (err, result)=>{
-        if(err) res.json({message: 'User not exist'});
-        else {
-            let sql = `DELETE FROM users WHERE id_users = ${connection.escape(req.params.id)}`;
-            connection.query(sql, (err, result)=>{
-                if(err) res.json(err);
-                else {
-                    res.json(result);                    
-                }
-            })
-        }
-    });
 });
 
 module.exports = router;

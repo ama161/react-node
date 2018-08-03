@@ -9,7 +9,7 @@ var Cryptr = require('cryptr');
 var cryptr = new Cryptr(secrets.cryptSecret);
 
 router.post('/', (req, res) => {
-    const sql = `SELECT * FROM users WHERE 
+    const sql = `SELECT * FROM USER WHERE 
         email = ${connection.escape(req.body.email)}
     `;
     connection.query(sql, (err, result)=>{
@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
         else {
             let passD = cryptr.decrypt(result[0].password);
             if(passD === req.body.password){
-                generateToken(result[0].id_users, (result) => {
+                generateToken(result[0].id_user, (result) => {
                     res.json(result);
                 })
             }
@@ -48,7 +48,8 @@ function generateToken(idU, callback){
     			result = {
                     token: token,
                     idUser: idU
-    			};
+                };
+                console.log(result);
     			return callback(result);
 
     			}else{

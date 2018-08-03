@@ -5,7 +5,7 @@ export function userByRole(){
     return new Promise((resolve, reject) => {
     
         if(sessionStorage.hasOwnProperty('idUser')){
-            console.log('aqui')
+            console.log(idUser)
                 get(sessionStorage.idUser)
                 .then(result => {
                     console.log(result)

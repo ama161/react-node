@@ -36,7 +36,10 @@ class Register extends React.Component{
           password: this.state.password
       }
       post(newUser, 'admin')
-      .then(result => console.log(result))
+      .then(result => {
+        if(result.hasOwnProperty('msg'))
+            message[result.type](result.msg)
+      })
       .catch(err => console.log(err));
     }
 

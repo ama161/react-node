@@ -9,6 +9,7 @@ import {userByRole} from '../../functions/userByRole';
 
 import MenuAdmin from './menu/MenuAdmin';
 import ClassList from '../class/ClassList';
+import Select from '../utils/Select';
 
 class HomeAdmin extends React.Component{
     constructor(props){
@@ -29,12 +30,12 @@ class HomeAdmin extends React.Component{
     }
 
     componentWillMount(){
-        userByRole()
-        .then(role => {
-            if(role !== 'admin'){
-                this.props.history.push("/login")
-            }
-        });
+        // userByRole()
+        // .then(role => {
+        //     if(role !== 'admin'){
+        //         this.props.history.push("/login")
+        //     }
+        // });
     }
 
     componentWillReceiveProps(){
@@ -55,6 +56,7 @@ class HomeAdmin extends React.Component{
                     onHandleUsers={() => this.setState({viewUsers: true, viewClass: false})}/>
                     
                 <div className="homeAdmin-container-info">
+                <Select/>
                     { this.state.viewModalClass
                         ? <ClassModal visible={this.state.viewModalClass} onHandleCancel={() => this.setState({viewModalClass: false})}/>
                         : null
@@ -70,12 +72,12 @@ class HomeAdmin extends React.Component{
                         : null
                     }
 
-                    {this.state.viewClass
+                    { this.state.viewClass
                         ? <ClassList/>
                         : null
                     }
 
-                    {this.state.viewUsers
+                    { this.state.viewUsers
                         ? <p>USERS</p>
                         : null
                     }
