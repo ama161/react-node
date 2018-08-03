@@ -17,8 +17,13 @@
     justify-content: center;
 }
 
-.animals-content{
+.animals-content, .avatars-content{
     display: flex;
     flex-wrap: wrap;
     margin: 5%;
+}
+
+.animals-content .icon, .avatars-content .icon{
+    width: 70px !important;
+    height: 70px !important;
 }

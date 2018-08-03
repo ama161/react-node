@@ -23,6 +23,7 @@ class HomeAdmin extends React.Component{
             viewModalParent: false,
             viewModalClass: false,
             viewClass: false,
+            viewUsers: false,
             class: {}
         }
     }
@@ -50,7 +51,9 @@ class HomeAdmin extends React.Component{
                     onHandleModalTeacher={() => this.setState({viewModalTeacher: true})}
                     onHandleModalParent={() => this.setState({viewModalParent: true})}
                     onHandleModalClass={() => this.setState({viewModalClass: true})}
-                    onHandleClass={() => this.setState({viewClass: true})}/>
+                    onHandleClass={() => this.setState({viewClass: true, viewUsers: false})}
+                    onHandleUsers={() => this.setState({viewUsers: true, viewClass: false})}/>
+                    
                 <div className="homeAdmin-container-info">
                     { this.state.viewModalClass
                         ? <ClassModal visible={this.state.viewModalClass} onHandleCancel={() => this.setState({viewModalClass: false})}/>
@@ -69,6 +72,11 @@ class HomeAdmin extends React.Component{
 
                     {this.state.viewClass
                         ? <ClassList/>
+                        : null
+                    }
+
+                    {this.state.viewUsers
+                        ? <p>USERS</p>
                         : null
                     }
                 </div>

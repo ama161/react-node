@@ -37,7 +37,7 @@ class StudentModal extends React.Component{
         .then(result => {
             if(result.hasOwnProperty('msg'))
                 message[result.type](result.msg)
-            if(result.type === 'success') this.setState({viewModal: false});
+            if(result.type === 'success') this.onCancel();
         })
     }
 

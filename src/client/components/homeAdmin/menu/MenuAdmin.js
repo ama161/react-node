@@ -18,11 +18,15 @@ class MenuAdmin extends React.Component {
         }
     }
 
+    componentWillMount(){
+        this.props.onHandleUsers();
+    }
+
     handleClick(e){
         if(e.key === '1')  this.props.onHandleModalStudent();  
         if(e.key === '2')  this.props.onHandleModalTeacher();  
         if(e.key === '3')  this.props.onHandleModalParent();  
-        if(e.key === '4')  console.log('users');  
+        if(e.key === '4')  this.props.onHandleUsers();    
         if(e.key === '5')  this.props.onHandleModalClass();          
         if(e.key === '6')  this.props.onHandleClass();  
         if(e.key === '7')  this.onHandleLogout();  

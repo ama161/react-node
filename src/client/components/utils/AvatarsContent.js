@@ -23,7 +23,7 @@ class AvatarsContent extends React.Component{
 
     render(){
         return(
-            <div className="animals-content">
+            <div className="avatars-content">
                 <p className="icon icon-avatar-1" onClick={() => this.handleClick("icon-avatar-1")}></p>
                 <p className="icon icon-avatar-2" onClick={() => this.handleClick("icon-avatar-2")}></p>
                 <p className="icon icon-avatar-3" onClick={() => this.handleClick("icon-avatar-3")}></p>
