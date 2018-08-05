@@ -6,7 +6,7 @@ import ClassForm from './ClassForm';
 import language from '../../language/language'
 import {post} from '../../services/class';
 
-class StudentModal extends React.Component{
+class ClassModal extends React.Component{
     constructor(props){
         super(props);
 
@@ -15,16 +15,17 @@ class StudentModal extends React.Component{
 
         this.state={
             viewModal: false,
-            newClass: {}
+            newClass: {},
+            language: 0
         }
     }
 
     componentWillMount(){
-        this.setState({viewModal: this.props.visible})
+        this.setState({viewModal: this.props.visible, language: sessionStorage.language})
     }
 
     componentWillReceiveProps(nextProps){
-        this.setState({viewModal: nextProps.visible})
+        this.setState({viewModal: nextProps.visible, language: sessionStorage.language})
     }
 
     onCancel(){
@@ -42,18 +43,23 @@ class StudentModal extends React.Component{
     }
 
     render(){
-        const lan = 0;
+        const lan = this.state.language;
 
         return(
             <Modal 
                 title={language[lan].addClass} 
-                onHandleOk={this.onHandleOk} 
                 visible={this.state.viewModal}
-                onHandleCancel={() => this.onCancel()}>
+                onHandleCancel={() => this.onCancel()}
+                footer={[
+                    <button key="back" class="ant-btn" onClick={this.handleCancel}>{language[lan].cancel} </button>,
+                    <button key="submit" class="ant-btn ant-btn-primary" onClick={this.onHandleOk}>
+                        {language[lan].addClass} 
+                    </button>
+                ]}>
                 <ClassForm onChangeClass={(newClass) => this.setState({newClass: newClass})}/>
             </Modal>
         )
     }
 }
 
-export default StudentModal
+export default ClassModal

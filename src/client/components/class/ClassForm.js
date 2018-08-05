@@ -10,7 +10,8 @@ class ClassForm extends React.Component{
         this.onHandleIcon = this.onHandleIcon.bind(this);
 
         this.state={
-            name: ''
+            name: '',
+            language: ''
         }
     }
 
@@ -21,8 +22,12 @@ class ClassForm extends React.Component{
             })
     }
 
+    componentWillMount(){
+        this.setState({language: sessionStorage.language})        
+    }
+
     render(){
-        const lan = 0;
+        const lan = (this.state.language) ? this.state.language : 0;;
         return(
             <div>
                 <AnimalsContent onHandleClick={(icon) => this.onHandleIcon(icon)}/>

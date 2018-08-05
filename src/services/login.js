@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
         email = ${connection.escape(req.body.email)}
     `;
     connection.query(sql, (err, result)=>{
-        if(err || !result[0]) res.json({msg: 'incorrect email'});
+        if(err || !result[0]) res.json({msg: 'incorrect email', type: 'error'});
         else {
             let passD = cryptr.decrypt(result[0].password);
             if(passD === req.body.password){
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
                 })
             }
             else{
-                res.json({msg: 'incorrect password'})
+                res.json({msg: 'incorrect password', type: 'error'})
             }
         }
     });

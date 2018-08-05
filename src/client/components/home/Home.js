@@ -7,31 +7,40 @@ import HeaderHome from './HeaderHome';
 class Home extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state={
+      language: 0
+    }
+  }
+
+  componentWillMount(){
+    this.setState({language: sessionStorage.language})
   }
 
   render(){
-    let lan = 0;
+    let lan = (this.state.language) ? this.state.language : 0;
+
     return(
       <div>
-        <HeaderHome/>
+        <HeaderHome onChangeLanguage={(language) => this.setState({language: language})}/>
         <div className="home-boxes">
           <Box type="brown" typeIcon="icon-chat">
-            <p>{language[lan].chat}</p>
+            <p>{language[lan].chatHOME}</p>
           </Box>
           <Box type="brown" typeIcon="icon-blackboard">
-            <p>{language[lan].class}</p>
+            <p>{language[lan].classHOME}</p>
           </Box>
           <Box type="brown" typeIcon="icon-file">
-            <p>{language[lan].evaluation}</p>
+            <p>{language[lan].evaluationHOME}</p>
           </Box>
           <Box type="brown" typeIcon="icon-calendar">
-            <p>{language[lan].calendar}</p>
+            <p>{language[lan].calendarHOME}</p>
           </Box>
           <Box type="brown" typeIcon="icon-statistics">
-            <p>{language[lan].statistics}</p>
+            <p>{language[lan].statisticsHOME}</p>
           </Box>
           <Box type="brown" typeIcon="icon-test">
-            <p>{language[lan].test}</p>
+            <p>{language[lan].testHOME}</p>
           </Box>
         </div>
 

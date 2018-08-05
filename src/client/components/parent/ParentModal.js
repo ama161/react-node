@@ -2,11 +2,11 @@ import React from 'react';
 import { message } from 'antd';
 
 import Modal from '../utils/Modal'
-import StudentForm from './StudentForm';
+import ParentForm from './ParentForm';
 import language from '../../language/language'
 import {post} from '../../services/user';
 
-class StudentModal extends React.Component{
+class ParentModal extends React.Component{
     constructor(props){
         super(props);
 
@@ -15,8 +15,8 @@ class StudentModal extends React.Component{
 
         this.state={
             viewModal: false,
-            newStudent: {},
-            language: 0
+            newParent: {},
+            language: ''
         }
     }
 
@@ -34,7 +34,11 @@ class StudentModal extends React.Component{
     }
 
     onHandleOk(){
-        post(this.state.newStudent, 'student')
+        if(this.state.newParent.student === ''){
+            message.warning('Student necessary');
+            return;
+        }
+        post(this.state.newParent, 'parent')
         .then(result => {
             if(result.hasOwnProperty('msg'))
                 message[result.type](result.msg)
@@ -43,23 +47,23 @@ class StudentModal extends React.Component{
     }
 
     render(){
-        const lan = this.state.language;
+        const lan = (this.state.language) ? this.state.language : 0;
 
         return(
             <Modal 
-                title={language[lan].addStudents} 
+                title={language[lan].addParents} 
                 visible={this.state.viewModal}
                 onHandleCancel={() => this.onCancel()}
                 footer={[
                     <button key="back" class="ant-btn" onClick={this.handleCancel}>{language[lan].cancel} </button>,
                     <button key="submit" class="ant-btn ant-btn-primary" onClick={this.onHandleOk}>
-                        {language[lan].addStudents} 
+                        {language[lan].addParents} 
                     </button>
                 ]}>
-                <StudentForm onChangeStudent={(newStudent) => this.setState({newStudent: newStudent})}/>
+                <ParentForm onHandleChange={(newParent) => this.setState({newParent: newParent})}/>
             </Modal>
         )
     }
 }
 
-export default StudentModal
+export default ParentModal

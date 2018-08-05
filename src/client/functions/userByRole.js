@@ -1,23 +1,18 @@
-import {get} from '../services/user'
+import {getByRole} from '../services/user'
 
 export function userByRole(){
-    console.log(sessionStorage.hasOwnProperty('idUser'));
-    return new Promise((resolve, reject) => {
-    
+    return new Promise((resolve, reject) => {    
         if(sessionStorage.hasOwnProperty('idUser')){
-            console.log(idUser)
-                get(sessionStorage.idUser)
-                .then(result => {
-                    console.log(result)
-                    if(result[0].role === 'admin'){
-                        resolve('admin');
-                    }
-                    resolve('');
+            getByRole(sessionStorage.idUser, 'admin')
+                .then(result => {                 
+                    resolve(true);
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                    reject();
+                })
         }
         else{
-            resolve('');
+            reject();
         }
     })
 }

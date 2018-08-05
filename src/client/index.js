@@ -10,6 +10,8 @@ const App = () => {
     )
 } 
 
+sessionStorage.setItem('language', 0);
+
 render(
     <App/>,
     document.getElementById('app')

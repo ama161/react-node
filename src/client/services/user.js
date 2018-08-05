@@ -86,3 +86,81 @@ export function get(idUser){
             })
     });
 }
+
+export function getByRole(idUser, role){
+    const route = ROUTE + '/' + role + '/' + idUser;
+    const request = new Request(route, {
+        method: 'GET',
+        mode: 'same-origin',
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}
+
+export function getAllStudents(){
+    const route = ROUTE + '/student';
+    const request = new Request(route, {
+        method: 'GET',
+        mode: 'same-origin',
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}
+
+export function getAll(rol){
+    const route = ROUTE + '/' + rol;
+    const request = new Request(route, {
+        method: 'GET',
+        mode: 'same-origin',
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom'
 
 class Language extends React.Component {
     constructor(props){
@@ -11,21 +12,23 @@ class Language extends React.Component {
     }
 
     changeLanguage(language){
-        console.log(language);
         let languageNumber = 0;
         if(language === 'EN') languageNumber = 1;
-    
-        this.props.updateLanguage(languageNumber)
+        
+        if(sessionStorage.hasOwnProperty('language')){
+            sessionStorage.language = languageNumber;
+            this.props.changeLanguage(languageNumber);
+        }
     }
 
     render(){
         return(
-            <p>
-                <span onClick={() => this.changeLanguage('ES')}>ES</span> 
+            <p className="language-container">
+                <span onClick={() => this.changeLanguage('ES')}>ES </span> 
                 | <span onClick={() => this.changeLanguage('EN')}>EN</span>
             </p>
         )
     }
 }
 
-export default Language
+export default withRouter(Language)

@@ -9,16 +9,24 @@ class HeaderHome extends React.Component{
         super(props);
 
         this.state = {
-
+            language: ''
         }
     }
 
+    componentWillMount(){
+        this.setState({language: sessionStorage.language})
+    }
+
     render(){
-        let lan = 0;
+        let lan = (this.state.language) ? this.state.language : 0;
+
         return(
             <div className="home-buttons">
                 <button className="button-fill" onClick={() => this.props.history.push("/login")}>{language[lan].login}</button>
-                <Language/>
+                <Language changeLanguage={(language) => {
+                    this.setState({language: language});
+                    this.props.onChangeLanguage(language);
+                }}/>
             </div>
         )
     }

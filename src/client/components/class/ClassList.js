@@ -19,6 +19,13 @@ class ClassList extends React.Component{
         })
     }
 
+    componentWillReceiveProps(nextProps){
+        getAll()
+        .then(result => {
+            this.setState({class: result})
+        })
+    }
+
     render(){
         return(
             <div className="classList-container">

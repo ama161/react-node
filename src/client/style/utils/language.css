@@ -1,0 +1,9 @@
+.language-container{
+    padding: 0.5em;
+    margin: auto;
+    text-align: end;
+}
+
+.language-container span{
+    cursor: pointer;
+}

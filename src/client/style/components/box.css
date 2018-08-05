@@ -27,8 +27,10 @@
 .box-white{
     background: white;
     border: solid 1px #4C6370;
-    width: 200px;
-    padding-top: 4em;
+    width: 150px;
+    display: flex;
+    margin: 0.5em;
+    align-items: center;
 }
 
 .box-brown p:nth-child(2) {

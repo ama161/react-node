@@ -1,7 +1,8 @@
 import React from 'react';
 import Input from '../utils/Input'
 import AvatarsContent from '../utils/AvatarsContent';
-import language from '../../language/language'
+import language from '../../language/language';
+import SelectClass from '../utils/select/SelectClass';
 
 class StudentForm extends React.Component{
     constructor(props){
@@ -9,12 +10,19 @@ class StudentForm extends React.Component{
 
         this.onChange = this.onChange.bind(this);
         this.onHandleAvatar = this.onHandleAvatar.bind(this);
+        this.onChangeClass = this.onChangeClass.bind(this);
 
         this.state={
-            name: '',
+            username: '',
             email: '',
-            icon: ''
+            icon: '',
+            class: '',
+            language: 0,
         }
+    }
+
+    componentWillMount(){
+        this.setState({language: sessionStorage.language})
     }
 
     onChange(event){
@@ -31,18 +39,25 @@ class StudentForm extends React.Component{
             })
     }
 
+    onChangeClass(event){
+        this.setState({class: event}
+            , () => {
+                this.props.onChangeStudent(this.state)
+            })
+    }
+
     render(){
-        const lan = 0;
+        const lan = this.state.language;
         return(
             <div>
                 <AvatarsContent onHandleClick={(avatar) => this.onHandleAvatar(avatar)}/>
                 <Input 
                     className="form-item"
-                    value={this.state.name}
+                    value={this.state.username}
                     type="text" 
                     label={language[lan].name} 
                     onChange={(event) => this.onChange(event)}
-                    name="name"
+                    name="username"
                 />
                 <Input 
                     className="form-item"
@@ -52,6 +67,10 @@ class StudentForm extends React.Component{
                     onChange={(event) => this.onChange(event)}
                     name="email"
                 />
+                <div className="form-item">
+                    <label>{language[lan].class}</label>
+                    <SelectClass onHandleChange={(value) => this.onChangeClass(value)}/>
+                </div>
             </div>
         )
     }

@@ -1,3 +1,9 @@
+.form-item{
+    width: 70%;
+    margin: auto;
+    margin-bottom: 1em;
+}
+
 input{
     border: none;
     border-bottom: solid 2px #4C6370;
@@ -13,8 +19,18 @@ label{
     font-weight: bold;
 }
 
-.form-item{
-    width: 70%;
-    margin: auto;
-    margin-bottom: 1em;
+.ant-select{
+    display: inherit !important;
+    border-bottom: solid 2px #4C6370 !important;
+    width: 90% !important;
+}
+
+.ant-select-selection{
+    padding: 1%;
+    border: none !important;
+    background: transparent;
+}
+
+.ant-select-selection__rendered{
+    margin: 0 !important;
 }
