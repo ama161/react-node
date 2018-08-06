@@ -13,6 +13,7 @@ import HomeTeacher from './components/homeTeacher/HomeTeacher';
 import HomeStudent from './components/homeStudent/HomeStudent';
 import HomeParent from './components/homeParent/HomeParent';
 import HomeAdmin from './components/homeAdmin/HomeAdmin';
+import Center from './components/center/CenterForm';
 
 class Router extends React.Component{
   constructor(props){
@@ -33,6 +34,7 @@ class Router extends React.Component{
           <Route exact path="/homeTeacher" component={HomeTeacher}/>
           <Route exact path="/homeStudent" component={HomeStudent}/>
           <Route exact path="/homeParent" component={HomeParent}/>
+          <Route exact path="/center" component={Center}/>
         </div>
       </HashRouter>
     )

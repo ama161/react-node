@@ -12,8 +12,7 @@ class Register extends React.Component{
         this.state = {
           user: {},
           email: '',
-          password: '',
-          username: ''
+          password: ''
         }
     }
     
@@ -25,14 +24,13 @@ class Register extends React.Component{
     }
 
     handleRegister(){
-      if(!this.state.email || !this.state.username || !this.state.password){
+      if(!this.state.email || !this.state.password){
         message.error('Incompleted fields');
         return;
       }
 
       let newUser = {
           email: this.state.email,
-          username: this.state.username,
           password: this.state.password
       }
       post(newUser, 'admin')
@@ -54,13 +52,6 @@ class Register extends React.Component{
               onChange={(event) => this.setState({email: event.target.value})}
               />
             <Input 
-              className="form-item"
-              value={this.state.username}
-              type="username" 
-              label="username" 
-              onChange={(event) => this.setState({username: event.target.value})}
-              />
-              <Input 
               className="form-item"
               value={this.state.password}
               type="password" 
