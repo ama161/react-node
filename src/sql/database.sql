@@ -40,6 +40,7 @@ CREATE TABLE ADMINISTRATOR(
 CREATE TABLE PARENT(
     id_parent INT PRIMARY KEY, 
     phone VARCHAR(20),
+    name VARCHAR(100),
     FOREIGN KEY (id_parent) REFERENCES USER(id_user)
 );
 
@@ -88,3 +89,4 @@ SELECT * FROM users;
 -- delete from USER, PARENT where id_user = '21' and id_parent = '21';
 
 ALTER TABLE PARENT ADD phone VARCHAR(100);
+ALTER TABLE PARENT ADD name VARCHAR(50);

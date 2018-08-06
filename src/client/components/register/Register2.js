@@ -13,8 +13,7 @@ class Register2 extends React.Component{
         this.state = {
           user: {},
           email: '',
-          password: '',
-          username: ''
+          password: ''
         }
     }
 
@@ -22,24 +21,23 @@ class Register2 extends React.Component{
         console.log(this.props.location.search.split('?'));
         let idU = this.props.location.search.split('?')[2];
         get(idU).then(result => {
+            console.log(result);
             this.setState({email: result[0].email, user: result[0]})
         })
         .catch(err => this.props.history.push('/login'));
     }
 
     handleUpdated(){
-      if(!this.state.email || !this.state.username || !this.state.password){
+      if(!this.state.email || !this.state.password){
         message.error('Incompleted fields');
         return;
       }
 
       let newUser = {
           email: this.state.user.email,
-          username: this.state.username,
           password: this.state.password,
-          role: this.state.user.role,
       }
-      put(newUser, this.state.user.id_users)
+      put(newUser, this.state.user.id_user)
       .then(result => this.props.history.push('/login'))
       .catch(err => console.log(err));
     }
@@ -54,13 +52,6 @@ class Register2 extends React.Component{
               label="email" 
               onChange={(event) => {}}
               disabled={true}
-              />
-            <Input 
-              className="form-item"
-              value={this.state.username}
-              type="username" 
-              label="username" 
-              onChange={(event) => this.setState({username: event.target.value})}
               />
               <Input 
               className="form-item"

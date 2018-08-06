@@ -20,7 +20,9 @@ class TeacherList extends React.Component{
 
     componentWillMount(){
         getAll('teacher')
-        .then(result => this.setState({teachers: result, language: sessionStorage.language}))
+        .then(result => {
+            this.setState({teachers: result, language: sessionStorage.language})
+        })
     }
 
     componentWillReceiveProps(){

@@ -8,6 +8,7 @@ class TeacherForm extends React.Component{
 
         this.state = {
             email: '',
+            name: '',
             language: 0,
         }
     }
@@ -27,6 +28,18 @@ class TeacherForm extends React.Component{
                     label={language[lan].email} 
                     onChange={(event) => 
                         this.setState({email: event.target.value}
+                        , () => {
+                            this.props.onHandleChange(this.state)
+                        })
+                    }
+                />
+                <Input 
+                    className="form-item"
+                    value={this.state.name}
+                    type="text" 
+                    label={language[lan].name} 
+                    onChange={(event) => 
+                        this.setState({name: event.target.value}
                         , () => {
                             this.props.onHandleChange(this.state)
                         })

@@ -71,7 +71,7 @@ router.get('/student', (req, res)=>{
 });
 
 router.get('/parent', (req, res)=>{
-    const sql = 'SELECT phone, name, username as name_student, STUDENT.id_student, PARENT.id_parent, email FROM PARENT INNER JOIN USER ON PARENT.id_parent = USER.id_user INNER JOIN STUDENT_PARENT ON PARENT.id_parent = STUDENT_PARENT.id_parent INNER JOIN STUDENT ON STUDENT_PARENT.id_student = STUDENT.id_student'
+    const sql = 'SELECT phone, username as name_student, STUDENT.id_student, PARENT.id_parent, email FROM PARENT INNER JOIN USER ON PARENT.id_parent = USER.id_user INNER JOIN STUDENT_PARENT ON PARENT.id_parent = STUDENT_PARENT.id_parent INNER JOIN STUDENT ON STUDENT_PARENT.id_student = STUDENT.id_student'
     console.log(sql);
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);
@@ -107,31 +107,55 @@ router.post('/:role', (req, res) => {
                         id_teacher = ${result.insertId},
                         name = ${connection.escape(req.body.name)}
                     `;
+                    const teacher = {
+                        email: req.body.email,
+                        id_user: result.insertId
+                    }
                     connection.query(sql, (err, result)=>{
-                        res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                        if(err) res.json({msg: 'no create teacher', type: 'error', err: err});
+                        else {
+                            sendEmailTeacher(teacher, (err, result) => {})
+                            res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                        }
                     })
                 }
                 else if(req.params.role === 'admin'){
+                    const admin = {
+                        email: req.body.email,
+                        id_user: result.insertId
+                    }
                     connection.query('INSERT INTO ADMINISTRATOR SET id_admin = ' + result.insertId, (err, result)=>{
-                        res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                        if(err) res.json({msg: 'no create admin', type: 'error', err: err});
+                        else {
+                            sendEmailAdmin(admin, (err, result) => {})
+                            res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                        }
                     })
                 }
                 else if(req.params.role === 'parent'){
                     const sql = `INSERT INTO PARENT SET
                         id_parent = ${result.insertId},
-                        name = ${connection.escape(req.body.name)},
-                        phone = ${connection.escape(req.body.phone)}
+                        phone = ${connection.escape(req.body.phone)},
+                        name = ${connection.escape(req.body.name)}
                     `;
                     let id_parent = result.insertId;
+                    let email = req.body.email;
                     connection.query(sql, (err, result)=>{
                         if(req.body.student){
                             const sql = `INSERT INTO STUDENT_PARENT SET
                                 id_parent = ${id_parent},
                                 id_student = ${connection.escape(req.body.student)}
                             `; 
+                            const parent = {
+                                email: email,
+                                id_user: id_parent
+                            }
                             connection.query(sql, (err, result)=>{
-                                if(err) res.json({msg: 'no insert student', type: 'error', result: result, err: err});
-                                res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                                if(err) res.json({msg: 'no insert parent', type: 'error', result: result, err: err});
+                                else{
+                                    sendEmailParent(parent, (err, result) => {})                                    
+                                    res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                                }
                             })
                         }
                         else{
@@ -146,9 +170,18 @@ router.post('/:role', (req, res) => {
                         icon = ${connection.escape(req.body.icon)},
                         id_class = ${connection.escape(req.body.class)}
                     `;
-
+                    let id_student = result.insertId;
+                    let email = req.body.email;
+                    const student = {
+                        email: email,
+                        id_user: id_student
+                    }
                     connection.query(sql, (err, result)=>{
+                        if(err) res.json({msg: 'no insert student', type: 'error', result: result, err: err});
+                        else{
+                            sendEmailStudent(student, (err, result) => {})                                    
                             res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                        }
                     })
                 }
             }
@@ -165,9 +198,9 @@ router.get('/:id', (req, res)=>{
 
 router.put('/:id', (req, res) => {
     console.log(req.body);    
-    const sql = `UPDATE USERS SET 
+    const sql = `UPDATE USER SET 
         password = '${cryptr.encrypt(req.body.password)}'
-        WHERE id_users = ${connection.escape(req.params.id)}
+        WHERE id_user = ${connection.escape(req.params.id)}
     `;
     console.log(sql);
     connection.query(sql, 

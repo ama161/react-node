@@ -33,24 +33,22 @@ function send(mailOptions){
 }
 
 export function sendEmailAdmin(req, res, callback){
-	var mail = req[0].email;
-	var idU = req[0].id_users;
-	var username = req[0].username;
+	var mail = req.email;
+	var idU = req.id_user;
 	var enlace = url + '/#/login';
 	var mailOptions ={
 		from: 'info@gmail.com',
 		to: mail,
-		subject: 'Bievenido '+username,
-		html: "<h1>Bienvenido "+username+"!</h1><p> Has sido aceptado para formar parte de nuesta plataforma!<br> Para continuar con tu registro sigue el enlace siguiente: <a href='"+enlace+"'> iniciar sesión</a><br> Gracias por confiar en nosostros."
+		subject: 'Bievenido '+email,
+		html: "<h1>Bienvenido "+email+"!</h1><p> Has sido aceptado para formar parte de nuesta plataforma!<br> Para continuar con tu registro sigue el enlace siguiente: <a href='"+enlace+"'> iniciar sesión</a><br> Gracias por confiar en nosostros."
 	};
 
 	send(mailOptions);
 }
 
 export function sendEmailStudent(req, res, callback){
-	var mail = req[0].email;
-	var idU = req[0].id_users;
-	var username = req[0].username;
+	var mail = req.email;
+	var idU = req.id_user;
 	generateToken(idU, (result) => {
 		if(result.hasOwnProperty('token')){
 			var enlace = url + '/#/register2?' + result.token + '?' + idU;
@@ -66,10 +64,9 @@ export function sendEmailStudent(req, res, callback){
 	});
 }
 
-export function sendEmailTeacher(req, res, callback){
-	var mail = req[0].email;
-	var idU = req[0].id_users;
-	var username = req[0].username;
+export function sendEmailTeacher(req, callback){
+	var mail = req.email;
+	var idU = req.id_user;
 	generateToken(idU, (result) => {
 		if(result.hasOwnProperty('token')){
 			var enlace = url + '/#/register2?' + result.token + '?' + idU;
@@ -84,9 +81,8 @@ export function sendEmailTeacher(req, res, callback){
 }
 
 export function sendEmailParent(req, res, callback){
-	var mail = req[0].email;
-	var idU = req[0].id_users;
-	var username = req[0].username;
+	var mail = req.email;
+	var idU = req.id_user;
 	generateToken(idU, (result) => {
 		if(result.hasOwnProperty('token')){
 			var enlace = url + '/#/register2?' + result.token + '?' + idU;

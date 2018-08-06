@@ -52,7 +52,7 @@ class TeacherModal extends React.Component{
                 visible={this.state.viewModal}
                 onHandleCancel={() => this.onCancel()}
                 footer={[
-                    <button key="back" class="ant-btn" onClick={this.handleCancel}>{language[lan].cancel} </button>,
+                    <button key="back" class="ant-btn" onClick={this.onCancel}>{language[lan].cancel} </button>,
                     <button key="submit" class="ant-btn ant-btn-primary" onClick={this.onHandleOk}>
                         {language[lan].addTeachers} 
                     </button>

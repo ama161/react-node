@@ -16,7 +16,9 @@ class ParentList extends React.Component{
 
     componentWillMount(){
         getAll('parent')
-        .then(result => this.setState({parents: result, language: sessionStorage.language}))
+        .then(result => {
+            this.setState({parents: result, language: sessionStorage.language})
+        })
     }
 
     componentWillReceiveProps(){

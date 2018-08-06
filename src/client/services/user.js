@@ -33,8 +33,6 @@ export function post(newUser, role){
 }
 
 export function put(newUser, idUser){
-    console.log('put user');
-    console.log(newUser);
     const route = ROUTE + '/' + idUser;    
     const request = new Request(route, {
         method: 'PUT',
