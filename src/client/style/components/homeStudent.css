@@ -1,0 +1,34 @@
+.container-info{
+    padding: 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.container-info #student_icon{
+    margin: 0;
+    width: 120px;
+    height: 120px;
+    background-color: #E1C0A2;
+    border-radius: 50%;
+}
+
+.container-info-data{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.container-info-data-class{
+    display: flex;
+    align-items: center;
+}
+
+.container-info-data-class .icon {
+    width: 30px;
+    height: 30px;
+}
+
+.container-info-data-parent{
+    cursor: pointer;
+}

@@ -21,9 +21,22 @@ class HomeTeacher extends React.Component{
     }
 
     componentWillMount(){
-        let idTeacher = sessionStorage.idUser;
-        getClassTeacher(idTeacher)
-        .then(result => this.setState({class: result}));
+        if(sessionStorage.length !== 0){
+            userByRole()
+            .then((result) => {
+                if(result !== 'teacher') this.props.history.push('/login');
+                else{
+                    let idTeacher = sessionStorage.idUser;
+                    getClassTeacher(idTeacher)
+                    .then(result => this.setState({class: result}));
+                }
+            })
+            .catch(() => {
+                this.props.history.push('/login');
+            })
+        }else{
+            this.props.history.push('/login')
+        }
     }
 
     componentWillReceiveProps(){
@@ -38,18 +51,6 @@ class HomeTeacher extends React.Component{
     }
 
     render(){
-        if(sessionStorage.length !== 0){
-            userByRole()
-            .then((result) => {
-                if(result !== 'teacher') this.props.history.push('/login');
-            })
-            .catch(() => {
-                this.props.history.push('/login');
-            })
-        }else{
-            this.props.history.push('/login')
-        }
-
         return(
             <div>
                 <Header/>

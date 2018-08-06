@@ -34,7 +34,7 @@ router.get('/teacher/:id', (req, res)=>{
 });
 
 router.get('/student/:id', (req, res)=>{
-    connection.query('SELECT * FROM STUDENT WHERE id_student = ' + req.params.id, (err, result)=>{
+    connection.query('SELECT id_student, CLASS.id_class, CLASS.name as class_name, STUDENT.username as student_name, STUDENT.icon as student_icon, CLASS.icon as class_icon FROM STUDENT, CLASS WHERE STUDENT.id_class = CLASS.id_class AND id_student = ' + req.params.id, (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
     });
@@ -79,8 +79,8 @@ router.get('/parent', (req, res)=>{
     });
 });
 
-router.get('/student-parent', (req, res)=>{
-    connection.query('SELECT * FROM STUDENT_PARENT', (err, result)=>{
+router.get('/student-parent/:id', (req, res)=>{
+    connection.query('SELECT * FROM STUDENT_PARENT, PARENT where STUDENT_PARENT.id_parent = PARENT.id_parent && id_student = ' + req.params.id, (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
     });

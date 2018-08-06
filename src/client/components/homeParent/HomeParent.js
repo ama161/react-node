@@ -15,14 +15,6 @@ class HomeParent extends React.Component{
     }
 
     componentWillMount(){
-
-    }
-
-    componentWillReceiveProps(){
-
-    }
-
-    render(){
         if(sessionStorage.length !== 0){
             userByRole()
             .then((result) => {
@@ -34,7 +26,13 @@ class HomeParent extends React.Component{
         }else{
             this.props.history.push('/login')
         }
+    }
 
+    componentWillReceiveProps(){
+
+    }
+
+    render(){
         return(
             <div>
                 <Header/>

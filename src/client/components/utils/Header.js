@@ -1,24 +1,39 @@
 import React from 'react'
+import { withRouter } from 'react-router'
+
 import Language from './Language';
 import language from '../../language/language';
+import {logout} from '../../functions/logout';
 
 class Header extends React.Component{
     constructor(props){
         super(props);
 
-        this.state = {}
+        this.onHandleLogout = this.onHandleLogout.bind(this);
+        this.state = {
+            language: 0
+        }
+    }
+
+    onHandleLogout(){
+        logout();
+        this.props.history.push('/');
     }
 
     render(){
-        const lan = 0;
+        const lan = this.state.language;
         return (
             <div className="header">
-                <button className="button-fill" onClick={() => this.handleLogout()}>{language[lan].logout}</button>                
-                <Language/>
+                <Language 
+                    changeLanguage={(language) => {
+                        this.setState({language: sessionStorage.language});
+                        this.props.onChangeLanguage(language);
+                    }}/>
+                <button className="button-fill" onClick={this.onHandleLogout}>{language[lan].logout}</button>                                
             </div>
         )
     }
 
 }
 
-export default Header
+export default withRouter(Header);

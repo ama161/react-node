@@ -35,7 +35,7 @@ class HomeAdmin extends React.Component{
         }
     }
 
-    render(){
+    componentWillMount(){
         if(sessionStorage.length !== 0){
             userByRole()
             .then((result) => {
@@ -47,7 +47,9 @@ class HomeAdmin extends React.Component{
         }else{
             this.props.history.push('/login')
         }
+    }
 
+    render(){
         return(
             <div className="homeAdmin-container-home">
                 <MenuAdmin 
