@@ -17,6 +17,24 @@ router.get('/', (req, res)=>{
 
 router.get('/admin/:id', (req, res)=>{
     connection.query('SELECT * FROM ADMINISTRATOR WHERE id_admin = ' + req.params.id, (err, result)=>{
+        if(err) {
+            res.json(err);
+        }
+        else {
+            res.json(result)
+        };
+    });
+});
+
+router.get('/teacher/:id', (req, res)=>{
+    connection.query('SELECT * FROM TEACHER WHERE id_teacher = ' + req.params.id, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/student/class/:id', (req, res)=>{
+    connection.query('SELECT * FROM STUDENT WHERE id_class = ' + req.params.id, (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
     });

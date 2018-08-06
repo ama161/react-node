@@ -38,6 +38,9 @@ class HomeAdmin extends React.Component{
     render(){
         if(sessionStorage.length !== 0){
             userByRole()
+            .then((result) => {
+                if(result !== 'admin') this.props.history.push('/login');
+            })
             .catch(() => {
                 this.props.history.push('/login');
             })

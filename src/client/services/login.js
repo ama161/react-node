@@ -5,7 +5,6 @@ const headers = new Headers({
 });
 
 export function login(user){
-    console.log(user);
     const request = new Request(ROUTE, {
         method: 'POST',
         mode: 'same-origin',

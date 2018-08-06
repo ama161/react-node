@@ -10,7 +10,7 @@ import Register from './components/register/Register';
 import Register2 from './components/register/Register2';
 import Login from './components/register/Login';
 // import HomeUser from './components/homeUser/HomeUserContainer';
-// import HomeTeacher from './components/homeTeacher/HomeTeacher';
+import HomeTeacher from './components/homeTeacher/HomeTeacher';
 import HomeAdmin from './components/homeAdmin/HomeAdmin';
 // import LoginTeacher from './components/register/LoginTeacherContainer';
 
@@ -30,6 +30,7 @@ class Router extends React.Component{
           <Route exact path="/register2" component={Register2}/>
           <Route exact path="/login" component={Login}/>
           <Route exact path="/homeAdmin" component={HomeAdmin}/>
+          <Route exact path="/homeTeacher" component={HomeTeacher}/>
           
           {/*      
           <Route exact path="/homeUser" component={HomeUser}/>

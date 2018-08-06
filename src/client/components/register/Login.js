@@ -6,6 +6,7 @@ import Box from '../utils/Box'
 import Input from '../utils/Input'
 import language from '../../language/language'
 import {login} from '../../services/login';
+import {userByRole} from '../../functions/userByRole'
 
 class Login extends React.Component{
     constructor(props){
@@ -31,7 +32,21 @@ class Login extends React.Component{
             else{
                 sessionStorage.setItem('token', result.token);
                 sessionStorage.setItem('idUser', result.idUser);
-                this.props.history.push("/homeAdmin");
+                userByRole()
+                .then((result) => {
+                    console.log(result);
+                    if(result === 'admin')
+                        this.props.history.push("/homeAdmin");
+                    if(result === 'teacher')
+                        this.props.history.push("/homeTeacher");
+                    if(result === 'student')
+                        console.log('student')
+                    if(result === 'parent')
+                        console.log('parent')
+                })
+                .catch(() => {
+                    this.props.history.push('/login');
+                })
             }
         })
         .catch(err => console.log(err));

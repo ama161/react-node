@@ -3,8 +3,17 @@ import db from '../database';
 const router = express.Router();
 const connection = db();
 
-router.get('/class_teacher', (req, res)=>{
+router.get('/class-teacher', (req, res)=>{
     const sql = 'SELECT * FROM CLASS_TEACHER INNER JOIN USER ON CLASS_TEACHER.id_teacher = USER.id_user INNER JOIN TEACHER ON CLASS_TEACHER.id_teacher = TEACHER.id_teacher INNER JOIN CLASS ON CLASS_TEACHER.id_class = CLASS.id_class'
+    console.log(sql);
+    connection.query(sql, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/class-teacher/:id', (req, res)=>{
+    const sql = 'SELECT CLASS_TEACHER.id_class, name, icon FROM CLASS_TEACHER, CLASS where CLASS_TEACHER.id_teacher = ' + req.params.id + ' AND CLASS_TEACHER.id_class = CLASS.id_class'
     console.log(sql);
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);

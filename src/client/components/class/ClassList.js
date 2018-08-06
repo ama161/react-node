@@ -30,7 +30,7 @@ class ClassList extends React.Component{
         return(
             <div className="classList-container">
                 {Object.values(this.state.class).map((key, index) => 
-                    <ClassItem name={key.name} icon={key.icon}/>
+                    <ClassItem name={key.name} icon={key.icon} id={key.id_class}/>
                 )}
             </div>
         )
