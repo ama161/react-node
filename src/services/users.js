@@ -33,6 +33,20 @@ router.get('/teacher/:id', (req, res)=>{
     });
 });
 
+router.get('/student/:id', (req, res)=>{
+    connection.query('SELECT * FROM STUDENT WHERE id_student = ' + req.params.id, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/parent/:id', (req, res)=>{
+    connection.query('SELECT * FROM PARENT WHERE id_parent = ' + req.params.id, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
 router.get('/student/class/:id', (req, res)=>{
     connection.query('SELECT * FROM STUDENT WHERE id_class = ' + req.params.id, (err, result)=>{
         if(err) res.json(err);

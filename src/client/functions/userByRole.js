@@ -10,10 +10,30 @@ export function userByRole(){
                     else{                              
                         getByRole(sessionStorage.idUser, 'teacher')
                         .then(result => {  
-                            if(result[0].hasOwnProperty('id_teacher'))     
+                            if(result[0] && result[0].hasOwnProperty('id_teacher'))     
                                 resolve('teacher');
                             else{
-                                reject();
+                                getByRole(sessionStorage.idUser, 'student')
+                                .then(result => {  
+                                    if(result[0] && result[0].hasOwnProperty('id_student'))     
+                                        resolve('student');
+                                    else{
+                                        getByRole(sessionStorage.idUser, 'parent')
+                                        .then(result => {  
+                                            if(result[0] && result[0].hasOwnProperty('id_parent'))     
+                                                resolve('parent');
+                                            else{
+                                                reject();
+                                            }
+                                        })
+                                        .catch(err => {
+                                            reject();
+                                        })
+                                    }
+                                })
+                                .catch(err => {
+                                    reject();
+                                })
                             }
                         })
                         .catch(err => {

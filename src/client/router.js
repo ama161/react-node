@@ -9,10 +9,10 @@ import Home from './components/home/Home';
 import Register from './components/register/Register';
 import Register2 from './components/register/Register2';
 import Login from './components/register/Login';
-// import HomeUser from './components/homeUser/HomeUserContainer';
 import HomeTeacher from './components/homeTeacher/HomeTeacher';
+import HomeStudent from './components/homeStudent/HomeStudent';
+import HomeParent from './components/homeParent/HomeParent';
 import HomeAdmin from './components/homeAdmin/HomeAdmin';
-// import LoginTeacher from './components/register/LoginTeacherContainer';
 
 class Router extends React.Component{
   constructor(props){
@@ -31,11 +31,8 @@ class Router extends React.Component{
           <Route exact path="/login" component={Login}/>
           <Route exact path="/homeAdmin" component={HomeAdmin}/>
           <Route exact path="/homeTeacher" component={HomeTeacher}/>
-          
-          {/*      
-          <Route exact path="/homeUser" component={HomeUser}/>
-          <Route exact path="/homeTeacher" component={HomeTeacher}/>
-          <Route exact path="/loginTeacher" component={LoginTeacher}/> */}
+          <Route exact path="/homeStudent" component={HomeStudent}/>
+          <Route exact path="/homeParent" component={HomeParent}/>
         </div>
       </HashRouter>
     )

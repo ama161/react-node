@@ -34,15 +34,14 @@ class Login extends React.Component{
                 sessionStorage.setItem('idUser', result.idUser);
                 userByRole()
                 .then((result) => {
-                    console.log(result);
                     if(result === 'admin')
                         this.props.history.push("/homeAdmin");
                     if(result === 'teacher')
                         this.props.history.push("/homeTeacher");
                     if(result === 'student')
-                        console.log('student')
+                        this.props.history.push("/homeStudent");
                     if(result === 'parent')
-                        console.log('parent')
+                        this.props.history.push("/homeParent");
                 })
                 .catch(() => {
                     this.props.history.push('/login');
