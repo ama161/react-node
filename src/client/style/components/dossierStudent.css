@@ -1,0 +1,19 @@
+.dossierStudent-container{
+    background: #97C6E1;
+    box-shadow: 1px 2px 3px 0 rgba(0,0,0,0.41);
+    margin: 1em;
+    padding: 0.5em;
+}
+
+.dossierStudent-container-item{
+    display: flex;
+    align-items: baseline;
+}
+
+.dossierStudent-container-item h2{
+    width: 30%;
+}
+
+.dossierStudent-container-item p{
+    width: 70%;
+}

@@ -34,6 +34,7 @@ class Login extends React.Component{
                 sessionStorage.setItem('idUser', result.idUser);
                 userByRole()
                 .then((result) => {
+                    console.log(result);
                     if(result === 'admin')
                         this.props.history.push("/homeAdmin");
                     if(result === 'teacher')
@@ -54,7 +55,7 @@ class Login extends React.Component{
     render(){
         const lan = 0;
         return(
-            <Box>
+            <Box typeIcon="logo-primary">
                 <Input 
                     className="form-item"
                     value={this.state.email}

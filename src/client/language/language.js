@@ -10,6 +10,9 @@ const language = [
         'name': 'Nombre',
         'email': 'Email',
         'phone': 'Teléfono',        
+        'title': 'Título',        
+        'note': 'Nota',        
+        'subject': 'Asignatura',        
         'chatHOME': 'CONTACTA CON LOS PADRES DE TUS ALUMNOS EN CUALQUIER MOMENTO',
         'classHOME': 'ORGANIZA TODOS TUS ALUMNOS POR AULAS',
         'evaluationHOME': 'CREA EXPEDIENTES PARA ORGANIZAR TODAS LAS NOTAS DE TUS ALUMNOS',
@@ -28,6 +31,7 @@ const language = [
         'addStudents': 'Añadir alumno',
         'addParents': 'Añadir padre',
         'addClass': 'Añadir clase',
+        'addEvaluation': 'Añadir Evaluación',        
     },
     {
         'welcome': 'Welcome',
@@ -40,6 +44,9 @@ const language = [
         'name': 'Name',
         'email': 'Email',
         'phone': 'Phone',
+        'title': 'Title',        
+        'note': 'Note',        
+        'subject': 'Subject',
         'chatHOME': 'CONTACT THE PARENTS OF YOUR STUDENTS AT ANY TIME',
         'classHOME': 'ORGANIZE ALL YOUR STUDENTS BY CLASSROOMS',
         'evaluationHOME': 'CREATE RECORDS TO ORGANIZE ALL THE NOTES OF YOUR STUDENTS',
@@ -58,6 +65,7 @@ const language = [
         'addStudents': 'Add student',
         'addParents': 'Add parent',
         'addClass': 'Add class',
+        'addEvaluation': 'Add Evaluation',
     }
 
 ]

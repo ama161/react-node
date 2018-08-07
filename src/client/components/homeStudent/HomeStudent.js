@@ -4,8 +4,9 @@ import { withRouter } from 'react-router'
 import language from '../../language/language'
 import {userByRole} from '../../functions/userByRole';
 import Header from '../utils/Header'
-import {getByRole} from '../../services/user'
+import {getByRole, getStudentDossier} from '../../services/user'
 import ParentInfoModal from './ParentInfoModal'
+import DossierStudent from '../dossier/DossierStudent'
 
 class HomeStudent extends React.Component{
     constructor(props){
@@ -14,23 +15,28 @@ class HomeStudent extends React.Component{
         this.state={
             language: 0,
             student: null,
+            dossier: null,
             viewModalParent: false,
         }
     }
 
     componentWillMount(){
-        console.log(sessionStorage)
         if(sessionStorage.length !== 0){
             userByRole()
             .then((result) => {
-                console.log('result' + result)
                 if(result !== 'student') this.props.history.push('/login');
                 else
                     getByRole(sessionStorage.idUser, 'student')
-                        .then(result => this.setState({student: result[0]}))
+                        .then(result => {
+                            this.setState({student: result[0]})
+                            getStudentDossier(sessionStorage.idUser)
+                            .then(result => {
+                                console.log(result)
+                                this.setState({dossier: (result.length === 0) ? null : result})
+                            })
+                        })
             })
             .catch((err) => {
-                console.log(err)
                 this.props.history.push('/login');
             })
         }else{
@@ -67,6 +73,11 @@ class HomeStudent extends React.Component{
                         <p className="container-info-data-parent" onClick={() => this.setState({viewModalParent: true})}>{language[lan].infoParent}</p>
                     </div>
                 </div>
+                {this.state.dossier
+                    ? <DossierStudent student={this.state.dossier}/>
+                    : null
+                }
+                
             </div>
         )
     }

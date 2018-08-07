@@ -11,6 +11,7 @@ class TeacherList extends React.Component{
     constructor(props){
         super(props);
 
+        this.getAllTeachers = this.getAllTeachers.bind(this);
         this.state = {
             teachers: [],
             classTeacherModal: false,
@@ -19,13 +20,14 @@ class TeacherList extends React.Component{
     }
 
     componentWillMount(){
-        getAll('teacher')
-        .then(result => {
-            this.setState({teachers: result, language: sessionStorage.language})
-        })
+        this.getAllTeachers()
     }
 
     componentWillReceiveProps(){
+        this.getAllTeachers();
+    }
+
+    getAllTeachers(){
         getAll('teacher')
         .then(result => this.setState({teachers: result, language: sessionStorage.language}))
     }
@@ -60,7 +62,10 @@ class TeacherList extends React.Component{
                 {this.state.classTeacherModal
                     ? <ClassTeacherModal 
                         visible={this.state.classTeacherModal} 
-                        onHandleCancel={() => this.setState({classTeacherModal: false})}
+                        onHandleCancel={() => {
+                            this.setState({classTeacherModal: false})
+                            this.getAllTeachers();
+                        }}
                         id_teacher={this.state.id_teacher}/>
                     : null
                 }

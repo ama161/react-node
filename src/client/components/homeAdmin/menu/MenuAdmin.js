@@ -55,7 +55,7 @@ class MenuAdmin extends React.Component {
             >
                 <MenuItemGroup 
                     key="g1" 
-                    title={<span className="container-logo"><span className="logo"></span><h1>TFG</h1></span>}
+                    title={<span className="container-logo"><p className="icon logo-header"></p></span>}
                 >
                     <Language 
                         changeLanguage={(language) => {

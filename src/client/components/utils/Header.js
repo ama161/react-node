@@ -24,12 +24,15 @@ class Header extends React.Component{
         const lan = this.state.language;
         return (
             <div className="header">
-                <Language 
-                    changeLanguage={(language) => {
-                        this.setState({language: sessionStorage.language});
-                        this.props.onChangeLanguage(language);
-                    }}/>
-                <button className="button-fill" onClick={this.onHandleLogout}>{language[lan].logout}</button>                                
+                <p className="icon logo-header"></p>
+                <div>
+                    <Language 
+                        changeLanguage={(language) => {
+                            this.setState({language: sessionStorage.language});
+                            this.props.onChangeLanguage(language);
+                        }}/>
+                    <button className="ant-btn" onClick={this.onHandleLogout}>{language[lan].logout}</button> 
+                </div>                               
             </div>
         )
     }

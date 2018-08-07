@@ -1,9 +1,9 @@
 .header{
     display: flex;
-    justify-content: flex-end;
-    align-items: baseline;
+    justify-content: space-between;
+    align-items: center;
     padding: 1%;
-    background: #4C6370;
+    /* background: #4C6370; */
 }
 
 .header .language-container{

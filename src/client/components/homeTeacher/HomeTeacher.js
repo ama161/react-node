@@ -7,16 +7,22 @@ import Header from '../utils/Header'
 import {getClassTeacher} from '../../services/class';
 import ClassItem from '../class/ClassItem';
 import UserItem from '../utils/UserItem';
-import {getStudentsByClass} from '../../services/user'
+import {getStudentsByClass, getStudentDossier} from '../../services/user'
+import DossierStudent from '../dossier/DossierStudent'
+import NoteDossierModal from '../dossier/NoteDossierModal';
 
 class HomeTeacher extends React.Component{
     constructor(props){
         super(props);
 
+        this.onStudentClick = this.onStudentClick.bind(this);
         this.state={
             language: 0,
             class: {},
-            students: {}
+            students: {},
+            student: null,
+            studentId: 0,
+            viewNoteDossierModal: false,
         }
     }
 
@@ -28,7 +34,7 @@ class HomeTeacher extends React.Component{
                 else{
                     let idTeacher = sessionStorage.idUser;
                     getClassTeacher(idTeacher)
-                    .then(result => this.setState({class: result}));
+                    .then(result => this.setState({class: result, language: sessionStorage.language}));
                 }
             })
             .catch(() => {
@@ -42,18 +48,38 @@ class HomeTeacher extends React.Component{
     componentWillReceiveProps(){
         let idTeacher = sessionStorage.idUser;
         getClassTeacher(idTeacher)
-        .then(result => this.setState({class: result}));
+        .then(result => this.setState({class: result, language: sessionStorage.language}));
     }
 
     onClassClick(id){
         getStudentsByClass(id)
-        .then((result) => {this.setState({students: result})})
+        .then((result) => {this.setState({students: result, studentId: 0, student: null})})
+    }
+
+    onStudentClick(id){
+        getStudentDossier(id)
+            .then(result => {
+                console.log(result);
+                this.setState({student: result, studentId: id})}
+            )
     }
 
     render(){
+        const lan = this.state.language
         return(
-            <div>
-                <Header/>
+            <div className="homeTeacher-container">
+                {this.state.viewNoteDossierModal
+                    ? <NoteDossierModal 
+                        visible={this.state.viewNoteDossierModal}
+                        id_student={this.state.studentId}
+                        id_teacher={sessionStorage.idUser}
+                        onHandleCancel={() => {
+                            this.setState({viewNoteDossierModal: false}, console.log(this.state))
+                            this.onStudentClick(this.state.studentId)
+                        }}/>
+                    : null
+                }
+                <Header onChangeLanguage={(language) => this.setState({language: language})}/>
                 <div className="classList-container">
                     {Object.values(this.state.class).map((key, index) => 
                         <ClassItem name={key.name} icon={key.icon} id={key.id_class} onHandleClick={(id) => this.onClassClick(id)}/>
@@ -64,9 +90,27 @@ class HomeTeacher extends React.Component{
                     {this.state.students
                         ? <div className="usersList-container">
                             {Object.values(this.state.students).map((key, index) => 
-                                <UserItem name={key.username} icon={key.icon}/>
+                                <UserItem 
+                                    name={key.username} 
+                                    icon={key.icon} 
+                                    onStudentClick={(id) => this.onStudentClick(id)}
+                                    id={key.id_student}/>
                             )}
                         </div>
+                        : null
+                    }
+                </div>
+
+                <div className="homeTeacher-container-dossier">
+                    {this.state.student && this.state.studentId
+                        ?   <div>
+                                <button 
+                                    class="ant-btn ant-btn-primary" 
+                                    onClick={() => this.setState({viewNoteDossierModal: true})}>
+                                    {language[lan].addEvaluation}
+                                    </button>
+                                <DossierStudent student={this.state.student}/>
+                            </div>
                         : null
                     }
                 </div>

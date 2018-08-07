@@ -34,7 +34,21 @@ router.get('/teacher/:id', (req, res)=>{
 });
 
 router.get('/student/:id', (req, res)=>{
-    connection.query('SELECT id_student, CLASS.id_class, CLASS.name as class_name, STUDENT.username as student_name, STUDENT.icon as student_icon, CLASS.icon as class_icon FROM STUDENT, CLASS WHERE STUDENT.id_class = CLASS.id_class AND id_student = ' + req.params.id, (err, result)=>{
+    connection.query('SELECT id_student, CLASS.id_class, CLASS.name as class_name, STUDENT.username as student_name, STUDENT.icon as student_icon, CLASS.icon as class_icon FROM STUDENT, CLASS WHERE STUDENT.id_class = CLASS.id_class AND id_student = ' + req.params.id, 
+    (err, result)=>{        
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/student/dossier/:id', (req, res)=>{
+    const sql = `SELECT STUDENT.id_student, CLASS.id_class, CLASS.name as class_name, 
+    STUDENT.username as student_name, STUDENT.icon as student_icon, CLASS.icon as class_icon, 
+    title, note, subject, id_teacher
+    FROM STUDENT, CLASS, DOSSIER 
+    WHERE STUDENT.id_class = CLASS.id_class AND STUDENT.id_student = ${req.params.id} AND STUDENT.id_student = DOSSIER.id_student
+    `;
+    connection.query(sql, (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
     });
@@ -188,6 +202,29 @@ router.post('/:role', (req, res) => {
         }); 
     }  
 });
+
+router.post('/parent-student/:id', (req, res) => {
+    const sql = `INSERT INTO STUDENT_PARENT SET
+    id_parent = ${req.params.id},
+    id_student = ${connection.escape(req.body.student)}
+    `; 
+    connection.query(sql, (err, result)=>{
+        if(err) res.json({msg: 'no insert student', type: 'error', result: result, err: err});
+        else{                                  
+            res.json({msg: 'registrated', type: 'success', result: result, err: err});
+        }
+    })
+})
+
+router.get('/parent-student/:id', (req, res) => {
+    const sql = `SELECT * FROM STUDENT_PARENT, STUDENT 
+    where STUDENT_PARENT.id_parent = ${req.params.id}
+    AND STUDENT_PARENT.id_student = STUDENT.id_student`; 
+    connection.query(sql, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    })
+})
 
 router.get('/:id', (req, res)=>{
     connection.query('SELECT * FROM USER WHERE id_user = ' + req.params.id, (err, result)=>{

@@ -111,6 +111,32 @@ export function getByRole(idUser, role){
     });
 }
 
+export function getStudentDossier(idUser){
+    const route = ROUTE + '/student/dossier/' + idUser;
+    const request = new Request(route, {
+        method: 'GET',
+        mode: 'same-origin',
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}
+
 export function getAllStudents(){
     const route = ROUTE + '/student';
     const request = new Request(route, {
@@ -194,6 +220,59 @@ export function getParentStudent(idStudent){
     const request = new Request(route, {
         method: 'GET',
         mode: 'same-origin',
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}
+
+export function getStudentsParent(idParent){
+    const route = ROUTE + '/parent-student/' + idParent;
+    const request = new Request(route, {
+        method: 'GET',
+        mode: 'same-origin',
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}
+
+export function postStudentParent(id_parent, student){
+    const route = ROUTE + '/parent-student/' + id_parent;
+    const request = new Request(route, {
+        method: 'POST',
+        mode: 'same-origin',
+        body: JSON.stringify({student: student}),
         credentials: 'same-origin',
         headers: headers
     });

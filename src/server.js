@@ -8,6 +8,7 @@ import usersRoutes from './services/users';
 import loginRoutes from './services/login';
 import classRoutes from './services/class';
 import centerRoutes from './services/center';
+import dossierRoutes from './services/dossiers';
 
 //init packages
 const app = express();
@@ -29,6 +30,7 @@ app.use('/api/users', usersRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/class', classRoutes);
 app.use('/api/center', centerRoutes);
+app.use('/api/dossier', dossierRoutes);
 
 //start server
 app.listen(app.get('port'), ()=>{

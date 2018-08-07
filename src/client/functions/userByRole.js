@@ -14,7 +14,7 @@ export function userByRole(){
                                 resolve('teacher');
                             else{
                                 getByRole(sessionStorage.idUser, 'student')
-                                .then(result => {  
+                                .then(result => {
                                     if(result[0] && result[0].hasOwnProperty('id_student'))     
                                         resolve('student');
                                     else{

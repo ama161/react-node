@@ -66,6 +66,17 @@ CREATE TABLE CLASS_TEACHER(
     FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher)
 );
 
+CREATE TABLE DOSSIER(
+    id_student INT,
+    id_teacher INT,
+    title VARCHAR(100),
+    note VARCHAR(20),
+    subject VARCHAR(50),
+    PRIMARY KEY (id_student, id_teacher, title),
+    FOREIGN KEY (id_student)  REFERENCES STUDENT(id_student),
+    FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher)
+);
+
 DESCRIBE users;
 
 SELECT * FROM users;
@@ -90,3 +101,4 @@ SELECT * FROM users;
 
 ALTER TABLE PARENT ADD phone VARCHAR(100);
 ALTER TABLE PARENT ADD name VARCHAR(50);
+ALTER TABLE DOSSIER ADD subject VARCHAR(50);
