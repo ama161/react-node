@@ -12,7 +12,10 @@ const language = [
         'phone': 'Teléfono',        
         'title': 'Título',        
         'note': 'Nota',        
-        'subject': 'Asignatura',        
+        'subject': 'Asignatura',  
+        'question': 'Pregunta',  
+        'responseTrue': 'Respuesta Correcta',
+        'responseFalse': 'Respuesta Incorrecta',      
         'chatHOME': 'CONTACTA CON LOS PADRES DE TUS ALUMNOS EN CUALQUIER MOMENTO',
         'classHOME': 'ORGANIZA TODOS TUS ALUMNOS POR AULAS',
         'evaluationHOME': 'CREA EXPEDIENTES PARA ORGANIZAR TODAS LAS NOTAS DE TUS ALUMNOS',
@@ -35,6 +38,8 @@ const language = [
         'addClass': 'Añadir clase',
         'addSubjects': 'Añadir Asignatura',        
         'addEvaluation': 'Añadir Evaluación',        
+        'addTest': 'Añadir Test',   
+        'addQuestion': 'Añadir Pregunta',                
     },
     {
         'welcome': 'Welcome',
@@ -50,6 +55,9 @@ const language = [
         'title': 'Title',        
         'note': 'Note',        
         'subject': 'Subject',
+        'question': 'Question',          
+        'responseTrue': 'Correct Response',
+        'responseFalse': 'Incorrect Response',
         'chatHOME': 'CONTACT THE PARENTS OF YOUR STUDENTS AT ANY TIME',
         'classHOME': 'ORGANIZE ALL YOUR STUDENTS BY CLASSROOMS',
         'evaluationHOME': 'CREATE RECORDS TO ORGANIZE ALL THE NOTES OF YOUR STUDENTS',
@@ -72,6 +80,8 @@ const language = [
         'addClass': 'Add class',
         'addSubjects': 'Add Subject',                
         'addEvaluation': 'Add Evaluation',
+        'addTest': 'Add Test',                
+        'addQuestion': 'Add Question',                
     }
 
 ]

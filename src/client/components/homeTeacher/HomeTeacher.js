@@ -80,6 +80,11 @@ class HomeTeacher extends React.Component{
                     : null
                 }
                 <Header onChangeLanguage={(language) => this.setState({language: language})}/>
+                <button 
+                    class="ant-btn ant-btn-primary" 
+                    onClick={() => this.props.history.push('/homeTeacher/test')}>
+                    {language[lan].addTest}
+                </button>
                 <div className="classList-container">
                     {Object.values(this.state.class).map((key, index) => 
                         <ClassItem name={key.name} icon={key.icon} id={key.id_class} onHandleClick={(id) => this.onClassClick(id)}/>

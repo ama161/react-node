@@ -84,6 +84,30 @@ CREATE TABLE DOSSIER(
     FOREIGN KEY (id_subject) REFERENCES SUBJECT(id_subject)
 );
 
+CREATE TABLE TEST(
+    id_test INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100),
+    description VARCHAR(100)
+);
+
+CREATE TABLE QUESTION(
+    id_question INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100),
+    response_true VARCHAR(100),
+    response_false_1 VARCHAR(100),
+    response_false_2 VARCHAR(100),
+    id_subject INT,
+    FOREIGN KEY (id_subject) REFERENCES SUBJECT(id_subject)
+);
+
+CREATE TABLE TEST_QUESTION(
+    id_test INT,
+    id_question INT,
+    PRIMARY KEY (id_test, id_question),
+    FOREIGN KEY (id_test) REFERENCES TEST(id_test),
+    FOREIGN KEY (id_question) REFERENCES QUESTION(id_question)
+);
+
 DESCRIBE users;
 
 SELECT * FROM users;

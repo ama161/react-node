@@ -3,10 +3,10 @@ import { message } from 'antd';
 
 import Modal from '../utils/Modal'
 import language from '../../language/language'
-import DossierForm from '../dossier/DossierForm';
-import {post} from '../../services/dossier';
+import QuestionForm from './QuestionForm';
+import {post} from '../../services/question';
 
-class ClassTeacherModal extends React.Component{
+class QuestionModal extends React.Component{
     constructor(props){
         super(props);
 
@@ -15,24 +15,20 @@ class ClassTeacherModal extends React.Component{
 
         this.state={
             viewModal: false,
-            id_student: '',
-            id_teacher: '',
             language: '',
-            newDossier: {}
+            newQuestion: {}
         }
     }
 
     componentWillMount(){
-        console.log(this.props.id_student)
         this.setState({
-            viewModal: this.props.visible, id_teacher: this.props.id_teacher, language: sessionStorage.language, id_student: this.props.id_student
+            viewModal: this.props.visible, language: sessionStorage.language
         })
     }
 
-    componentWillReceiveProps(nextProps){
-        console.log(nextProps.id_teacher)        
+    componentWillReceiveProps(nextProps){      
         this.setState({
-            viewModal: nextProps.visible, id_teacher: nextProps.id_teacher, id_student: nextProps.id_student
+            viewModal: nextProps.visible,
         })
     }
 
@@ -42,12 +38,9 @@ class ClassTeacherModal extends React.Component{
     }
 
     onHandleOk(){
-        post(this.state.id_student, this.state.id_teacher, this.state.newDossier)
-        .then(result => {
-            if(result.hasOwnProperty('msg'))
-                message[result.type](result.msg)
-            if(result.type === 'success') this.onCancel();
-        })
+        console.log(this.state.newQuestion)
+        post(this.state.newQuestion)
+        .then(result => console.log(result))
     }
     
     render(){
@@ -61,13 +54,14 @@ class ClassTeacherModal extends React.Component{
                         {language[lan].cancel}
                     </button>,
                     <button key="submit" class="ant-btn ant-btn-primary" onClick={this.onHandleOk}>
-                        {language[lan].addEvaluation}
+                        {language[lan].addQuestion}
                     </button>
                 ]}>
-                <DossierForm onChangeDossier={(newDossier) => this.setState({newDossier: newDossier})}/>
+                <QuestionForm 
+                    onChangeQuestion={(newQuestion) => this.setState({newQuestion: newQuestion})}/>
             </Modal>
         )
     }
 }
 
-export default ClassTeacherModal
+export default QuestionModal

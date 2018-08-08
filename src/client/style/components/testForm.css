@@ -1,0 +1,13 @@
+.testForm-container{
+    display: flex;
+    justify-content: space-around;
+}
+
+.testForm-container-formTest, .testForm-container-formQuestion{
+    width: 50%;
+    padding: 2em;
+}
+
+.testForm-container-formTest .form-item, .testForm-container-formQuestion .form-item{
+    width: 100%;
+}
