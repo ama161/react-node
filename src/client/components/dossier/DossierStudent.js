@@ -19,7 +19,7 @@ class DossierStudent extends React.Component{
             <div className="dossierStudent-container">
                 {Object.values(this.props.student).map((key, index) => (
                     <div className="dossierStudent-container-item">
-                        <h2>{key.subject}</h2>
+                        <h2>{key.subject_name}</h2>
                         <p>{key.title} - {key.note}</p>
                     </div>
                 ))}

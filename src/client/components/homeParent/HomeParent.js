@@ -5,13 +5,15 @@ import language from '../../language/language'
 import {userByRole} from '../../functions/userByRole';
 import Header from '../utils/Header'
 import { getStudentsParent } from '../../services/user';
+import UserItem from '../utils/UserItem'
 
 class HomeParent extends React.Component{
     constructor(props){
         super(props);
 
         this.state={
-            language: 0
+            language: 0,
+            students: {}
         }
     }
 
@@ -21,7 +23,7 @@ class HomeParent extends React.Component{
             .then((result) => {
                 if(result !== 'parent') this.props.history.push('/login');
                 getStudentsParent(sessionStorage.idUser)
-                .then(result => console.log(result))
+                .then(result => this.setState({students: result}))
                 .catch(err => console.log(err))
             })
             .catch((err) => {
@@ -41,7 +43,11 @@ class HomeParent extends React.Component{
         return(
             <div>
                 <Header/>
-                <p>PARENTSS</p>
+                <div className="usersList-container">
+                    {Object.values(this.state.students).map((key, index) => 
+                        <UserItem name={key.username} icon={key.icon} onStudentClick={() => {}}/>
+                    )}
+                </div>
             </div>
         )
     }

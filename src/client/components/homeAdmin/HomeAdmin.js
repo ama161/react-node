@@ -15,6 +15,8 @@ import StudentList from '../student/StudentList';
 import ParentModal from '../parent/ParentModal';
 import TeacherList from '../teacher/TeacherList';
 import ParentList from '../parent/ParentList';
+import SubjectList from '../subject/SubjectList';
+import SubjectModal from '../subject/SubjectModal';
 
 class HomeAdmin extends React.Component{
     constructor(props){
@@ -31,6 +33,8 @@ class HomeAdmin extends React.Component{
             viewStudents: false,
             viewTeachers: false,
             viewParents: false,
+            viewModalSubject: false,
+            viewSubjects: false,
             language: 0,
         }
     }
@@ -57,11 +61,13 @@ class HomeAdmin extends React.Component{
                     onHandleModalTeacher={() => this.setState({viewModalTeacher: true})}
                     onHandleModalParent={() => this.setState({viewModalParent: true})}
                     onHandleModalClass={() => this.setState({viewModalClass: true})}
-                    onHandleClass={() => this.setState({viewClass: true, viewStudents: false, viewTeachers: false, viewParents: false})}
-                    onHandleStudents={() => this.setState({viewStudents: true, viewClass: false, viewTeachers: false, viewParents: false})}
-                    onHandleTeachers={() => this.setState({viewTeachers: true, viewClass: false, viewStudents: false, viewParents: false})}
-                    onHandleParents={() => this.setState({viewParents: true, viewClass: false, viewStudents: false, viewTeachers: false})}
-                    onChangeLanguage={(language) => this.setState({language: language})}/>
+                    onHandleClass={() => this.setState({viewClass: true, viewStudents: false, viewTeachers: false, viewParents: false, viewSubjects: false})}
+                    onHandleStudents={() => this.setState({viewStudents: true, viewClass: false, viewTeachers: false, viewParents: false, viewSubjects: false})}
+                    onHandleTeachers={() => this.setState({viewTeachers: true, viewClass: false, viewStudents: false, viewParents: false, viewSubjects: false})}
+                    onHandleParents={() => this.setState({viewParents: true, viewClass: false, viewStudents: false, viewTeachers: false, viewSubjects: false})}
+                    onChangeLanguage={(language) => this.setState({language: language})}
+                    onHandleModalSubject={() => this.setState({viewModalSubject: true})}
+                    onHandleSubject={() => this.setState({viewSubjects: true, viewParents: false, viewClass: false, viewStudents: false, viewTeachers: false})}/>
                     
                 <div className="homeAdmin-container-info">
                     
@@ -102,6 +108,16 @@ class HomeAdmin extends React.Component{
 
                     { this.state.viewTeachers
                         ? <TeacherList/>
+                        : null
+                    }
+
+                    { this.state.viewModalSubject
+                        ? <SubjectModal visible={this.state.viewModalSubject} onHandleCancel={() => this.setState({viewModalSubject: false})}/>
+                        : null
+                    }
+
+                    { this.state.viewSubjects
+                        ? <SubjectList/>
                         : null
                     }
                 </div>

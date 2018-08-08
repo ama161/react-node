@@ -35,7 +35,9 @@ class MenuAdmin extends React.Component {
         if(e.key === '6')  this.props.onHandleParents();    
         if(e.key === '7')  this.props.onHandleModalClass();          
         if(e.key === '8')  this.props.onHandleClass();  
-        if(e.key === '9')  this.onHandleLogout();  
+        if(e.key === '9')  this.props.onHandleModalSubject();  
+        if(e.key === '10')  this.props.onHandleSubject();  
+        if(e.key === '11')  this.onHandleLogout();  
     }
 
     onHandleLogout(){
@@ -76,7 +78,11 @@ class MenuAdmin extends React.Component {
                         <MenuItem key="7"><Icon type="folder-add" />{language[lan].addClass}</MenuItem>        
                         <MenuItem key="8"><Icon type="folder" />{language[lan].viewClass}</MenuItem>        
                     </SubMenu>
-                    <MenuItem key="9"><Icon type="logout" />{language[lan].logout}</MenuItem>   
+                    <SubMenu key="sub4" title={<span><Icon type="folder-open" /><span>{language[lan].subjects}</span></span>}>
+                        <MenuItem key="9"><Icon type="folder-add" />{language[lan].addSubjects}</MenuItem>        
+                        <MenuItem key="10"><Icon type="folder" />{language[lan].viewSubjects}</MenuItem>        
+                    </SubMenu>
+                    <MenuItem key="11"><Icon type="logout" />{language[lan].logout}</MenuItem>   
                 </MenuItemGroup>
             </MenuANT>
         );

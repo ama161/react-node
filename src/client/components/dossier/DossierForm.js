@@ -1,6 +1,7 @@
 import React from 'react';
 import language from '../../language/language'
 import Input from '../utils/Input'
+import SelectSubject from '../utils/select/SelectSubject';
 
 class DossierForm extends React.Component{
     constructor(props){
@@ -16,6 +17,14 @@ class DossierForm extends React.Component{
 
     componentWillMount(){
         this.setState({language: sessionStorage.language})        
+    }
+
+    onChangeSubject(value){
+        console.log(value)
+        this.setState({subject: value}
+            , () => {
+                this.props.onChangeDossier(this.state)
+            })
     }
 
     render(){
@@ -44,17 +53,10 @@ class DossierForm extends React.Component{
                         })
                     }
                 />
-                <Input 
-                    className="form-item"
-                    value={this.state.subject}
-                    type="text" 
-                    label={language[lan].subject} 
-                    onChange={(event) => 
-                        this.setState({subject: event.target.value}, () => {
-                            this.props.onChangeDossier(this.state)
-                        })
-                    }
-                />
+                <div className="form-item">
+                    <label>{language[lan].subject}</label>
+                    <SelectSubject onHandleChange={(value) => this.onChangeSubject(value)}/>
+                </div>
             </div>
         )
     }

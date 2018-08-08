@@ -44,9 +44,12 @@ router.get('/student/:id', (req, res)=>{
 router.get('/student/dossier/:id', (req, res)=>{
     const sql = `SELECT STUDENT.id_student, CLASS.id_class, CLASS.name as class_name, 
     STUDENT.username as student_name, STUDENT.icon as student_icon, CLASS.icon as class_icon, 
-    title, note, subject, id_teacher
-    FROM STUDENT, CLASS, DOSSIER 
-    WHERE STUDENT.id_class = CLASS.id_class AND STUDENT.id_student = ${req.params.id} AND STUDENT.id_student = DOSSIER.id_student
+    title, note, SUBJECT.id_subject, SUBJECT.name as subject_name, id_teacher
+    FROM STUDENT, CLASS, DOSSIER, SUBJECT
+    WHERE STUDENT.id_class = CLASS.id_class 
+    AND STUDENT.id_student = ${req.params.id} 
+    AND STUDENT.id_student = DOSSIER.id_student
+    AND DOSSIER.id_subject = SUBJECT.id_subject
     `;
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);

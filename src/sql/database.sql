@@ -66,15 +66,22 @@ CREATE TABLE CLASS_TEACHER(
     FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher)
 );
 
+CREATE TABLE SUBJECT(
+    id_subject INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100),
+    icon VARCHAR(50)
+);
+
 CREATE TABLE DOSSIER(
     id_student INT,
     id_teacher INT,
     title VARCHAR(100),
     note VARCHAR(20),
-    subject VARCHAR(50),
+    id_subject INT,
     PRIMARY KEY (id_student, id_teacher, title),
-    FOREIGN KEY (id_student)  REFERENCES STUDENT(id_student),
-    FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher)
+    FOREIGN KEY (id_student) REFERENCES STUDENT(id_student),
+    FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher),
+    FOREIGN KEY (id_subject) REFERENCES SUBJECT(id_subject)
 );
 
 DESCRIBE users;

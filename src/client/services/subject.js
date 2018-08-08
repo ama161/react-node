@@ -1,10 +1,10 @@
-const ROUTE = '/api/dossier';
+const ROUTE = '/api/subject';
 
 const headers = new Headers({
     'Content-Type': 'application/json'
 });
 
-export function get(){
+export function getAll(){
     const request = new Request(ROUTE, {
         method: 'GET',
         mode: 'same-origin',
@@ -29,12 +29,11 @@ export function get(){
     });
 }
 
-export function post(id_student, id_teacher, newDossier){
-    const route = ROUTE + '/' + id_student + '/' + id_teacher;
-    const request = new Request(route, {
+export function post(newSubject){
+    const request = new Request(ROUTE, {
         method: 'POST',
         mode: 'same-origin',
-        body: JSON.stringify(newDossier),
+        body: JSON.stringify(newSubject),
         credentials: 'same-origin',
         headers: headers
     });
