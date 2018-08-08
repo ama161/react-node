@@ -40,6 +40,7 @@ const language = [
         'addEvaluation': 'Añadir Evaluación',        
         'addTest': 'Añadir Test',   
         'addQuestion': 'Añadir Pregunta',                
+        'newQuestion': 'Nueva Pregunta',                
     },
     {
         'welcome': 'Welcome',
@@ -82,6 +83,7 @@ const language = [
         'addEvaluation': 'Add Evaluation',
         'addTest': 'Add Test',                
         'addQuestion': 'Add Question',                
+        'newQuestion': 'New Question',                
     }
 
 ]

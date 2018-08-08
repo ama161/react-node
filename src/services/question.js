@@ -10,6 +10,13 @@ router.get('/', (req, res)=>{
     });
 });
 
+router.get('/:id', (req, res)=>{
+    connection.query('SELECT * FROM QUESTION, SUBJECT where id_question = ' + req.params.id + ' AND SUBJECT.id_subject = QUESTION.id_subject', (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
 router.post('/', (req, res)=>{
     const sql = `INSERT INTO QUESTION SET
         title = ${connection.escape(req.body.title)},

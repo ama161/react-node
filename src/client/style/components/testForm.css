@@ -11,3 +11,11 @@
 .testForm-container-formTest .form-item, .testForm-container-formQuestion .form-item{
     width: 100%;
 }
+
+.testForm-container-formQuestion .form-item{
+    display: flex;
+}
+
+.testForm-container-formQuestion .form-item div{
+    width: inherit;
+}

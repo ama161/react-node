@@ -63,11 +63,20 @@ class TestForm extends React.Component{
                 </div>
                 <div className="testForm-container-formQuestion">
                     <div className="form-item">
-                        <label>{language[lan].question}</label>
-                        <SelectQuestion onHandleChange={(value) => this.onChangeQuestion(value)}/>
+                        <div>
+                            <label>{language[lan].question}</label>
+                            <SelectQuestion onHandleChange={(value) => this.onChangeQuestion(value)}/>
+                        </div>
+                        <button key="submit" class="ant-btn ant-btn-primary" 
+                            onClick={() => {
+                                this.props.onAddQuestion(this.state.question); 
+                                this.setState({question: ''})
+                            }}>
+                            {language[lan].addQuestion}
+                        </button>
                     </div>
                     <button key="submit" class="ant-btn ant-btn-primary" onClick={() => this.setState({viewModalQuestion: true})}>
-                        {language[lan].addQuestion}
+                        {language[lan].newQuestion}
                     </button>
                 </div>
             </div>

@@ -25,9 +25,11 @@ class SelectQuestion extends React.Component{
         return(
             <Select 
                 placeholder="Select question" 
-                options={this.state.question} onHandleChange={this.props.onHandleChange}
+                options={this.state.question} 
+                onHandleChange={this.props.onHandleChange}
                 id="id_question"
-                name="title"/>
+                name="title"
+            />
         )
     }
 }

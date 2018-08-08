@@ -40,7 +40,11 @@ class QuestionModal extends React.Component{
     onHandleOk(){
         console.log(this.state.newQuestion)
         post(this.state.newQuestion)
-        .then(result => console.log(result))
+        .then(result => {
+            if(result.hasOwnProperty('msg'))
+                message[result.type](result.msg)
+            if(result.type === 'success') this.onCancel();
+        })
     }
     
     render(){
@@ -50,7 +54,7 @@ class QuestionModal extends React.Component{
                 visible={this.state.viewModal}
                 onHandleCancel={() => this.onCancel()}
                 footer={[
-                    <button key="submit" class="ant-btn" onClick={this.onHandleCancel}>
+                    <button key="submit" class="ant-btn" onClick={this.onCancel}>
                         {language[lan].cancel}
                     </button>,
                     <button key="submit" class="ant-btn ant-btn-primary" onClick={this.onHandleOk}>
