@@ -42,18 +42,39 @@ router.get('/student/:id', (req, res)=>{
 });
 
 router.get('/student/dossier/:id', (req, res)=>{
-    const sql = `SELECT STUDENT.id_student, CLASS.id_class, CLASS.name as class_name, 
-    STUDENT.username as student_name, STUDENT.icon as student_icon, CLASS.icon as class_icon, 
-    title, note, SUBJECT.id_subject, SUBJECT.name as subject_name, id_teacher
-    FROM STUDENT, CLASS, DOSSIER, SUBJECT
-    WHERE STUDENT.id_class = CLASS.id_class 
-    AND STUDENT.id_student = ${req.params.id} 
-    AND STUDENT.id_student = DOSSIER.id_student
+    const sql = `SELECT DISTINCT SUBJECT.id_subject, SUBJECT.name FROM DOSSIER, STUDENT, SUBJECT 
+    where DOSSIER.id_student = STUDENT.id_student 
     AND DOSSIER.id_subject = SUBJECT.id_subject
-    `;
+    AND STUDENT.id_student = ${req.params.id}`;
+    // const sql1 = `SELECT STUDENT.id_student, CLASS.id_class, CLASS.name as class_name, 
+    // STUDENT.username as student_name, STUDENT.icon as student_icon, CLASS.icon as class_icon, 
+    // title, note, SUBJECT.id_subject, SUBJECT.name as subject_name, id_teacher
+    // FROM STUDENT, CLASS, DOSSIER, SUBJECT
+    // WHERE STUDENT.id_class = CLASS.id_class 
+    // AND STUDENT.id_student = ${req.params.id} 
+    // AND STUDENT.id_student = DOSSIER.id_student
+    // AND DOSSIER.id_subject = SUBJECT.id_subject
+    // `;
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);
-        else res.json(result);
+        else {
+            let subjects = result;
+            let data = [];
+            for(let i = 0; i<subjects.length; i++){
+                let id = subjects[i].id_subject;              
+                const sql2 = `SELECT title, note, DOSSIER.id_subject FROM DOSSIER, STUDENT 
+                where DOSSIER.id_student = STUDENT.id_student AND STUDENT.id_student = ${req.params.id} AND DOSSIER.id_subject = ${id}`;
+                connection.query(sql2, (err, result)=>{
+                    if(err) res.json(err);
+                    else {
+                        data.push({[id]: result});
+                        if(i === subjects.length - 1){
+                            res.json({subjects: subjects, data: data});
+                        }
+                    }
+                })
+            }
+        }
     });
 });
 

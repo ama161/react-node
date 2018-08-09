@@ -6,23 +6,38 @@ class DossierStudent extends React.Component{
         super(props);
 
         this.state = {
-            dossiers: {}
+            subjects: {},
+            data: {},
+            subjectId: '',
         }
     }
 
     componentWillMount(){
-        this.setState({dossiers: this.props.student})
+        this.setState({data: this.props.student.data, subjects: this.props.student.subjects})
     }
 
     render(){
         return(
             <div className="dossierStudent-container">
-                {Object.values(this.props.student).map((key, index) => (
-                    <div className="dossierStudent-container-item">
-                        <h2>{key.subject_name}</h2>
-                        <p>{key.title} - {key.note}</p>
+            {this.state.subjects
+                ? this.state.subjects.map((key, index) => (
+                    <div className="dossierStudent-container-item" onClick={() => this.setState({subjectId: key.id_subject})}>
+                        <h2>{key.name}</h2>
+                        {this.state.subjectId === key.id_subject
+                            ? this.state.data.map((key, index) => (
+                                key[this.state.subjectId]
+                                    ? key[this.state.subjectId].map((key, index) => 
+                                        <p>{key.title} - {key.note}</p>
+                                    )
+                                    : null  
+                                ))
+                            : null
+                        }
                     </div>
-                ))}
+                  ))
+                : null
+            }
+            
             </div>
         )
     }
