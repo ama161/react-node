@@ -4,7 +4,7 @@ import { message } from 'antd';
 import Modal from '../utils/Modal'
 import language from '../../language/language'
 import SubjectForm from './SubjectForm';
-import {post} from '../../services/subject'
+import {post, put} from '../../services/subject'
 
 class SubjectModal extends React.Component{
     constructor(props){
@@ -16,16 +16,17 @@ class SubjectModal extends React.Component{
         this.state={
             viewModal: false,
             newSubject: {},
-            language: 0
+            language: 0,
+            id_subject: ''
         }
     }
 
     componentWillMount(){
-        this.setState({viewModal: this.props.visible, language: sessionStorage.language})
+        this.setState({viewModal: this.props.visible, language: sessionStorage.language, id_subject: this.props.id_subject})
     }
 
     componentWillReceiveProps(nextProps){
-        this.setState({viewModal: nextProps.visible, language: sessionStorage.language})
+        this.setState({viewModal: nextProps.visible, language: sessionStorage.language, id_subject: nextProps.id_subject})
     }
 
     onCancel(){
@@ -34,14 +35,23 @@ class SubjectModal extends React.Component{
     }
 
     onHandleOk(){
-        console.log(this.state.newSubject)
-        post(this.state.newSubject)
-        .then(result => {
-            console.log(result);
-            if(result.hasOwnProperty('msg'))
-                message[result.type](result.msg)
-            if(result.type === 'success') this.onCancel();
-        })
+        if(this.state.id_subject){
+            put(this.state.newSubject, this.state.id_subject)
+            .then(result => {
+                console.log(result);
+                if(result.hasOwnProperty('msg'))
+                    message[result.type](result.msg)
+                if(result.type === 'success') this.onCancel();
+            })
+        }else{
+            post(this.state.newSubject)
+            .then(result => {
+                console.log(result);
+                if(result.hasOwnProperty('msg'))
+                    message[result.type](result.msg)
+                if(result.type === 'success') this.onCancel();
+            })
+        }
     }
 
     render(){
@@ -57,7 +67,7 @@ class SubjectModal extends React.Component{
                         {language[lan].addSubjects} 
                     </button>
                 ]}>
-                <SubjectForm onChangeSubject={(subject) => this.setState({newSubject: subject})}/>
+                <SubjectForm onChangeSubject={(subject) => this.setState({newSubject: subject})} id_subject={this.state.id_subject}/>
             </Modal>
         )
     }

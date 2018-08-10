@@ -1,6 +1,7 @@
 import React from 'react';
 import Input from '../utils/Input'
 import language from '../../language/language';
+import {get} from '../../services/subject'
 
 class SubjectForm extends React.Component{
     constructor(props){
@@ -15,7 +16,10 @@ class SubjectForm extends React.Component{
     }
 
     componentWillMount(){
-        this.setState({language: sessionStorage.language})
+        if(this.props.id_subject)
+            get(this.props.id_subject)
+            .then(result => this.setState({language: sessionStorage.language, name: result[0].name}))
+        else this.setState({language: sessionStorage.language})
     }
 
     onChange(event){

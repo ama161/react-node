@@ -66,7 +66,11 @@ class HomeParent extends React.Component{
 
                 <div className="homeTeacher-container-dossier">
                     {this.state.student && this.state.studentId
-                        ? <DossierStudent student={this.state.student}/>
+                        ?   <DossierStudent 
+                                student={this.state.student} 
+                                visible={(this.state.studentId) ? true : false}
+                                onHandleCancel={() => this.setState({studentId: ''})}
+                                newNoteDossier={() => {}}/>
                         : null
                     }
                 </div>

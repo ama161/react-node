@@ -61,7 +61,7 @@ class HomeTeacher extends React.Component{
             .then(result => {
                 console.log(result);
                 this.setState({student: result, studentId: id})}
-            )
+            ).catch(err => console.log('err'))
     }
 
     render(){
@@ -74,7 +74,8 @@ class HomeTeacher extends React.Component{
                         id_student={this.state.studentId}
                         id_teacher={sessionStorage.idUser}
                         onHandleCancel={() => {
-                            this.setState({viewNoteDossierModal: false}, console.log(this.state))
+                            console.log('onHandleCancel')
+                            this.setState({viewNoteDossierModal: false})
                             this.onStudentClick(this.state.studentId)
                         }}/>
                     : null
@@ -108,14 +109,11 @@ class HomeTeacher extends React.Component{
 
                 <div className="homeTeacher-container-dossier">
                     {this.state.student && this.state.studentId
-                        ?   <div>
-                                <button 
-                                    class="ant-btn ant-btn-primary" 
-                                    onClick={() => this.setState({viewNoteDossierModal: true})}>
-                                    {language[lan].addEvaluation}
-                                    </button>
-                                <DossierStudent student={this.state.student}/>
-                            </div>
+                        ?   <DossierStudent 
+                                student={this.state.student} 
+                                visible={(this.state.studentId) ? true : false}
+                                onHandleCancel={() => this.setState({studentId: ''})}
+                                newNoteDossier={() => this.setState({viewNoteDossierModal: true})}/>
                         : null
                     }
                 </div>

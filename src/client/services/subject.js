@@ -54,3 +54,56 @@ export function post(newSubject){
             })
     });
 }
+
+export function put(newSubject, subjectId){
+    let route = ROUTE + '/' + subjectId;    
+    const request = new Request(route, {
+        method: 'PUT',
+        mode: 'same-origin',
+        body: JSON.stringify(newSubject),
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}
+
+export function get(subjectId){
+    let route = ROUTE + '/' + subjectId;
+    const request = new Request(route, {
+        method: 'GET',
+        mode: 'same-origin',
+        credentials: 'same-origin',
+        headers: headers
+    });
+
+    return new Promise((resolve, reject) => {
+    fetch(request)
+        .then((response) => {
+            if(!response.ok) {
+                throw response.json();
+            }
+            return response.json();
+            })
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((error) => {
+                error.then(error => reject(error))
+            })
+    });
+}

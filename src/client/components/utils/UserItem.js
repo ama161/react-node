@@ -13,7 +13,7 @@ class UserItem extends React.Component{
 
     render(){
         return(
-            <div onClick={() => this.props.onStudentClick(this.props.id)}>
+            <div onClick={() => {this.props.onStudentClick(this.props.id)}}>
                 <Box type="white" typeIcon={this.props.icon}>
                     <p>{this.props.name}</p>
                 </Box>

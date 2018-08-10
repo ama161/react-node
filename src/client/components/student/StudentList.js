@@ -30,7 +30,10 @@ class StudentList extends React.Component{
         return(
             <div className="usersList-container">
                 {Object.values(this.state.students).map((key, index) => 
-                    <UserItem name={key.username} icon={key.icon} onStudentClick={() => {}}/>
+                    <UserItem 
+                    name={key.username} icon={key.icon} 
+                    onStudentClick={(id) => this.props.onStudentClick(id)}
+                    id={key.id_student}/>
                 )}
             </div>
         )

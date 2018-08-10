@@ -11,12 +11,15 @@ import ClassList from '../class/ClassList';
 import SelectClass from '../utils/select/SelectClass';
 
 import {getAll} from '../../services/class';
+import {getStudentDossier} from '../../services/user'
 import StudentList from '../student/StudentList';
 import ParentModal from '../parent/ParentModal';
 import TeacherList from '../teacher/TeacherList';
 import ParentList from '../parent/ParentList';
 import SubjectList from '../subject/SubjectList';
 import SubjectModal from '../subject/SubjectModal';
+import UserItem from '../utils/UserItem';
+import DossierStudent from '../dossier/DossierStudent';
 
 class HomeAdmin extends React.Component{
     constructor(props){
@@ -36,6 +39,9 @@ class HomeAdmin extends React.Component{
             viewModalSubject: false,
             viewSubjects: false,
             language: 0,
+            students: {},
+            student: null,
+            studentId: ''
         }
     }
 
@@ -51,6 +57,13 @@ class HomeAdmin extends React.Component{
         }else{
             this.props.history.push('/login')
         }
+    }
+
+    onStudentClick(id){
+        getStudentDossier(id)
+            .then(result => {
+                this.setState({student: result, studentId: id})}
+            ).catch(err => console.log('err'))
     }
 
     render(){
@@ -71,6 +84,15 @@ class HomeAdmin extends React.Component{
                     
                 <div className="homeAdmin-container-info">
                     
+                    {this.state.student && this.state.studentId
+                        ?   <DossierStudent 
+                                student={this.state.student} 
+                                visible={(this.state.studentId) ? true : false}
+                                onHandleCancel={() => this.setState({studentId: '', student: null})}
+                                newNoteDossier={() => {}}/>
+                        : null
+                    }
+
                     { this.state.viewModalClass
                         ? <ClassModal visible={this.state.viewModalClass} onHandleCancel={() => this.setState({viewModalClass: false})}/>
                         : null
@@ -92,12 +114,26 @@ class HomeAdmin extends React.Component{
                     }
 
                     { this.state.viewClass
-                        ? <ClassList/>
+                        ? <div>
+                            <ClassList onClassClick={(students) => this.setState({students: students})}/>
+                            {this.state.students
+                                ? <div className="usersList-container">
+                                    {Object.values(this.state.students).map((key, index) => 
+                                        <UserItem 
+                                            name={key.username} 
+                                            icon={key.icon} 
+                                            onStudentClick={(id) => this.onStudentClick(id)}
+                                            id={key.id_student}/>
+                                    )}
+                                </div>
+                                : null
+                            }
+                        </div>
                         : null
                     }
 
                     { this.state.viewStudents
-                        ? <StudentList/>
+                        ? <StudentList onStudentClick={(id) => this.onStudentClick(id)}/>
                         : null
                     }
 

@@ -56,23 +56,28 @@ router.get('/student/dossier/:id', (req, res)=>{
     // AND DOSSIER.id_subject = SUBJECT.id_subject
     // `;
     connection.query(sql, (err, result)=>{
-        if(err) res.json(err);
+        if(err) res.json({msg: 'err', err: err});
         else {
-            let subjects = result;
-            let data = [];
-            for(let i = 0; i<subjects.length; i++){
-                let id = subjects[i].id_subject;              
-                const sql2 = `SELECT title, note, DOSSIER.id_subject FROM DOSSIER, STUDENT 
-                where DOSSIER.id_student = STUDENT.id_student AND STUDENT.id_student = ${req.params.id} AND DOSSIER.id_subject = ${id}`;
-                connection.query(sql2, (err, result)=>{
-                    if(err) res.json(err);
-                    else {
-                        data.push({[id]: result});
-                        if(i === subjects.length - 1){
-                            res.json({subjects: subjects, data: data});
+            if(result.length !== 0){
+                let subjects = result;
+                let data = [];
+                for(let i = 0; i<subjects.length; i++){
+                    let id = subjects[i].id_subject;              
+                    const sql2 = `SELECT title, note, DOSSIER.id_subject FROM DOSSIER, STUDENT 
+                    where DOSSIER.id_student = STUDENT.id_student AND STUDENT.id_student = ${req.params.id} AND DOSSIER.id_subject = ${id}`;
+                    connection.query(sql2, (err, result)=>{
+                        if(err) res.json({msg: 'err', err: err});
+                        else {
+                            data.push({[id]: result});
+                            if(i === subjects.length - 1){
+                                res.json({subjects: subjects, data: data});
+                            }
                         }
-                    }
-                })
+                    })
+                }
+            }
+            else{
+                res.json({msg: 'no dossier', err: err});
             }
         }
     });
