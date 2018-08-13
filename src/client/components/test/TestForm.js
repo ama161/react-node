@@ -3,16 +3,20 @@ import language from '../../language/language'
 import Input from '../utils/Input'
 import QuestionModal from '../question/QuestionModal';
 import SelectQuestion from '../utils/select/SelectQuestion';
+import SelectSubject from '../utils/select/SelectSubject';
 
 class TestForm extends React.Component{
     constructor(props){
         super(props);
 
+        this.onHandleTest = this.onHandleTest.bind(this);
+
         this.state={
             title: '',
             description: '',
             viewModalQuestion: false,
-            question: ''
+            question: '',
+            subjectId: '',
         }
     }
 
@@ -23,16 +27,23 @@ class TestForm extends React.Component{
     onChange(event){
         this.setState({[event.target.name]: event.target.value}
             , () => {
-                this.props.onChangeTest(this.state)
+                this.props.onChangeTest({title: this.state.title, description: this.state.description})
             })
     }
 
     onChangeQuestion(value){
-        console.log(value)
         this.setState({question: value}
             , () => {
-                this.props.onChangeTest(this.state)
+                this.props.onChangeTest({title: this.state.title, description: this.state.description})
             })
+    }
+
+    onChangeSubject(value){
+        this.setState({subjectId: value})
+    }
+
+    onHandleTest(){
+        this.props.onHandleTest(this.state)
     }
     
     render(){
@@ -63,17 +74,27 @@ class TestForm extends React.Component{
                 </div>
                 <div className="testForm-container-formQuestion">
                     <div className="form-item">
-                        <div>
-                            <label>{language[lan].question}</label>
-                            <SelectQuestion onHandleChange={(value) => this.onChangeQuestion(value)}/>
+                        <div className="form-item">
+                            <label>{language[lan].subject}</label>
+                            <SelectSubject onHandleChange={(value) => this.onChangeSubject(value)}/>
                         </div>
-                        <button key="submit" class="ant-btn ant-btn-primary" 
-                            onClick={() => {
-                                this.props.onAddQuestion(this.state.question); 
-                                this.setState({question: ''})
-                            }}>
-                            {language[lan].addQuestion}
-                        </button>
+                        {this.state.subjectId
+                            ?<div className="addQuestion">
+                                <div className="form-item">
+                                    <label>{language[lan].question}</label>
+                                    <SelectQuestion subjectId={this.state.subjectId} onHandleChange={(value) => this.onChangeQuestion(value)}/>
+                                </div>
+                                
+                                <button key="submit" class="ant-btn ant-btn-primary" 
+                                    onClick={() => {
+                                        this.props.onAddQuestion(this.state.question); 
+                                        this.setState({question: ''})
+                                    }}>
+                                    {language[lan].addQuestion}
+                                </button>
+                            </div>
+                            : null
+                        }
                     </div>
                     <button key="submit" class="ant-btn ant-btn-primary" onClick={() => this.setState({viewModalQuestion: true})}>
                         {language[lan].newQuestion}

@@ -10,6 +10,13 @@ router.get('/', (req, res)=>{
     });
 });
 
+router.get('/subject/:id', (req, res)=>{
+    connection.query('SELECT * FROM QUESTION WHERE id_subject = ' + req.params.id, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
 router.get('/:id', (req, res)=>{
     connection.query('SELECT * FROM QUESTION, SUBJECT where id_question = ' + req.params.id + ' AND SUBJECT.id_subject = QUESTION.id_subject', (err, result)=>{
         if(err) res.json(err);

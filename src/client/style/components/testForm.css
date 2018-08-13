@@ -14,8 +14,15 @@
 
 .testForm-container-formQuestion .form-item{
     display: flex;
+    flex-direction: column;
 }
 
 .testForm-container-formQuestion .form-item div{
-    width: inherit;
+    width: 100%;
+}
+
+.testForm-container-formQuestion .form-item .addQuestion{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

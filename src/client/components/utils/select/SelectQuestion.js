@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from './Select'
-import {getAll} from '../../../services/question'
+import {getAllWithSubject} from '../../../services/question'
 
 class SelectQuestion extends React.Component{
     constructor(props){
@@ -12,12 +12,12 @@ class SelectQuestion extends React.Component{
     }
 
     componentWillMount(){
-        getAll()
+        getAllWithSubject(this.props.subjectId)
         .then(result => this.setState({question: result}));
     }
 
-    componentWillReceiveProps(){
-        getAll()
+    componentWillReceiveProps(nextProps){
+        getAllWithSubject(nextProps.subjectId)
         .then(result => this.setState({question: result}));
     }
 

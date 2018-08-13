@@ -1,8 +1,83 @@
 .testView-questions{
     padding: 2em;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
 .testView-questions .item{
     padding: 0 1em;
+}
+
+.testView-button{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.ant-modal-body{
+    padding-top: 50px !important;
+}
+
+.testView-testList{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.testView-testList .box{
+    height: 150px;
+    width: 200px;
+}
+
+.testView-testList .box p:nth-child(1){
+    margin-top: 10px;
+    margin-bottom: 0;
+    color: #4C6370;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.testView-testList .box p:nth-child(2){
+    margin-top: 10px;
+    margin-bottom: 0;
+    color: #4C6370;
+    font-weight: normal;
+    font-size: 1;
+}
+
+.steps-content {
+    margin-top: 16px;
+    min-height: max-content;
+    padding-top: 1em;
+  }
+
+.steps-content-structure {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.steps-content-structure button{
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 20px;
+    font-weight: bold;
+    color: #4C6370;
+}
+
+.steps-content-structure button:hover{
+    color: #97C6E1;
+}
+
+.steps-content-structure-responses{
+    width: 80%;
+    text-align: center;
+}
+
+.steps-content-structure-responses p:hover{
+    background: #97C6E1;
+}
+
+.steps-content-structure-responses .selected{
+    background: #97C6E1;
 }

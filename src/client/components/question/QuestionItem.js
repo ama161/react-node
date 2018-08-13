@@ -9,19 +9,27 @@ class QuestionItem extends React.Component{
 
         this.state={
             question: {},
-            language: 0
+            language: 0,
+            disabled: false,
+            checked: false
         }
     }
 
     componentWillMount(){
         if(this.props.id_question){
             get(this.props.id_question)
-            .then(result => this.setState({question: result[0], language: sessionStorage.language}))
+            .then(result => this.setState({
+                question: result[0], 
+                language: sessionStorage.language,
+                disabled: (this.props.disabled) ? this.props.disabled : false,
+                checked: (this.props.checked) ? this.props.checked : false
+            }))
         }   
     }
 
     onChangeCheckbox(event){
         console.log(event.target.checked)
+        // this.setState({checked: })
     }
 
     render(){
@@ -29,9 +37,9 @@ class QuestionItem extends React.Component{
         return(
             <div className="item">
                 <h2>{this.state.question.title}</h2>
-                <Checkbox onChange={this.onChangeCheckbox}>{this.state.question.response_true}</Checkbox>
-                <Checkbox onChange={this.onChangeCheckbox}>{this.state.question.response_false_1}</Checkbox>
-                <Checkbox onChange={this.onChangeCheckbox}>{this.state.question.response_false_2}</Checkbox>
+                <Checkbox checked={this.state.checked} disabled={this.state.disabled} onChange={this.onChangeCheckbox}>{this.state.question.response_true}</Checkbox>
+                <Checkbox disabled={this.state.disabled} onChange={this.onChangeCheckbox}>{this.state.question.response_false_1}</Checkbox>
+                <Checkbox disabled={this.state.disabled} onChange={this.onChangeCheckbox}>{this.state.question.response_false_2}</Checkbox>
                 <p>{this.state.question.name}</p>
             </div>
         )
