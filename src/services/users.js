@@ -46,15 +46,6 @@ router.get('/student/dossier/:id', (req, res)=>{
     where DOSSIER.id_student = STUDENT.id_student 
     AND DOSSIER.id_subject = SUBJECT.id_subject
     AND STUDENT.id_student = ${req.params.id}`;
-    // const sql1 = `SELECT STUDENT.id_student, CLASS.id_class, CLASS.name as class_name, 
-    // STUDENT.username as student_name, STUDENT.icon as student_icon, CLASS.icon as class_icon, 
-    // title, note, SUBJECT.id_subject, SUBJECT.name as subject_name, id_teacher
-    // FROM STUDENT, CLASS, DOSSIER, SUBJECT
-    // WHERE STUDENT.id_class = CLASS.id_class 
-    // AND STUDENT.id_student = ${req.params.id} 
-    // AND STUDENT.id_student = DOSSIER.id_student
-    // AND DOSSIER.id_subject = SUBJECT.id_subject
-    // `;
     connection.query(sql, (err, result)=>{
         if(err) res.json({msg: 'err', err: err});
         else {
@@ -70,7 +61,15 @@ router.get('/student/dossier/:id', (req, res)=>{
                         else {
                             data.push({[id]: result});
                             if(i === subjects.length - 1){
-                                res.json({subjects: subjects, data: data});
+                                const sql3 = `SELECT CLASS_TEST.id_test, STUDENT_TEST.note, TEST.title, TEST.description FROM STUDENT 
+                                LEFT JOIN CLASS_TEST ON CLASS_TEST.id_class = STUDENT.id_class
+                                LEFT JOIN STUDENT_TEST ON STUDENT_TEST.id_test = CLASS_TEST.id_test
+                                LEFT JOIN TEST ON CLASS_TEST.id_test = TEST.id_test
+                                where STUDENT.id_student = ${req.params.id}`;
+                                connection.query(sql3, (err, result)=>{
+                                    if(err) res.json(err);
+                                    else res.json({subjects: subjects, data: data, test: result});
+                                });
                             }
                         }
                     })

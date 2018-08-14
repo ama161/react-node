@@ -23,6 +23,7 @@ class DossierStudent extends React.Component{
             data: this.props.student.data, 
             subjects: this.props.student.subjects, 
             viewModal: this.props.visible,
+            test: this.props.student.test,
             language: sessionStorage.language
         })
     }
@@ -32,6 +33,7 @@ class DossierStudent extends React.Component{
             data: nextProps.student.data, 
             subjects: nextProps.student.subjects, 
             viewModal: nextProps.visible,
+            test: nextProps.student.test,
             language: sessionStorage.language
         })
     }
@@ -75,6 +77,20 @@ class DossierStudent extends React.Component{
                                 }
                             </div>
                         ))
+                        : null
+                    }
+                    {this.state.test
+                        ?<div className="dossierStudent-container-item" onClick={() => this.setState({subjectId: -1})}>
+                            <h2>Test
+                                {this.state.subjectId === -1 ? <Icon type="minus" /> : <Icon type="plus" />} 
+                            </h2>
+                            {this.state.subjectId === -1
+                                ? this.state.test.map((key, index) => 
+                                    <div><p>{key.title}</p> <p>{key.note ? key.note : '--'}</p></div>
+                                )
+                                : null
+                            }
+                        </div>
                         : null
                     }
                 </div>

@@ -108,6 +108,23 @@ CREATE TABLE TEST_QUESTION(
     FOREIGN KEY (id_question) REFERENCES QUESTION(id_question)
 );
 
+CREATE TABLE CLASS_TEST(
+    id_class INT,
+    id_test INT,
+    PRIMARY KEY (id_class, id_test),
+    FOREIGN KEY (id_class) REFERENCES CLASS(id_class),    
+    FOREIGN KEY (id_test) REFERENCES TEST(id_test)
+);
+
+CREATE TABLE STUDENT_TEST(
+    id_student INT,
+    id_test INT,
+    note VARCHAR(50),
+    PRIMARY KEY (id_student, id_test),
+    FOREIGN KEY (id_student) REFERENCES STUDENT(id_student),    
+    FOREIGN KEY (id_test) REFERENCES TEST(id_test)
+);
+
 DESCRIBE users;
 
 SELECT * FROM users;

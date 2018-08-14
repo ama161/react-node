@@ -18,9 +18,9 @@
 
 .box-brown{
     background: #E1C0A2;
-    width: 240px;
+    width: 220px;
     margin: 1em;
-    max-height: 180px;
+    min-height: 180px;
     text-align: center;
 }
 

@@ -19,20 +19,37 @@ class TestQuestionsModal extends React.Component{
             questions: [],
             stepCurrent: 0,
             trueQuestions: [],
-            responseSelected: ''
+            responseSelected: '',
         }
     }
 
     componentWillMount(){
+        console.log('componentWillMount')
         get(this.props.testId)
         .then(result => {
-            this.setState({viewModal: this.props.visible, language: sessionStorage.language, questions: result.questions})
+            console.log(result);
+            this.setState({
+                viewModal: this.props.visible, 
+                language: sessionStorage.language, 
+                questions: result.questions
+            })
         })
     }
 
     componentWillReceiveProps(nextProps){
-        get(nextProps.testID)
-        .then(result => this.setState({viewModal: nextProps.visible, language: sessionStorage.language, questions: result.questions}))        
+        console.log('componentWillReceiveProps')
+        get(nextProps.testId)
+        .then(result => {
+            console.log(result);
+            this.setState({
+                viewModal: nextProps.visible, 
+                language: sessionStorage.language, 
+                questions: result.questions,
+                stepCurrent: 0,
+                trueQuestions: [],
+                responseSelected: '',
+            })
+        })        
     }
 
     onCancel(){
@@ -42,20 +59,36 @@ class TestQuestionsModal extends React.Component{
 
     handleResponse(idQuestion, type, response){
         let array = this.state.trueQuestions;
-        console.log(type);
-        if(this.state.trueQuestions.length){
-            for(let i = 0; i < this.state.trueQuestions.length; i++){
-                if(this.state.trueQuestions[i].id_question === idQuestion){
-                    array.splice(i, 1);
-                }
-                array.push({id_question: idQuestion, correct: type})
-                this.setState({trueQuestions: array, responseSelected: response}, console.log(this.state))            
-            }
+        
+        array.push({id_question: idQuestion, correct: type})
+        this.setState({
+            trueQuestions: array, 
+            responseSelected: '', 
+            stepCurrent: (this.state.stepCurrent + 1 < this.state.questions.length) ? this.state.stepCurrent+1 : this.state.stepCurrent
+        }) 
+
+        if(this.state.trueQuestions.length === this.state.questions.length){
+            this.setState({viewModal: false});
+            this.props.onFinishTest(this.state.trueQuestions);
         }
-        else {
-            array.push({id_question: idQuestion, correct: type})
-            this.setState({trueQuestions: array, responseSelected: response}, console.log(this.state)) 
+    }
+
+    answers(response_true, response_false_1, response_false_2, id_question){
+        let arrayAnswer = []
+        arrayAnswer.push(
+            {answer: response_true, id: 0, question: id_question}, 
+            {answer: response_false_1, id: 1, question: id_question}, 
+            {answer: response_false_2, id: 2, question: id_question});
+        let arrayRandom = [];
+
+        for(let i = 0; i <= arrayAnswer.length; i++){
+            let random = Math.floor((Math.random() * (arrayAnswer.length - 1)) + 0)
+
+            arrayRandom.push(arrayAnswer[random])
+            arrayAnswer.splice(random, 1);
         }
+        arrayRandom.push(arrayAnswer[0])
+        return arrayRandom;
     }
 
     render(){
@@ -63,13 +96,8 @@ class TestQuestionsModal extends React.Component{
         return(
             <Modal 
                 visible={this.state.viewModal}
-                onHandleCancel={() => this.onCancel()}
-                footer={[
-                    <button key="back" class="ant-btn" onClick={this.onCancel}>{language[lan].cancel} </button>,
-                    <button key="submit" class="ant-btn ant-btn-primary" onClick={this.onCancel}>
-                        {language[lan].addTest} 
-                    </button>
-                ]}>
+                onHandleOk={() => this.onCancel()}
+                onHandleCancel={() => this.onCancel()}>
                 <Steps current={this.state.stepCurrent}>
                 {this.state.questions
                     ? this.state.questions.map((item, index) => (
@@ -83,43 +111,18 @@ class TestQuestionsModal extends React.Component{
                     ? this.state.questions.map((item, index) => (
                         this.state.stepCurrent === index
                             ? <div className="steps-content-structure">
-                                <button 
-                                    class="ant-btn"
-                                    // onClick={() => {
-                                    //     this.setState({stepCurrent: (this.state.stepCurrent - 1 >= 0) ? this.state.stepCurrent-1 : this.state.stepCurrent})
-                                    // }}
-                                    >
-                                    <Icon type="left" />
-                                </button>    
                                 <div className="steps-content-structure-responses"> 
-                                    <h3>{item.title}</h3>                           
-                                    <p 
-                                        className={this.state.responseSelected === 0 ? 'selected' : null} 
-                                        onClick={() => this.handleResponse(item.id_question, true, 0)}
-                                        >
-                                        {item.response_true}
-                                    </p>
-                                    <p 
-                                        className={this.state.responseSelected === 1 ? 'selected' : null} 
-                                        onClick={() => this.handleResponse(item.id_question, false, 1)}>
-                                        {item.response_false_1}
-                                    </p>
-                                    <p 
-                                        className={this.state.responseSelected === 2 ? 'selected' : null} 
-                                        onClick={() => this.handleResponse(item.id_question, false, 2)}>
-                                        {item.response_false_2}
-                                    </p>
+                                    <h3>{item.title}</h3>
+                                    
+                                    {this.answers(item.response_true, item.response_false_1, item.response_false_2, item.id_question).map((item, index) => 
+                                        <p 
+                                            className={this.state.responseSelected === item.id ? 'selected' : null} 
+                                            onClick={() => this.handleResponse(item.question, (item.id === 0) ? true : false, item.id)}>
+                                            {item.answer}
+                                        </p>
+                                    )}
+                                    
                                 </div>
-                                <button 
-                                    class="ant-btn" 
-                                    onClick={() => 
-                                        this.setState({
-                                            stepCurrent: (this.state.stepCurrent + 1 < this.state.questions.length) ? this.state.stepCurrent+1 : this.state.stepCurrent,
-                                            responseSelected: ''
-                                        })
-                                    }>
-                                    <Icon type="right" />
-                                </button>
                             </div>
                             : null
                     ))

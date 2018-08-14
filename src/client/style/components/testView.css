@@ -26,7 +26,6 @@
 
 .testView-testList .box{
     height: 150px;
-    width: 200px;
 }
 
 .testView-testList .box p:nth-child(1){
@@ -70,7 +69,7 @@
 }
 
 .steps-content-structure-responses{
-    width: 80%;
+    width: 100%;
     text-align: center;
 }
 
@@ -80,4 +79,17 @@
 
 .steps-content-structure-responses .selected{
     background: #97C6E1;
+}
+
+.testView-modalClass-header{
+    text-align: center;
+}
+
+.testView-modalClass-classes{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.testView-modalClass-classes p{
+    padding: 0 0.5em;
 }
