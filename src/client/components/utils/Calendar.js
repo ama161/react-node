@@ -26,20 +26,56 @@ class Calendar extends React.Component{
         this.props.onHandleDate(date.format('DD-MM-YYYY'));
     }
 
-    dateCellRender(event){
-        let date = event.format('DD-MM-YYYY')
-        for (let i=0; i<this.state.dataCalendar.length; i++){
-            if(this.state.dataCalendar[i].date === date){
-                console.log(this.state.dataCalendar[i])
-                return (
-                    <li>
-                        <Badge 
-                            status={this.state.dataCalendar[i].type} 
-                            text={this.state.dataCalendar[i].username + ' ' + this.state.dataCalendar[i].description} />
-                    </li>
-                );
+    getListData(data, date){
+        let array = [];
+        for(let i = 0; i<data.length; i++){
+            if(data[i].date === date){
+                array.push(data[i])
             }
         }
+
+        return array;
+    }
+
+    dateCellRender(event){
+        let date = event.format('DD-MM-YYYY')
+        if(this.state.dataCalendar){
+            let array = [];
+            for(let i = 0; i<this.state.dataCalendar.length; i++){
+                if(this.state.dataCalendar[i].date === date){
+                    array.push(this.state.dataCalendar[i])
+                }
+            }
+
+            return (
+                <div>
+                    {array.map((item, index) => 
+                        <li>
+                            <Badge 
+                                status={item.type} 
+                                text={(item.username !== null) 
+                                    ? item.username + ' ' + item.description
+                                    : item.name + ' ' + item.description
+                                } />
+                        </li>
+                    )}
+                </div>
+            );
+        }
+        
+        // for (let i=0; i<this.state.dataCalendar.length; i++){
+        //     if(this.state.dataCalendar[i].date === date){
+        //         console.log(this.state.dataCalendar[i])
+        //         return (
+        //             <li>
+        //                 <Badge 
+        //                     status={this.state.dataCalendar[i].type} 
+        //                     text={this.state.dataCalendar[i].username + ' ' + this.state.dataCalendar[i].description} />
+        //             </li>
+        //         );
+        //     }
+        // }
+        
         // let listData = getListData(value);
         // return (
         //     <ul className="events">
