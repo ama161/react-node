@@ -12,6 +12,7 @@ import dossierRoutes from './services/dossiers';
 import subjectRoutes from './services/subject';
 import testRoutes from './services/test';
 import questionRoutes from './services/question';
+import calendarRoutes from './services/calendar';
 
 //init packages
 const app = express();
@@ -37,6 +38,7 @@ app.use('/api/dossier', dossierRoutes);
 app.use('/api/subject', subjectRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/question', questionRoutes);
+app.use('/api/calendar', calendarRoutes);
 
 //start server
 app.listen(app.get('port'), ()=>{

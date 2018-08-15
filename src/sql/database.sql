@@ -125,6 +125,17 @@ CREATE TABLE STUDENT_TEST(
     FOREIGN KEY (id_test) REFERENCES TEST(id_test)
 );
 
+CREATE TABLE CALENDAR_ASSISTANCE(
+    id_student INT,
+    id_class INT,
+    date VARCHAR(50),
+    description VARCHAR(100),
+    type VARCHAR(50),
+    PRIMARY KEY (id_student, id_class, date),
+    FOREIGN KEY (id_student) REFERENCES STUDENT(id_student),
+    FOREIGN KEY (id_class) REFERENCES CLASS(id_class)
+);
+
 DESCRIBE users;
 
 SELECT * FROM users;

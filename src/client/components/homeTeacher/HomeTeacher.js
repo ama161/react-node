@@ -10,6 +10,7 @@ import UserItem from '../utils/UserItem';
 import {getStudentsByClass, getStudentDossier} from '../../services/user'
 import DossierStudent from '../dossier/DossierStudent'
 import NoteDossierModal from '../dossier/NoteDossierModal';
+import CalendarTeacher from './CalendarTeacher';
 
 class HomeTeacher extends React.Component{
     constructor(props){
@@ -23,6 +24,7 @@ class HomeTeacher extends React.Component{
             student: null,
             studentId: 0,
             viewNoteDossierModal: false,
+            viewCalendar: false
         }
     }
 
@@ -86,6 +88,15 @@ class HomeTeacher extends React.Component{
                     onClick={() => this.props.history.push('/homeTeacher/test')}>
                     {language[lan].addTest}
                 </button>
+                <button 
+                    class="ant-btn ant-btn-primary" 
+                    onClick={() => this.setState({viewCalendar: !this.state.viewCalendar})}>
+                    {language[lan].calendar}
+                </button>
+                {this.state.viewCalendar
+                    ? <CalendarTeacher/>
+                    : null
+                }
                 <div className="classList-container">
                     {Object.values(this.state.class).map((key, index) => 
                         <ClassItem name={key.name} icon={key.icon} id={key.id_class} onHandleClick={(id) => this.onClassClick(id)}/>

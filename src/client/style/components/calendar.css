@@ -1,0 +1,32 @@
+.calendar{
+    
+}
+
+.ant-fullcalendar-header {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ant-fullcalendar-header .ant-select{
+    width: 10% !important;
+}
+
+.ant-fullcalendar-header .ant-select-selection{
+    width: 100%;
+}
+
+/* .ant-fullcalendar-header .ant-radio-group .ant-radio-button-wrapper-checked{
+    color: #4C6370;
+    border-color: #4C6370;
+}
+
+.ant-fullcalendar-selected-day .ant-fullcalendar-date .ant-fullcalendar-value, 
+.ant-fullcalendar-cell .ant-fullcalendar-date .ant-fullcalendar-value:hover,
+.ant-fullcalendar-month-panel-current-cell .ant-fullcalendar-month .ant-fullcalendar-value,
+.ant-fullcalendar-month-panel-cell .ant-fullcalendar-month .ant-fullcalendar-value:hover{
+    background: #97C6E1;
+}
+
+.ant-fullcalendar-today .ant-fullcalendar-date .ant-fullcalendar-value{
+    border-top: #4C6370 2px solid;
+} */

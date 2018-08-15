@@ -33,6 +33,10 @@
     align-items: center;
 }
 
+.classList-container .box-brown{
+    min-height: 120px !important;
+}
+
 .box-brown p:nth-child(2) {
     margin: 20px 0 0 0;
 }
