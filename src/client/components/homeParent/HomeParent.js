@@ -7,6 +7,7 @@ import Header from '../utils/Header'
 import { getStudentsParent, getStudentDossier } from '../../services/user';
 import UserItem from '../utils/UserItem'
 import DossierStudent from '../dossier/DossierStudent'
+import CalendarParent from './CalendarParent';
 
 class HomeParent extends React.Component{
     constructor(props){
@@ -16,7 +17,8 @@ class HomeParent extends React.Component{
             language: 0,
             students: {},
             student: null,
-            studentId: 0
+            studentId: 0,
+            viewCalendar: false,
         }
     }
 
@@ -54,6 +56,15 @@ class HomeParent extends React.Component{
         return(
             <div>
                 <Header/>
+                <button 
+                    class="ant-btn ant-btn-primary" 
+                    onClick={() => this.setState({viewCalendar: !this.state.viewCalendar})}>
+                    {language[lan].calendar}
+                </button>
+                {this.state.viewCalendar
+                    ? <CalendarParent/>
+                    : null
+                }
                 <div className="usersList-container">
                     {Object.values(this.state.students).map((key, index) => 
                         <UserItem 

@@ -11,6 +11,7 @@ import ParentInfoModal from './ParentInfoModal'
 import DossierStudent from '../dossier/DossierStudent'
 import TestItem from '../test/TestItem';
 import TestQuestionsModal from '../test/TestQuestionsModal'
+import CalendarStudent from './CalendarStudent';
 
 class HomeStudent extends React.Component{
     constructor(props){
@@ -26,6 +27,7 @@ class HomeStudent extends React.Component{
             arrayClass: [],
             testId: '',
             modalQuestions: false,
+            viewCalendar: false
         }
     }
 
@@ -102,6 +104,15 @@ class HomeStudent extends React.Component{
         return(
             <div>
                 <Header onChangeLanguage={(language) => this.setState({language: language})}/>
+                <button 
+                    class="ant-btn ant-btn-primary" 
+                    onClick={() => this.setState({viewCalendar: !this.state.viewCalendar})}>
+                    {language[lan].calendar}
+                </button>
+                {this.state.viewCalendar
+                    ? <CalendarStudent/>
+                    : null
+                }
                 <div className="container-info">
                     <p id="student_icon" className={(this.state.student) ? "icon " + this.state.student.student_icon : null}></p>
                     <div className="container-info-data">

@@ -11,7 +11,7 @@ router.get('/', (req, res)=>{
 });
 
 router.get('/student/:id', (req, res)=>{
-    connection.query('SELECT * FROM CALENDAR_ASSISTANCE WHERE CALENDAR_ASSISTANCE.id_student = ' + req.params.id, (err, result)=>{
+    connection.query('SELECT * FROM CALENDAR_ASSISTANCE, STUDENT WHERE CALENDAR_ASSISTANCE.id_student = STUDENT.id_student AND CALENDAR_ASSISTANCE.id_student = ' + req.params.id, (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
     });
@@ -46,6 +46,19 @@ router.get('/teacher/:id', (req, res)=>{
     });
 });
 
+router.get('/parent/:id', (req, res)=>{
+    const sql = `SELECT * FROM CALENDAR_ASSISTANCE
+    LEFT JOIN CLASS_TEACHER ON CLASS_TEACHER.id_class = CALENDAR_ASSISTANCE.id_class
+    LEFT JOIN STUDENT ON STUDENT.id_student = CALENDAR_ASSISTANCE.id_student
+    LEFT JOIN CLASS ON CLASS.id_class = CALENDAR_ASSISTANCE.id_class
+    LEFT JOIN SUBJECT ON SUBJECT.id_subject = CALENDAR_ASSISTANCE.id_subject
+    LEFT JOIN STUDENT_PARENT ON STUDENT_PARENT.id_student = CALENDAR_ASSISTANCE.id_student
+    WHERE STUDENT_PARENT.id_parent = ${req.params.id}`;
+    connection.query(sql, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
 
 router.post('/', (req, res) => {
     const sql = `INSERT INTO CALENDAR_ASSISTANCE SET 
@@ -59,6 +72,18 @@ router.post('/', (req, res) => {
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);
         else res.json({msg: 'calendar registred', type: 'success', result: result, err: err });
+    });
+});
+
+router.put('/:description', (req, res) => {
+    const sql = `UPDATE CALENDAR_ASSISTANCE SET
+    type = success
+    WHERE description = ${req.params.description}`;
+    connection.query(sql, (err, result)=>{
+        if(err) res.json({msg: 'no update date', type: 'error', result: result, err: err});
+        else {
+            res.json({msg: 'update date', type: 'success', result: result, err: err});            
+        }
     });
 });
 
