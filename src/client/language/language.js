@@ -1,6 +1,7 @@
 const language = [
     {
         'welcome': 'Bienvenido',
+        'return': 'Volver',
         'description': 'Descripción',
         'login': 'Iniciar Sesión',
         'cancel': 'Cancelar',
@@ -41,12 +42,14 @@ const language = [
         'addClass': 'Añadir clase',
         'addSubjects': 'Añadir Asignatura',        
         'addEvaluation': 'Añadir Evaluación',        
-        'addTest': 'Añadir Test',   
+        'test': 'Test',                
+        'newTest': 'Nuevo Test',  
         'addQuestion': 'Añadir Pregunta',                
         'newQuestion': 'Nueva Pregunta',                
     },
     {
         'welcome': 'Welcome',
+        'return': 'Return',        
         'description': 'Description',
         'login': 'Login',
         'cancel': 'Cancel',
@@ -87,7 +90,8 @@ const language = [
         'addClass': 'Add class',
         'addSubjects': 'Add Subject',                
         'addEvaluation': 'Add Evaluation',
-        'addTest': 'Add Test',                
+        'test': 'Test',                
+        'newTest': 'New Test',                
         'addQuestion': 'Add Question',                
         'newQuestion': 'New Question',                
     }

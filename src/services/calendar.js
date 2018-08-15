@@ -20,6 +20,7 @@ router.get('/student/:id', (req, res)=>{
 router.get('/teacher/:id', (req, res)=>{
     const sql = `SELECT * FROM CALENDAR_ASSISTANCE
     LEFT JOIN CLASS_TEACHER ON CLASS_TEACHER.id_class = CALENDAR_ASSISTANCE.id_class
+    LEFT JOIN STUDENT ON STUDENT.id_student = CALENDAR_ASSISTANCE.id_student
     WHERE CLASS_TEACHER.id_teacher = ${req.params.id}`;
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);

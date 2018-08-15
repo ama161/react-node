@@ -1,5 +1,6 @@
 import React from 'react';
 import { message } from 'antd';
+import {withRouter} from 'react-router-dom';
 
 import TestForm from './TestForm';
 import Header from '../utils/Header';
@@ -64,7 +65,7 @@ class TestView extends React.Component{
                         
                         <div className="testView-button">
                             <button key="submit" class="ant-btn ant-btn-primary" onClick={() => this.onHandleTest()}>
-                                {language[lan].addTest}
+                                {language[lan].newTest}
                             </button>
                             <button key="submit" class="ant-btn ant-btn-primary" onClick={() => this.setState({testForm: !this.state.testForm})}>
                                 {language[lan].cancel}
@@ -72,16 +73,18 @@ class TestView extends React.Component{
                         </div>
                     </div>
                     : <div>
+                        <button key="submit" class="ant-btn" onClick={() => this.props.history.push('/homeTeacher')}>
+                            {language[lan].return}
+                        </button>
                         <button key="submit" class="ant-btn ant-btn-primary" onClick={() => this.setState({testForm: !this.state.testForm})}>
-                            {language[lan].addTest}
+                            {language[lan].newTest}
                         </button>
                         <TestList/>
                     </div>
                 }
-                
             </div>
         )
     }
 }
 
-export default TestView;
+export default withRouter(TestView);

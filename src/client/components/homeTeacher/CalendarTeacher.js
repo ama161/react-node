@@ -10,12 +10,13 @@ class CalendarTeacher extends React.Component{
         this.state = {
             assistanceModal: false,
             date: '',
+            dataCalendar: []
         }
     }
 
     componentWillMount(){
         getByTeacher(sessionStorage.idUser)
-        .then(result => console.log(result))
+        .then(result => this.setState({dataCalendar: result}))
         .catch(err => console.log(err))
     }
 
@@ -33,7 +34,9 @@ class CalendarTeacher extends React.Component{
                         date={this.state.date}/>
                     : null
                 }
-                <Calendar onHandleDate={(date) => this.onHandleDate(date)}/>
+                <Calendar 
+                    onHandleDate={(date) => this.onHandleDate(date)}
+                    dataCalendar={this.state.dataCalendar}/>
             </div>
         )
     }

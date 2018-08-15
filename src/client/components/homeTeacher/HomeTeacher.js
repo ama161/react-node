@@ -83,16 +83,18 @@ class HomeTeacher extends React.Component{
                     : null
                 }
                 <Header onChangeLanguage={(language) => this.setState({language: language})}/>
-                <button 
-                    class="ant-btn ant-btn-primary" 
-                    onClick={() => this.props.history.push('/homeTeacher/test')}>
-                    {language[lan].addTest}
-                </button>
-                <button 
-                    class="ant-btn ant-btn-primary" 
-                    onClick={() => this.setState({viewCalendar: !this.state.viewCalendar})}>
-                    {language[lan].calendar}
-                </button>
+                <div className="homeTeacher-container-buttons">
+                    <button 
+                        class="ant-btn ant-btn-primary" 
+                        onClick={() => this.props.history.push('/homeTeacher/test')}>
+                        {language[lan].test}
+                    </button>
+                    <button 
+                        class="ant-btn ant-btn-primary" 
+                        onClick={() => this.setState({viewCalendar: !this.state.viewCalendar})}>
+                        {language[lan].calendar}
+                    </button>
+                </div>
                 {this.state.viewCalendar
                     ? <CalendarTeacher/>
                     : null

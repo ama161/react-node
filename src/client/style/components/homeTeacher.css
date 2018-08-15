@@ -1,3 +1,8 @@
+.homeTeacher-container-buttons{
+    display: flex;
+    justify-content: space-between;
+}
+
 .homeTeacher-container-dossier button{
     margin-left: 1.5%;
 }
