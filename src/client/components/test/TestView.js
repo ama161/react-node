@@ -72,7 +72,7 @@ class TestView extends React.Component{
                             </button>
                         </div>
                     </div>
-                    : <div>
+                    : <div className="homeTeacher-container-buttons">
                         <button key="submit" class="ant-btn" onClick={() => this.props.history.push('/homeTeacher')}>
                             {language[lan].return}
                         </button>

@@ -32,6 +32,7 @@ router.get('/teacher/:id', (req, res)=>{
 router.post('/', (req, res) => {
     const sql = `INSERT INTO CALENDAR_ASSISTANCE SET 
         id_student = ${connection.escape(req.body.id_student)},
+        id_subject = ${connection.escape(req.body.id_subject)},
         id_class = ${connection.escape(req.body.id_class)},
         date = ${connection.escape(req.body.date)},
         description = ${connection.escape(req.body.description)},
@@ -39,7 +40,7 @@ router.post('/', (req, res) => {
     `;
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);
-        else res.json({msg: 'calendar registred', type: 'success'});
+        else res.json({msg: 'calendar registred', type: 'success', result: result, err: err });
     });
 });
 

@@ -15,6 +15,15 @@ class CalendarTeacher extends React.Component{
     }
 
     componentWillMount(){
+        this.getByTeacher();
+    }
+
+    componentWillReceiveProps(){
+        console.log('componentWillReceiveProps')
+        this.getByTeacher()
+    }
+
+    getByTeacher(){
         getByTeacher(sessionStorage.idUser)
         .then(result => this.setState({dataCalendar: result}))
         .catch(err => console.log(err))
@@ -30,7 +39,10 @@ class CalendarTeacher extends React.Component{
                 {this.state.assistanceModal
                     ?  <AssistanceModal 
                         visible={this.state.assistanceModal} 
-                        onHandleCancel={() => this.setState({assistanceModal: false, date: ''})}
+                        onHandleCancel={() => {
+                            this.getByTeacher();
+                            this.setState({assistanceModal: false, date: ''})}
+                        }
                         date={this.state.date}/>
                     : null
                 }

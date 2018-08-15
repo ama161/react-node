@@ -5,6 +5,7 @@ import Modal from '../utils/Modal'
 import language from '../../language/language'
 import AssistanceForm from './AssistanceForm';
 import {postAssistance} from '../../services/calendar'
+import ExamForm from './ExamForm';
 
 class AssistanceModal extends React.Component{
     constructor(props){
@@ -17,7 +18,8 @@ class AssistanceModal extends React.Component{
             viewModal: false,
             date: '',
             language: 0,
-            newAssistance: {}
+            newAssistance: {},
+            viewAssistance: true
         }
     }
 
@@ -35,15 +37,32 @@ class AssistanceModal extends React.Component{
     }
 
     onHandleOk(){
-        const assistance = {
-            id_student: this.state.newAssistance.studentId,
-            id_class: this.state.newAssistance.classId,
-            date: this.state.date,
-            description: this.state.newAssistance.description,
-            type: 'error'
+        console.log(this.state)
+        let assistance = {};
+        if(this.state.viewAssistance){
+            assistance = {
+                id_student: this.state.newAssistance.studentId,
+                id_class: this.state.newAssistance.classId,
+                date: this.state.date,
+                description: this.state.newAssistance.description,
+                type: 'error',
+                id_subject: null
+            }
         }
+        else{
+            assistance = {
+                id_student: null,
+                id_subject: this.state.newAssistance.subjectId,
+                id_class: this.state.newAssistance.classId,
+                date: this.state.date,
+                description: this.state.newAssistance.description,
+                type: 'warning'
+            }
+        }
+         
         postAssistance(assistance)
         .then(result => {
+            console.log(result);
             if(result.hasOwnProperty('msg'))
                 message[result.type](result.msg)
             this.onCancel();
@@ -63,8 +82,23 @@ class AssistanceModal extends React.Component{
                 visible={this.state.viewModal}
                 onHandleCancel={() => this.onCancel()}
                 onHandleOk={() => this.onHandleOk()}>
-                <h2>{language[lan].assistance}: {this.state.date}</h2>
-                <AssistanceForm onNewAssistance={(newAssistance) => this.setState({newAssistance: newAssistance})}/>
+                <h2>{language[lan].date}: {this.state.date}</h2>
+                <div className="homeTeacher-container-buttons">
+                    <button 
+                        class="ant-btn ant-btn-primary" 
+                        onClick={() => this.setState({viewAssistance: !this.state.viewAssistance})}>
+                        {language[lan].assistance}
+                    </button>
+                    <button 
+                        class="ant-btn" 
+                        onClick={() => this.setState({viewAssistance: !this.state.viewAssistance})}>
+                        {language[lan].remember}
+                    </button>
+                </div>
+                {this.state.viewAssistance
+                    ? <AssistanceForm onNewAssistance={(newAssistance) => this.setState({newAssistance: newAssistance})}/>
+                    : <ExamForm onNewAssistance={(newAssistance) => this.setState({newAssistance: newAssistance})}/>
+                }
             </Modal>
         )
     }

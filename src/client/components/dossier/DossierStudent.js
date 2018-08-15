@@ -50,13 +50,14 @@ class DossierStudent extends React.Component{
                 visible={this.state.viewModal}
                 onHandleCancel={() => this.onCancel()}
                 onHandleOk={() => this.onCancel()}>
-                {this.props.history.location.pathname !== '/homeTeacher'
-                    ? null
-                    : <button 
+                {console.log(this.props.history.location.pathname)}
+                {this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher'
+                    ? <button 
                         class="ant-btn ant-btn-primary" 
                         onClick={this.props.newNoteDossier}>
                         {language[lan].addEvaluation}
                     </button>
+                    : null
                 }
                 <div className="dossierStudent-container">
                     {this.state.subjects

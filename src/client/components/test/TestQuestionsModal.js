@@ -97,7 +97,8 @@ class TestQuestionsModal extends React.Component{
             <Modal 
                 visible={this.state.viewModal}
                 onHandleOk={() => this.onCancel()}
-                onHandleCancel={() => this.onCancel()}>
+                onHandleCancel={() => this.onCancel()}
+                className="big-modal">
                 <Steps current={this.state.stepCurrent}>
                 {this.state.questions
                     ? this.state.questions.map((item, index) => (

@@ -41,6 +41,7 @@ class Modal extends React.Component{
                     visible={this.state.visible}
                     onCancel={this.handleCancel}
                     footer={this.props.footer}
+                    className={this.props.className}
                 >
                     {this.props.children}
                 </AntModal>

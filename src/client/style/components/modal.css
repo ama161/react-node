@@ -1,6 +1,11 @@
 .ant-modal{
+    width: 40% !important;
+}
+
+.big-modal{
     width: 80% !important;
 }
+
 .ant-modal-content{
     border-radius: 0 !important;
 }
