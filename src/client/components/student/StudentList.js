@@ -8,7 +8,8 @@ class StudentList extends React.Component{
         super(props);
 
         this.state={
-            students: {}
+            students: {},
+            studentSelected: ''
         }
     }
 
@@ -32,7 +33,10 @@ class StudentList extends React.Component{
                 {Object.values(this.state.students).map((key, index) => 
                     <UserItem 
                     name={key.username} icon={key.icon} 
-                    onStudentClick={(id) => this.props.onStudentClick(id)}
+                    onStudentClick={(id) => {
+                        this.setState({studentSelected: id})
+                        this.props.onStudentClick(id)
+                    }}
                     id={key.id_student}/>
                 )}
             </div>

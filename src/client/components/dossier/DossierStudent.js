@@ -15,6 +15,7 @@ class DossierStudent extends React.Component{
             subjectId: '',
             viewModal: '',
             language: 0,
+            student: {}
         }
     }
 
@@ -23,6 +24,7 @@ class DossierStudent extends React.Component{
             data: this.props.student.data, 
             subjects: this.props.student.subjects, 
             viewModal: this.props.visible,
+            student: this.props.student.student[0],
             test: this.props.student.test,
             language: sessionStorage.language
         })
@@ -33,6 +35,7 @@ class DossierStudent extends React.Component{
             data: nextProps.student.data, 
             subjects: nextProps.student.subjects, 
             viewModal: nextProps.visible,
+            student: nextProps.student.student[0],
             test: nextProps.student.test,
             language: sessionStorage.language
         })
@@ -50,7 +53,13 @@ class DossierStudent extends React.Component{
                 visible={this.state.viewModal}
                 onHandleCancel={() => this.onCancel()}
                 onHandleOk={() => this.onCancel()}>
-                {console.log(this.props.history.location.pathname)}
+                {this.state.student
+                    ? <div className="dossier-header">
+                        <p id="student_icon" className={(this.state.student) ? "icon " + this.state.student.icon : null}></p>
+                        <h2>{this.state.student.username}</h2>
+                    </div>
+                    : null
+                }
                 {this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher'
                     ? <button 
                         class="ant-btn ant-btn-primary" 

@@ -68,7 +68,17 @@ router.get('/student/dossier/:id', (req, res)=>{
                                 where STUDENT.id_student = ${req.params.id}`;
                                 connection.query(sql3, (err, result)=>{
                                     if(err) res.json(err);
-                                    else res.json({subjects: subjects, data: data, test: result});
+                                    else {
+                                        const test = result;
+                                        const sql4 = `SELECT * FROM STUDENT
+                                        WHERE id_student = ${req.params.id}`;
+                                        connection.query(sql4, (err, result)=>{
+                                            if(err) res.json(err);
+                                            else {
+                                                res.json({subjects: subjects, data: data, test: test, student: result});
+                                            }
+                                        });
+                                    }
                                 });
                             }
                         }

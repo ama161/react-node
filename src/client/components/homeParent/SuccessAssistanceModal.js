@@ -3,6 +3,7 @@ import { message } from 'antd';
 
 import Modal from '../utils/Modal'
 import language from '../../language/language'
+import {putAssistance} from '../../services/calendar'
 
 class SuccessAssistanceModal extends React.Component{
     constructor(props){
@@ -35,7 +36,15 @@ class SuccessAssistanceModal extends React.Component{
     }
 
     onHandleOk(){
-
+        console.log('justify')
+        putAssistance(this.state.infoDate.description)
+        .then(result => {
+            console.log(result);
+            if(result.hasOwnProperty('msg'))
+                message[result.type](result.msg)
+            this.onCancel();
+        })
+        .catch(err => console.log(err))
     }
 
     onChangeClass(event){
@@ -48,9 +57,11 @@ class SuccessAssistanceModal extends React.Component{
         return(
             <Modal 
                 visible={this.state.viewModal}
+                title={language[lan].justify}
                 onHandleCancel={() => this.onCancel()}
                 onHandleOk={() => this.onHandleOk()}>
-                
+                <h3>{this.state.infoDate.date}</h3>
+                <p>{this.state.infoDate.username} {this.state.infoDate.description}</p>
             </Modal>
         )
     }

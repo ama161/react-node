@@ -10,7 +10,8 @@ class ClassList extends React.Component{
 
         this.onClassClick = this.onClassClick.bind(this);
         this.state={
-            class: {}
+            class: {},
+            classSelected: ''
         }
     }
 
@@ -30,7 +31,10 @@ class ClassList extends React.Component{
 
     onClassClick(id){
         getStudentsByClass(id)
-        .then((result) => {this.props.onClassClick(result)})
+        .then((result) => {
+            this.setState({classSelected: id})
+            this.props.onClassClick(result)
+        })
     }
 
     render(){
@@ -41,7 +45,8 @@ class ClassList extends React.Component{
                         name={key.name} 
                         icon={key.icon} 
                         id={key.id_class} 
-                        onHandleClick={(id) => this.onClassClick(id)}/>
+                        onHandleClick={(id) => this.onClassClick(id)}
+                        classSelected={this.state.classSelected}/>
                 )}
             </div>
         )

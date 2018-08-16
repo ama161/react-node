@@ -72,13 +72,15 @@ class TestView extends React.Component{
                             </button>
                         </div>
                     </div>
-                    : <div className="homeTeacher-container-buttons">
-                        <button key="submit" class="ant-btn" onClick={() => this.props.history.push('/homeTeacher')}>
-                            {language[lan].return}
-                        </button>
-                        <button key="submit" class="ant-btn ant-btn-primary" onClick={() => this.setState({testForm: !this.state.testForm})}>
-                            {language[lan].newTest}
-                        </button>
+                    : <div>
+                        <div className="homeTeacher-container-buttons">
+                            <button key="submit" class="ant-btn" onClick={() => this.props.history.push('/homeTeacher')}>
+                                {language[lan].return}
+                            </button>
+                            <button key="submit" class="ant-btn ant-btn-primary" onClick={() => this.setState({testForm: !this.state.testForm})}>
+                                {language[lan].newTest}
+                            </button>
+                        </div>
                         <TestList/>
                     </div>
                 }

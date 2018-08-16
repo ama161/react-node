@@ -24,13 +24,16 @@ class CalendarParent extends React.Component{
 
     getByParents(){
         getByParent(sessionStorage.idUser)
-        .then(result => this.setState({dataCalendar: result}))
+        .then(result => {
+            console.log(result)
+            this.setState({dataCalendar: result})
+        })
         .catch(err => console.log(err))
     }
 
     onHandleDate(date){
         for(let i=0; i<this.state.dataCalendar.length; i++){
-            if(this.state.dataCalendar[i].date === date){
+            if(this.state.dataCalendar[i].date === date && this.state.dataCalendar[i].type === 'error'){
                 this.setState({assistanceModal: true, infoDate: this.state.dataCalendar[i]})
             }
         }

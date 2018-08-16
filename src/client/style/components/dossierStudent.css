@@ -25,3 +25,18 @@
     justify-content: space-between;
     padding: 0 1em;
 }
+
+.dossier-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.dossier-header p{
+    margin: 0;
+}
+
+.dossier-header .icon{
+    background-color: #E1C0A2;
+    border-radius: 50%;
+}

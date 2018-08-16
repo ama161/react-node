@@ -135,11 +135,10 @@ export function postAssistance(newAssistance){
 }
 
 export function putAssistance(description){
-    const route = ROUTE + '/' + description;
-    const request = new Request(route, {
-        method: 'POST',
+    const request = new Request(ROUTE, {
+        method: 'PUT',
         mode: 'same-origin',
-        body: JSON.stringify(),
+        body: JSON.stringify({description: description}),
         credentials: 'same-origin',
         headers: headers
     });

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const Box = ({children, className, type, typeIcon}) => {
+const Box = ({children, className, type, typeIcon, selected}) => {
     // let classNames = "box " + (className) ? className : '';
     let classNameType = (type === 'brown') ? 'box-brown' : (type === 'white') ? 'box-white' : 'box-blue';
     return(
-        <div className = {"box " + classNameType}>
+        <div className = {"box " + classNameType + " " + selected}>
             {typeIcon 
                 ? <p className={"icon " + typeIcon}></p>    
                 : null

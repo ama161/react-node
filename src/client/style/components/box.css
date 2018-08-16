@@ -40,3 +40,11 @@
 .box-brown p:nth-child(2) {
     margin: 20px 0 0 0;
 }
+
+.selectedClass{
+    border-bottom: solid 4px #97C6E1;
+}
+
+.selectedUser{
+    border-bottom: solid 4px #97C6E1;    
+}

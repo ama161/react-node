@@ -13,7 +13,7 @@ class ClassItem extends React.Component{
     render(){
         return(
             <div onClick={() => this.props.onHandleClick(this.props.id)}>
-                <Box type="brown" typeIcon={this.props.icon}>
+                <Box type="brown" typeIcon={this.props.icon} selected={(this.props.classSelected === this.props.id) ? 'selectedClass' : null}>
                     <p>{this.props.name}</p>
                 </Box>
             </div>
