@@ -1,4 +1,5 @@
 import React from 'react'
+import { Alert } from 'antd';
 import { withRouter } from 'react-router'
 
 import language from '../../language/language'
@@ -19,6 +20,7 @@ class HomeParent extends React.Component{
             student: null,
             studentId: 0,
             viewCalendar: false,
+            notifications: []
         }
     }
 
@@ -28,7 +30,7 @@ class HomeParent extends React.Component{
             .then((result) => {
                 if(result !== 'parent') this.props.history.push('/login');
                 getStudentsParent(sessionStorage.idUser)
-                .then(result => this.setState({students: result, language: sessionStorage.language}))
+                .then(result => this.setState({students: result.students, notifications: result.notifications, language: sessionStorage.language}))
                 .catch(err => console.log(err))
             })
             .catch((err) => {
@@ -61,6 +63,11 @@ class HomeParent extends React.Component{
                     onClick={() => this.setState({viewCalendar: !this.state.viewCalendar})}>
                     {language[lan].calendar}
                 </button>
+                <div className="homeParent-notifications">
+                    {this.state.notifications.map(item =>
+                        <Alert message={item.username + ' ' + item.title + ' -> ' + item.note} type="warning" showIcon closable/>
+                    )}
+                </div>
                 {this.state.viewCalendar
                     ? <CalendarParent/>
                     : null
