@@ -60,27 +60,38 @@ router.get('/student/dossier/:id', (req, res)=>{
                     if(result.length !== 0){
                         let subjects = result;
                         let data = [];
+                        let media = [];
                         for(let i = 0; i<subjects.length; i++){
-                            let id = subjects[i].id_subject;              
-                            const sql2 = `SELECT title, note, DOSSIER.id_subject FROM DOSSIER, STUDENT 
-                            where DOSSIER.id_student = STUDENT.id_student AND STUDENT.id_student = ${req.params.id} AND DOSSIER.id_subject = ${id}`;
-                            connection.query(sql2, (err, result)=>{
+                            let id = subjects[i].id_subject;  
+                            const sqlMedia = `SELECT AVG(note) as media
+                            FROM DOSSIER, SUBJECT 
+                            where DOSSIER.id_subject = ${id}
+                            AND DOSSIER.id_student = ${req.params.id}`;
+                            connection.query(sqlMedia, (err, result)=>{
                                 if(err) res.json({msg: 'err', err: err});
                                 else {
-                                    data.push({[id]: result});
-                                    if(i === subjects.length - 1){
-                                        const sql3 = `SELECT CLASS_TEST.id_test, STUDENT_TEST.note, TEST.title, TEST.description FROM STUDENT 
-                                        LEFT JOIN CLASS_TEST ON CLASS_TEST.id_class = STUDENT.id_class
-                                        LEFT JOIN STUDENT_TEST ON STUDENT_TEST.id_test = CLASS_TEST.id_test
-                                        LEFT JOIN TEST ON CLASS_TEST.id_test = TEST.id_test
-                                        where STUDENT.id_student = ${req.params.id}`;
-                                        connection.query(sql3, (err, result)=>{
-                                            if(err) res.json(err);
-                                            else {
-                                                res.json({subjects: subjects, data: data, test: result, student: student});
+                                    media.push({[id]: result[0].media});
+                                    const sql2 = `SELECT title, note, DOSSIER.id_subject FROM DOSSIER, STUDENT 
+                                    where DOSSIER.id_student = STUDENT.id_student AND STUDENT.id_student = ${req.params.id} AND DOSSIER.id_subject = ${id}`;
+                                    connection.query(sql2, (err, result)=>{
+                                        if(err) res.json({msg: 'err', err: err});
+                                        else {
+                                            data.push({[id]: result});
+                                            if(i === subjects.length - 1){
+                                                const sql3 = `SELECT CLASS_TEST.id_test, STUDENT_TEST.note, TEST.title, TEST.description FROM STUDENT 
+                                                LEFT JOIN CLASS_TEST ON CLASS_TEST.id_class = STUDENT.id_class
+                                                LEFT JOIN STUDENT_TEST ON STUDENT_TEST.id_test = CLASS_TEST.id_test
+                                                LEFT JOIN TEST ON CLASS_TEST.id_test = TEST.id_test
+                                                where STUDENT.id_student = ${req.params.id}`;
+                                                connection.query(sql3, (err, result)=>{
+                                                    if(err) res.json(err);
+                                                    else {
+                                                        res.json({subjects: subjects, data: data, test: result, student: student, media: media});
+                                                    }
+                                                });
                                             }
-                                        });
-                                    }
+                                        }
+                                    })
                                 }
                             })
                         }
@@ -263,16 +274,22 @@ router.get('/parent-student/:id', (req, res) => {
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);
         else {
+            let notifications = [];
             for(let i = 0; i<result.length; i++){
                 const sql1 = `SELECT * FROM STUDENT 
                 INNER JOIN DOSSIER ON DOSSIER.id_student = STUDENT.id_student
+                INNER JOIN SUBJECT ON DOSSIER.id_subject = SUBJECT.id_subject
                 where STUDENT.id_student = ${result[i].id_student}
                 AND DOSSIER.note < 5`; 
                 let students = result;
                 connection.query(sql1, (err, result)=>{
                     if(err) res.json(err);
+
                     else {
-                        res.json({students: students, notifications: result});
+                        if(result.length !== 0) notifications.push(result[0])
+                        if(i === students.length - 1) {
+                            res.json({students: students, notifications: notifications});
+                        }
                     }
                 })
             }

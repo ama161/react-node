@@ -10,6 +10,18 @@ router.get('/', (req, res)=>{
     });
 });
 
+router.get('/:id_student/:id_subject', (req, res)=>{
+    const sql = `SELECT AVG(note) as media
+    FROM DOSSIER, SUBJECT 
+    where DOSSIER.id_subject = ${req.params.id_subject}
+    AND DOSSIER.id_student = ${req.params.id_student}`;
+
+    connection.query(sql, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
 router.post('/:id_student/:id_teacher', (req, res)=>{
     const sql = `INSERT INTO DOSSIER SET
         id_student = ${req.params.id_student},

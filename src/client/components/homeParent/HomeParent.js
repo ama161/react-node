@@ -65,7 +65,7 @@ class HomeParent extends React.Component{
                 </button>
                 <div className="homeParent-notifications">
                     {this.state.notifications.map(item =>
-                        <Alert message={item.username + ' ' + item.title + ' -> ' + item.note} type="warning" showIcon closable/>
+                        <Alert message={item.username + ' ' + item.name + ' ' + item.title + ' -> ' + item.note} type="warning" showIcon closable/>
                     )}
                 </div>
                 {this.state.viewCalendar

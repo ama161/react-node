@@ -4,6 +4,10 @@
     justify-content: space-evenly;
 }
 
+.box-white{
+    height: 100%;
+}
+
 .box-white .icon{
     width: 70px;
     height: 70px;
@@ -15,4 +19,5 @@
     color: #4C6370;
     font-weight: bold;
     font-size: 1.5em;
+    text-align: center;    
 }

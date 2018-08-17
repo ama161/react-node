@@ -78,7 +78,7 @@ CREATE TABLE DOSSIER(
     title VARCHAR(100),
     note FLOAT,
     id_subject INT,
-    PRIMARY KEY (id_student, id_teacher, title),
+    PRIMARY KEY (id_student, id_teacher, title, id_subject),
     FOREIGN KEY (id_student) REFERENCES STUDENT(id_student),
     FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher),
     FOREIGN KEY (id_subject) REFERENCES SUBJECT(id_subject)
@@ -138,6 +138,17 @@ CREATE TABLE CALENDAR_ASSISTANCE(
     FOREIGN KEY (id_subject) REFERENCES SUBJECT(id_subject)
 );
 
+CREATE TABLE NOTIFICATIONS(
+    id_parent INT,
+    id_student INT,
+    id_teacher INT,
+    description VARCHAR(50),
+    PRIMARY KEY (description, id_parent, id_student, id_teacher),
+    FOREIGN KEY (id_student) REFERENCES STUDENT(id_student),
+    FOREIGN KEY (id_parent) REFERENCES PARENT(id_parent),
+    FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher)
+);
+
 DESCRIBE users;
 
 SELECT * FROM users;
@@ -163,3 +174,5 @@ SELECT * FROM users;
 ALTER TABLE PARENT ADD phone VARCHAR(100);
 ALTER TABLE PARENT ADD name VARCHAR(50);
 ALTER TABLE DOSSIER ADD subject VARCHAR(50);
+
+ALTER TABLE DOSSIER ADD PRIMARY KEY (id_student, id_teacher, title, id_subject);

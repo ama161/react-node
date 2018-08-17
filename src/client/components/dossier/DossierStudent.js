@@ -4,6 +4,7 @@ import {Icon} from 'antd';
 import Modal from '../utils/Modal'
 import {getByRole} from '../../services/user'
 import language from '../../language/language'
+import { getNoteSubject } from '../../services/dossier';
 
 class DossierStudent extends React.Component{
     constructor(props){
@@ -16,18 +17,19 @@ class DossierStudent extends React.Component{
             viewModal: '',
             language: 0,
             student: {},
-            test: {}
+            test: {},
+            media: []
         }
     }
 
     componentWillMount(){
-        console.log(this.props)
         this.setState({
             data: this.props.student.hasOwnProperty('data') ? this.props.student.data : {}, 
             subjects: this.props.student.hasOwnProperty('subjects') ? this.props.student.subjects : [], 
             viewModal: this.props.visible,
             student: this.props.student.hasOwnProperty('student') ? this.props.student.student[0] : {},
             test: this.props.student.hasOwnProperty('test') ? this.props.student.test : [],
+            media: this.props.student.hasOwnProperty('media') ? this.props.student.media : [],
             language: sessionStorage.language
         })
     }
@@ -39,6 +41,7 @@ class DossierStudent extends React.Component{
             viewModal: nextProps.visible,
             student: nextProps.student.student[0],
             test: nextProps.student.test,
+            media: nextProps.student.media,
             language: sessionStorage.language
         })
     }
@@ -80,14 +83,21 @@ class DossierStudent extends React.Component{
                     {this.state.subjects
                         ? this.state.subjects.map((key, index) => (
                             <div className="dossierStudent-container-item" onClick={() => this.setState({subjectId: key.id_subject})}>
-                                <h2>{key.name} 
-                                    {this.state.subjectId === key.id_subject ? <Icon type="minus" /> : <Icon type="plus" />} 
+                                <h2 className="dossierStudent-title-evaluations">{key.name}
+                                    <div>
+                                        {this.state.media.map(item => (
+                                            item[key.id_subject]
+                                                ? item[key.id_subject].toFixed(2)
+                                                : null
+                                        ))}
+                                        {this.state.subjectId === key.id_subject ? <Icon type="minus" /> : <Icon type="plus" />} 
+                                    </div>
                                 </h2>
                                 {this.state.subjectId === key.id_subject
                                     ? this.state.data.map((key, index) => (
                                         key[this.state.subjectId]
                                             ? key[this.state.subjectId].map((key, index) => 
-                                                <div><p>{key.title}</p> <p>{key.note}</p></div>
+                                                <div className="dossierStudent-container-evaluations"><p>{key.title}</p> <p>{key.note}</p></div>
                                             )
                                             : null  
                                         ))
@@ -99,12 +109,12 @@ class DossierStudent extends React.Component{
                     }
                     {this.state.test
                         ?<div className="dossierStudent-container-item" onClick={() => this.setState({subjectId: -1})}>
-                            <h2>Test
+                            <h2 className="dossierStudent-title-evaluations">Test
                                 {this.state.subjectId === -1 ? <Icon type="minus" /> : <Icon type="plus" />} 
                             </h2>
                             {this.state.subjectId === -1
                                 ? this.state.test.map((key, index) => 
-                                    <div><p>{key.title}</p> <p>{key.note ? key.note : '--'}</p></div>
+                                    <div className="dossierStudent-container-evaluations"><p>{key.title}</p> <p>{key.note ? key.note : '--'}</p></div>
                                 )
                                 : null
                             }
