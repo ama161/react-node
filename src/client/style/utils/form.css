@@ -6,7 +6,7 @@
     flex-direction: column; */
 }
 
-input{
+input, textarea{
     border: none;
     border-bottom: solid 2px #4C6370;
     padding: 1%;

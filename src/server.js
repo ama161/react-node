@@ -13,6 +13,7 @@ import subjectRoutes from './services/subject';
 import testRoutes from './services/test';
 import questionRoutes from './services/question';
 import calendarRoutes from './services/calendar';
+import notificationRoutes from './services/notification'
 
 //init packages
 const app = express();
@@ -39,6 +40,7 @@ app.use('/api/subject', subjectRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/calendar', calendarRoutes);
+app.use('/api/notification', notificationRoutes);
 
 //start server
 app.listen(app.get('port'), ()=>{

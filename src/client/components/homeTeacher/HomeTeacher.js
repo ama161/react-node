@@ -11,6 +11,7 @@ import {getStudentsByClass, getStudentDossier} from '../../services/user'
 import DossierStudent from '../dossier/DossierStudent'
 import NoteDossierModal from '../dossier/NoteDossierModal';
 import CalendarTeacher from './CalendarTeacher';
+import { getByTeacher } from '../../services/notification';
 
 class HomeTeacher extends React.Component{
     constructor(props){
@@ -24,7 +25,8 @@ class HomeTeacher extends React.Component{
             student: null,
             studentId: 0,
             viewNoteDossierModal: false,
-            viewCalendar: false
+            viewCalendar: false,
+            notifications: [],
         }
     }
 
@@ -51,6 +53,8 @@ class HomeTeacher extends React.Component{
         let idTeacher = sessionStorage.idUser;
         getClassTeacher(idTeacher)
         .then(result => this.setState({class: result, language: sessionStorage.language}));
+        getByTeacher(sessionStorage.idUser)
+        .then(result => this.setState({notifications: result}))
     }
 
     onClassClick(id){
@@ -94,6 +98,11 @@ class HomeTeacher extends React.Component{
                         onClick={() => this.setState({viewCalendar: !this.state.viewCalendar})}>
                         {language[lan].calendar}
                     </button>
+                </div>
+                <div className="notifications-container">
+                    {this.state.notifications.map(item =>
+                        <Alert message={item.description + ' - ' + item.username} type="info" showIcon closable/>
+                    )}
                 </div>
                 {this.state.viewCalendar
                     ? <CalendarTeacher/>

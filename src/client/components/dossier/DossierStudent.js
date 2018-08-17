@@ -71,14 +71,26 @@ class DossierStudent extends React.Component{
                     </div>
                     : null
                 }
-                {this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher'
-                    ? <button 
-                        class="ant-btn ant-btn-primary newDossier-button" 
-                        onClick={this.props.newNoteDossier}>
-                        {language[lan].addEvaluation}
-                    </button>
+                
+                {this.props.history.location.pathname !== '/homeStudent/' || this.props.history.location.pathname !== '/homeStudent'
+                    ? <div>
+                        <button 
+                            class="ant-btn ant-btn-primary newDossier-button" 
+                            onClick={this.props.newNotification}>
+                            {language[lan].notification} {(this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher') ? language[lan].parent : language[lan].teacher}
+                        </button>
+                        {this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher'
+                            ? <button 
+                                class="ant-btn newDossier-button" 
+                                onClick={this.props.newNoteDossier}>
+                                {language[lan].addEvaluation}
+                            </button>
+                            : null
+                        }
+                    </div>
                     : null
                 }
+                
                 <div className="dossierStudent-container">
                     {this.state.subjects
                         ? this.state.subjects.map((key, index) => (

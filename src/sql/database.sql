@@ -139,14 +139,10 @@ CREATE TABLE CALENDAR_ASSISTANCE(
 );
 
 CREATE TABLE NOTIFICATIONS(
-    id_parent INT,
     id_student INT,
-    id_teacher INT,
     description VARCHAR(50),
-    PRIMARY KEY (description, id_parent, id_student, id_teacher),
-    FOREIGN KEY (id_student) REFERENCES STUDENT(id_student),
-    FOREIGN KEY (id_parent) REFERENCES PARENT(id_parent),
-    FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher)
+    PRIMARY KEY (description, id_student),
+    FOREIGN KEY (id_student) REFERENCES STUDENT(id_student)
 );
 
 DESCRIBE users;

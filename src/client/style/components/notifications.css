@@ -1,0 +1,7 @@
+.notifications-container{
+    padding: 1em;
+}
+
+.notifications-container .ant-alert{
+    margin: 0.5em;
+}
