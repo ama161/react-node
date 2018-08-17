@@ -31,11 +31,7 @@ class ParentList extends React.Component{
     }
 
     render(){
-        const columns = [{
-            title: language[this.state.language].name,
-            dataIndex: 'name',
-            key: 'name'
-          },
+        const columns = [
           {
             title: language[this.state.language].email,
             dataIndex: 'email',

@@ -41,53 +41,108 @@ router.get('/student/:id', (req, res)=>{
     });
 });
 
+// router.get('/student/dossier/:id', (req, res)=>{
+//     const sql = `SELECT DISTINCT SUBJECT.id_subject, SUBJECT.name FROM DOSSIER, STUDENT, SUBJECT 
+//     where DOSSIER.id_student = STUDENT.id_student 
+//     AND DOSSIER.id_subject = SUBJECT.id_subject
+//     AND STUDENT.id_student = ${req.params.id}`;
+//     connection.query(sql, (err, result)=>{
+//         if(err) res.json({msg: 'err', err: err});
+//         else {
+//             if(result.length !== 0){
+//                 let subjects = result;
+//                 let data = [];
+//                 for(let i = 0; i<subjects.length; i++){
+//                     let id = subjects[i].id_subject;              
+//                     const sql2 = `SELECT title, note, DOSSIER.id_subject FROM DOSSIER, STUDENT 
+//                     where DOSSIER.id_student = STUDENT.id_student AND STUDENT.id_student = ${req.params.id} AND DOSSIER.id_subject = ${id}`;
+//                     connection.query(sql2, (err, result)=>{
+//                         if(err) res.json({msg: 'err', err: err});
+//                         else {
+//                             data.push({[id]: result});
+//                             if(i === subjects.length - 1){
+//                                 const sql3 = `SELECT CLASS_TEST.id_test, STUDENT_TEST.note, TEST.title, TEST.description FROM STUDENT 
+//                                 LEFT JOIN CLASS_TEST ON CLASS_TEST.id_class = STUDENT.id_class
+//                                 LEFT JOIN STUDENT_TEST ON STUDENT_TEST.id_test = CLASS_TEST.id_test
+//                                 LEFT JOIN TEST ON CLASS_TEST.id_test = TEST.id_test
+//                                 where STUDENT.id_student = ${req.params.id}`;
+//                                 connection.query(sql3, (err, result)=>{
+//                                     if(err) res.json(err);
+//                                     else {
+//                                         const test = result;
+//                                         const sql4 = `SELECT id_student, CLASS.id_class, STUDENT.icon, STUDENT.username, CLASS.name 
+//                                         FROM STUDENT, CLASS
+//                                         WHERE id_student = ${req.params.id}
+//                                         AND STUDENT.id_class = CLASS.id_class`;
+//                                         connection.query(sql4, (err, result)=>{
+//                                             if(err) res.json(err);
+//                                             else {
+//                                                 res.json({subjects: subjects, data: data, test: test, student: result});
+//                                             }
+//                                         });
+//                                     }
+//                                 });
+//                             }
+//                         }
+//                     })
+//                 }
+//             }
+//             else{
+//                 res.json({msg: 'no dossier', err: err});
+//             }
+//         }
+//     });
+// });
+
 router.get('/student/dossier/:id', (req, res)=>{
-    const sql = `SELECT DISTINCT SUBJECT.id_subject, SUBJECT.name FROM DOSSIER, STUDENT, SUBJECT 
-    where DOSSIER.id_student = STUDENT.id_student 
-    AND DOSSIER.id_subject = SUBJECT.id_subject
-    AND STUDENT.id_student = ${req.params.id}`;
+    const sql = `SELECT id_student, CLASS.id_class, STUDENT.icon, STUDENT.username, CLASS.name 
+    FROM STUDENT, CLASS
+    WHERE id_student = ${req.params.id}
+    AND STUDENT.id_class = CLASS.id_class`;
     connection.query(sql, (err, result)=>{
-        if(err) res.json({msg: 'err', err: err});
+        if(err) res.json(err);
         else {
-            if(result.length !== 0){
-                let subjects = result;
-                let data = [];
-                for(let i = 0; i<subjects.length; i++){
-                    let id = subjects[i].id_subject;              
-                    const sql2 = `SELECT title, note, DOSSIER.id_subject FROM DOSSIER, STUDENT 
-                    where DOSSIER.id_student = STUDENT.id_student AND STUDENT.id_student = ${req.params.id} AND DOSSIER.id_subject = ${id}`;
-                    connection.query(sql2, (err, result)=>{
-                        if(err) res.json({msg: 'err', err: err});
-                        else {
-                            data.push({[id]: result});
-                            if(i === subjects.length - 1){
-                                const sql3 = `SELECT CLASS_TEST.id_test, STUDENT_TEST.note, TEST.title, TEST.description FROM STUDENT 
-                                LEFT JOIN CLASS_TEST ON CLASS_TEST.id_class = STUDENT.id_class
-                                LEFT JOIN STUDENT_TEST ON STUDENT_TEST.id_test = CLASS_TEST.id_test
-                                LEFT JOIN TEST ON CLASS_TEST.id_test = TEST.id_test
-                                where STUDENT.id_student = ${req.params.id}`;
-                                connection.query(sql3, (err, result)=>{
-                                    if(err) res.json(err);
-                                    else {
-                                        const test = result;
-                                        const sql4 = `SELECT * FROM STUDENT
-                                        WHERE id_student = ${req.params.id}`;
-                                        connection.query(sql4, (err, result)=>{
+            let student = result;
+            const sql1 = `SELECT DISTINCT SUBJECT.id_subject, SUBJECT.name FROM DOSSIER, STUDENT, SUBJECT 
+            where DOSSIER.id_student = STUDENT.id_student 
+            AND DOSSIER.id_subject = SUBJECT.id_subject
+            AND STUDENT.id_student = ${req.params.id}`;
+            connection.query(sql1, (err, result)=>{
+                if(err) res.json({msg: 'err', err: err});
+                else {
+                    if(result.length !== 0){
+                        let subjects = result;
+                        let data = [];
+                        for(let i = 0; i<subjects.length; i++){
+                            let id = subjects[i].id_subject;              
+                            const sql2 = `SELECT title, note, DOSSIER.id_subject FROM DOSSIER, STUDENT 
+                            where DOSSIER.id_student = STUDENT.id_student AND STUDENT.id_student = ${req.params.id} AND DOSSIER.id_subject = ${id}`;
+                            connection.query(sql2, (err, result)=>{
+                                if(err) res.json({msg: 'err', err: err});
+                                else {
+                                    data.push({[id]: result});
+                                    if(i === subjects.length - 1){
+                                        const sql3 = `SELECT CLASS_TEST.id_test, STUDENT_TEST.note, TEST.title, TEST.description FROM STUDENT 
+                                        LEFT JOIN CLASS_TEST ON CLASS_TEST.id_class = STUDENT.id_class
+                                        LEFT JOIN STUDENT_TEST ON STUDENT_TEST.id_test = CLASS_TEST.id_test
+                                        LEFT JOIN TEST ON CLASS_TEST.id_test = TEST.id_test
+                                        where STUDENT.id_student = ${req.params.id}`;
+                                        connection.query(sql3, (err, result)=>{
                                             if(err) res.json(err);
                                             else {
-                                                res.json({subjects: subjects, data: data, test: test, student: result});
+                                                res.json({subjects: subjects, data: data, test: result, student: student});
                                             }
                                         });
                                     }
-                                });
-                            }
+                                }
+                            })
                         }
-                    })
+                    }
+                    else{
+                        res.json({msg: 'no dossier', err: err, student: student});
+                    }
                 }
-            }
-            else{
-                res.json({msg: 'no dossier', err: err});
-            }
+            });
         }
     });
 });

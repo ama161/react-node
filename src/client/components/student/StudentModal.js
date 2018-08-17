@@ -34,12 +34,18 @@ class StudentModal extends React.Component{
     }
 
     onHandleOk(){
-        post(this.state.newStudent, 'student')
-        .then(result => {
-            if(result.hasOwnProperty('msg'))
-                message[result.type](result.msg)
-            if(result.type === 'success') this.onCancel();
-        })
+        if(this.state.newStudent.class){
+            post(this.state.newStudent, 'student')
+            .then(result => {
+                if(result.hasOwnProperty('msg'))
+                    message[result.type](result.msg)
+                if(result.type === 'success') this.onCancel();
+            })
+        }
+        else{
+            message.warning('No insert class')
+        }
+        
     }
 
     render(){

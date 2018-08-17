@@ -33,16 +33,16 @@ function send(mailOptions){
 }
 
 export function sendEmailAdmin(req, res, callback){
-	var mail = req.email;
+	var email = req.email;
 	var idU = req.id_user;
 	var enlace = url + '/#/login';
 	var mailOptions ={
 		from: 'info@gmail.com',
-		to: mail,
+		to: email,
 		subject: 'Bievenido '+email,
 		html: "<h1>Bienvenido "+email+"!</h1><p> Has sido aceptado para formar parte de nuesta plataforma!<br> Para continuar con tu registro sigue el enlace siguiente: <a href='"+enlace+"'> iniciar sesión</a><br> Gracias por confiar en nosostros."
 	};
-
+	console.log(mailOptions)
 	send(mailOptions);
 }
 

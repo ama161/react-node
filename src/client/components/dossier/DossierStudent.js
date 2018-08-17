@@ -15,17 +15,19 @@ class DossierStudent extends React.Component{
             subjectId: '',
             viewModal: '',
             language: 0,
-            student: {}
+            student: {},
+            test: {}
         }
     }
 
     componentWillMount(){
+        console.log(this.props)
         this.setState({
-            data: this.props.student.data, 
-            subjects: this.props.student.subjects, 
+            data: this.props.student.hasOwnProperty('data') ? this.props.student.data : {}, 
+            subjects: this.props.student.hasOwnProperty('subjects') ? this.props.student.subjects : [], 
             viewModal: this.props.visible,
-            student: this.props.student.student[0],
-            test: this.props.student.test,
+            student: this.props.student.hasOwnProperty('student') ? this.props.student.student[0] : {},
+            test: this.props.student.hasOwnProperty('test') ? this.props.student.test : [],
             language: sessionStorage.language
         })
     }
@@ -56,13 +58,19 @@ class DossierStudent extends React.Component{
                 {this.state.student
                     ? <div className="dossier-header">
                         <p id="student_icon" className={(this.state.student) ? "icon " + this.state.student.icon : null}></p>
-                        <h2>{this.state.student.username}</h2>
+                        <h2>
+                            {this.state.student.username}
+                            {this.props.history.location.pathname === '/homeParent/' || this.props.history.location.pathname === '/homeParent'
+                                ? <p>{this.state.student.name}</p>
+                                : null
+                            }
+                        </h2>
                     </div>
                     : null
                 }
                 {this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher'
                     ? <button 
-                        class="ant-btn ant-btn-primary" 
+                        class="ant-btn ant-btn-primary newDossier-button" 
                         onClick={this.props.newNoteDossier}>
                         {language[lan].addEvaluation}
                     </button>

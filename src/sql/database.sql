@@ -76,7 +76,7 @@ CREATE TABLE DOSSIER(
     id_student INT,
     id_teacher INT,
     title VARCHAR(100),
-    note VARCHAR(20),
+    note FLOAT,
     id_subject INT,
     PRIMARY KEY (id_student, id_teacher, title),
     FOREIGN KEY (id_student) REFERENCES STUDENT(id_student),

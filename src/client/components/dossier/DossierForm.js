@@ -45,7 +45,7 @@ class DossierForm extends React.Component{
                 <Input 
                     className="form-item"
                     value={this.state.note}
-                    type="text" 
+                    type="number" 
                     label={language[lan].note} 
                     onChange={(event) => 
                         this.setState({note: event.target.value}, () => {
