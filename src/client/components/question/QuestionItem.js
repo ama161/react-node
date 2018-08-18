@@ -28,7 +28,7 @@ class QuestionItem extends React.Component{
     }
 
     onChangeCheckbox(event){
-        console.log(event.target.checked)
+        // console.log(event.target.checked)
         // this.setState({checked: })
     }
 

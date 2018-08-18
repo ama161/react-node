@@ -5,7 +5,6 @@ const headers = new Headers({
 });
 
 export function post(newUser, role){
-    console.log(newUser);
     const route = ROUTE + '/' + role;        
     const request = new Request(route, {
         method: 'POST',

@@ -5,7 +5,6 @@ const headers = new Headers({
 });
 
 export function post(newClass){
-    console.log(newClass);
     const request = new Request(ROUTE, {
         method: 'POST',
         mode: 'same-origin',
@@ -32,8 +31,6 @@ export function post(newClass){
 }
 
 export function put(newClass, idClass){
-    console.log('put class');
-    console.log(newClass);
     const route = ROUTE + '/' + idClass;    
     const request = new Request(route, {
         method: 'PUT',

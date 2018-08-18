@@ -66,16 +66,17 @@ router.post('/', (req, res)=>{
     connection.query(sql, (err, result)=>{
         if(err) res.json({msg: 'no insert test', type: 'error', result: result, err: err});
         else {
-            if(req.body.questions){             
-                let i;
-                for(i = 0; i<req.body.questions.length; i++){
+            if(req.body.questions){
+                let questions = req.body.questions;
+                for(let i = 0; i<questions.length; i++){
                     const sql2 = `INSERT INTO TEST_QUESTION SET
                     id_test = ${result.insertId},
-                    id_question = ${req.body.questions[i]}`;
+                    id_question = ${questions[i]}`;
                     connection.query(sql2, (err, result)=>{
                         if(err) res.json({msg: 'err questions', type: 'error', result: result, err: err});
-                        else if(i === req.body.questions.length){
-                            res.json({msg: 'register test', type: 'success', result: result, err: err});                                
+                        else {
+                            if(i === questions.length - 1)
+                                res.json({msg: 'register test', type: 'success', result: result, err: err});                                
                         }
                     })
                 }

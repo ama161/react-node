@@ -27,7 +27,6 @@ class TestView extends React.Component{
     }
 
     onHandleTest(){
-        console.log(this.state)
         let newTest = {
             questions: this.state.questions,
             title: this.state.newTest.title,

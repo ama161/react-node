@@ -82,7 +82,6 @@ export function getAllByStudent(idStudent){
 }
 
 export function post(newTest){
-    console.log(newTest)
     const request = new Request(ROUTE, {
         method: 'POST',
         mode: 'same-origin',
