@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../database';
+import { checkToken } from './utils/token';
 const router = express.Router();
 const connection = db();
 
@@ -36,56 +37,76 @@ router.get('/', (req, res)=>{
 });
 
 router.post('/', (req, res) => {
-    const sql = `INSERT INTO CLASS SET 
-        name = ${connection.escape(req.body.name)},
-        icon = ${connection.escape(req.body.icon)}
-    `;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json(err);
-        else res.json({msg: 'class registred', type: 'success'});
-    });
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO CLASS SET 
+                name = ${connection.escape(req.body.name)},
+                icon = ${connection.escape(req.body.icon)}
+            `;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json(err);
+                else res.json({msg: 'class registred', type: 'success'});
+            });
+        }
+    })
 });
 
 router.post('/class-teacher', (req, res) => {
-    const sql = `INSERT INTO CLASS_TEACHER SET 
-        id_teacher = ${connection.escape(req.body.id_teacher)},
-        id_class = ${connection.escape(req.body.id_class)}
-    `;
-    console.log(sql);
-    connection.query(sql, (err, result)=>{
-        console.log(err);
-        if(err) res.json(err);
-        else res.json({msg: 'class registred', type: 'success'});
-    });
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO CLASS_TEACHER SET 
+                id_teacher = ${connection.escape(req.body.id_teacher)},
+                id_class = ${connection.escape(req.body.id_class)}
+            `;
+            console.log(sql);
+            connection.query(sql, (err, result)=>{
+                console.log(err);
+                if(err) res.json(err);
+                else res.json({msg: 'class registred', type: 'success'});
+            });
+        }
+    })
 });
 
 router.put('/:id', (req, res) => {
-    const sql = `UPDATE CLASS SET 
-        name = ${connection.escape(req.body.name)}
-    `;
-    connection.query(sql, 
-    (err, result)=>{
-        if(err) res.json(err);
-        else res.json(result);
-    });
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `UPDATE CLASS SET 
+                name = ${connection.escape(req.body.name)}
+            `;
+            connection.query(sql, 
+            (err, result)=>{
+                if(err) res.json(err);
+                else res.json(result);
+            });
+        }
+    })
 });
 
 router.delete('/:id', (req, res) => {
-    let sql = `SELECT * FROM class WHERE id_class = ${connection.escape(req.params.id)}`;
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            let sql = `SELECT * FROM class WHERE id_class = ${connection.escape(req.params.id)}`;
     
-    connection.query(sql, 
-    (err, result)=>{
-        if(err) res.json({message: 'Class not exist'});
-        else {
-            let sql = `DELETE FROM class WHERE id_class = ${connection.escape(req.params.id)}`;
-            connection.query(sql, (err, result)=>{
-                if(err) res.json(err);
+            connection.query(sql, 
+            (err, result)=>{
+                if(err) res.json({message: 'Class not exist'});
                 else {
-                    res.json(result);                    
+                    let sql = `DELETE FROM class WHERE id_class = ${connection.escape(req.params.id)}`;
+                    connection.query(sql, (err, result)=>{
+                        if(err) res.json(err);
+                        else {
+                            res.json(result);                    
+                        }
+                    })
                 }
-            })
+            });
         }
-    });
+    })
 });
 
 module.exports = router;

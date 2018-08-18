@@ -5,6 +5,7 @@ const connection = db();
 
 var secrets = require('./config/secret');
 import {sendEmailAdmin, sendEmailParent, sendEmailStudent, sendEmailTeacher} from './utils/sendEmail';
+import { checkToken } from './utils/token';
 var Cryptr = require('cryptr'); 
 var cryptr = new Cryptr(secrets.cryptSecret);
 
@@ -255,14 +256,19 @@ router.post('/:role', (req, res) => {
 });
 
 router.post('/parent-student/:id', (req, res) => {
-    const sql = `INSERT INTO STUDENT_PARENT SET
-    id_parent = ${req.params.id},
-    id_student = ${connection.escape(req.body.student)}
-    `; 
-    connection.query(sql, (err, result)=>{
-        if(err) res.json({msg: 'no insert student', type: 'error', result: result, err: err});
-        else{                                  
-            res.json({msg: 'registrated', type: 'success', result: result, err: err});
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO STUDENT_PARENT SET
+            id_parent = ${req.params.id},
+            id_student = ${connection.escape(req.body.student)}
+            `; 
+            connection.query(sql, (err, result)=>{
+                if(err) res.json({msg: 'no insert student', type: 'error', result: result, err: err});
+                else{                                  
+                    res.json({msg: 'registrated', type: 'success', result: result, err: err});
+                }
+            })
         }
     })
 })

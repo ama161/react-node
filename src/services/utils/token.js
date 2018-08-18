@@ -31,3 +31,18 @@ export function generateToken(id, callback){
     	}
    });
 }
+
+export function checkToken(token, callback){
+    var tokenD = jwt.decode(token);
+    var tokenSecret = secrets.tokenSecret;
+
+    jwt.verify(token, tokenSecret, function(err){
+        if(err){
+            console.log('Token invalido');
+            return callback(err);
+        }else{
+            console.log('Token valido');
+            return callback();
+        }
+    });
+}

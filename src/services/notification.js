@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../database';
+import { checkToken } from './utils/token';
 const router = express.Router();
 const connection = db();
 
@@ -36,25 +37,35 @@ router.get('/parent/:id', (req, res)=>{
 });
 
 router.post('/', (req, res) => {
-    const sql = `INSERT INTO NOTIFICATIONS SET 
-        id_student = ${connection.escape(req.body.id_student)},
-        description = ${connection.escape(req.body.description)}
-    `;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json(err);
-        else res.json({msg: 'notification registred', type: 'success', err: err, result: result});
-    });
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO NOTIFICATIONS SET 
+                id_student = ${connection.escape(req.body.id_student)},
+                description = ${connection.escape(req.body.description)}
+            `;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json(err);
+                else res.json({msg: 'notification registred', type: 'success', err: err, result: result});
+            });
+        }
+    })
 });
 
 router.delete('/:id_student', (req, res) => {
-    const sql = `DELETE FROM NOTIFICATIONS
-    WHERE id_student = ${req.params.id_student}
-    AND description = ${connection.escape(req.body.description)}
-    `;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json(err);
-        else res.json({msg: 'notification deleted', type: 'success', err: err, result: result});
-    });
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `DELETE FROM NOTIFICATIONS
+            WHERE id_student = ${req.params.id_student}
+            AND description = ${connection.escape(req.body.description)}
+            `;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json(err);
+                else res.json({msg: 'notification deleted', type: 'success', err: err, result: result});
+            });
+        }
+    })
 })
 
 module.exports = router;

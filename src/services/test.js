@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../database';
+import { checkToken } from './utils/token';
 const router = express.Router();
 const connection = db();
 
@@ -59,71 +60,92 @@ router.get('/:id', (req, res)=>{
 });
 
 router.post('/', (req, res)=>{
-    const sql = `INSERT INTO TEST SET
-        title = ${connection.escape(req.body.title)},
-        description = ${connection.escape(req.body.description)}
-    `;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json({msg: 'no insert test', type: 'error', result: result, err: err});
-        else {
-            if(req.body.questions){
-                let questions = req.body.questions;
-                for(let i = 0; i<questions.length; i++){
-                    const sql2 = `INSERT INTO TEST_QUESTION SET
-                    id_test = ${result.insertId},
-                    id_question = ${questions[i]}`;
-                    connection.query(sql2, (err, result)=>{
-                        if(err) res.json({msg: 'err questions', type: 'error', result: result, err: err});
-                        else {
-                            if(i === questions.length - 1)
-                                res.json({msg: 'register test', type: 'success', result: result, err: err});                                
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO TEST SET
+                title = ${connection.escape(req.body.title)},
+                description = ${connection.escape(req.body.description)}
+            `;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json({msg: 'no insert test', type: 'error', result: result, err: err});
+                else {
+                    if(req.body.questions){
+                        let questions = req.body.questions;
+                        for(let i = 0; i<questions.length; i++){
+                            const sql2 = `INSERT INTO TEST_QUESTION SET
+                            id_test = ${result.insertId},
+                            id_question = ${questions[i]}`;
+                            connection.query(sql2, (err, result)=>{
+                                if(err) res.json({msg: 'err questions', type: 'error', result: result, err: err});
+                                else {
+                                    if(i === questions.length - 1)
+                                        res.json({msg: 'register test', type: 'success', result: result, err: err});                                
+                                }
+                            })
                         }
-                    })
+                    }
+                    else res.json({msg: 'no questions', type: 'error', result: result, err: err});            
                 }
-            }
-            else res.json({msg: 'no questions', type: 'error', result: result, err: err});            
+            });
         }
-    });
+    })
+    
 });
 
 router.post('/class/:id', (req, res) => {
-    const sql = `INSERT INTO CLASS_TEST SET
-    id_class = ${req.params.id},
-    id_test = ${connection.escape(req.body.id_test)}
-    `;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json({msg: 'no insert test in class', type: 'error', result: result, err: err});
-        else {
-            res.json({msg: 'add test in class', type: 'success', result: result, err: err});            
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO CLASS_TEST SET
+            id_class = ${req.params.id},
+            id_test = ${connection.escape(req.body.id_test)}
+            `;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json({msg: 'no insert test in class', type: 'error', result: result, err: err});
+                else {
+                    res.json({msg: 'add test in class', type: 'success', result: result, err: err});            
+                }
+            });
         }
-    });
+    })
 });
 
 router.post('/student/:id', (req, res) => {
-    const sql = `INSERT INTO STUDENT_TEST SET
-    id_student = ${req.params.id},
-    id_test = ${connection.escape(req.body.id_test)},
-    note = ${connection.escape(req.body.note)}
-    `;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json({msg: 'no insert note in test student', type: 'error', result: result, err: err});
-        else {
-            res.json({msg: 'add note in test', type: 'success', result: result, err: err});            
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO STUDENT_TEST SET
+            id_student = ${req.params.id},
+            id_test = ${connection.escape(req.body.id_test)},
+            note = ${connection.escape(req.body.note)}
+            `;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json({msg: 'no insert note in test student', type: 'error', result: result, err: err});
+                else {
+                    res.json({msg: 'add note in test', type: 'success', result: result, err: err});            
+                }
+            });
         }
-    });
+    })
 });
 
 router.put('/student/:id', (req, res) => {
-    const sql = `UPDATE STUDENT_TEST SET
-    note = ${connection.escape(req.body.note)}
-    WHERE id_student = ${req.params.id} AND id_test = ${connection.escape(req.body.id_test)}
-    `;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json({msg: 'no update note in test student', type: 'error', result: result, err: err});
-        else {
-            res.json({msg: 'update note in test', type: 'success', result: result, err: err});            
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `UPDATE STUDENT_TEST SET
+            note = ${connection.escape(req.body.note)}
+            WHERE id_student = ${req.params.id} AND id_test = ${connection.escape(req.body.id_test)}
+            `;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json({msg: 'no update note in test student', type: 'error', result: result, err: err});
+                else {
+                    res.json({msg: 'update note in test', type: 'success', result: result, err: err});            
+                }
+            });
         }
-    });
+    })
 });
 
 module.exports = router;

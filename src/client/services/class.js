@@ -1,7 +1,8 @@
 const ROUTE = '/api/class';
 
 const headers = new Headers({
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'authorization': sessionStorage.token
 });
 
 export function post(newClass){

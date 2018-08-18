@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../database';
+import { checkToken } from './utils/token';
 const router = express.Router();
 const connection = db();
 
@@ -18,7 +19,6 @@ router.get('/student/:id', (req, res)=>{
 });
 
 router.get('/teacher/:id_teacher/date/:date', (req, res)=>{
-    console.log(req.params.id_date)
     const sql = `SELECT CALENDAR_ASSISTANCE.id_class, CALENDAR_ASSISTANCE.id_student, CALENDAR_ASSISTANCE.type, CALENDAR_ASSISTANCE.id_subject, SUBJECT.name, STUDENT.username 
     FROM CALENDAR_ASSISTANCE
     LEFT JOIN CLASS_TEACHER ON CLASS_TEACHER.id_class = CALENDAR_ASSISTANCE.id_class
@@ -58,28 +58,38 @@ router.get('/parent/:id', (req, res)=>{
 });
 
 router.post('/', (req, res) => {
-    const sql = `INSERT INTO CALENDAR_ASSISTANCE SET 
-        id_student = ${connection.escape(req.body.id_student)},
-        id_subject = ${connection.escape(req.body.id_subject)},
-        id_class = ${connection.escape(req.body.id_class)},
-        date = ${connection.escape(req.body.date)},
-        description = ${connection.escape(req.body.description)},
-        type = ${connection.escape(req.body.type)}
-    `;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json(err);
-        else res.json({msg: 'calendar registred', type: 'success', result: result, err: err });
-    });
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO CALENDAR_ASSISTANCE SET 
+                id_student = ${connection.escape(req.body.id_student)},
+                id_subject = ${connection.escape(req.body.id_subject)},
+                id_class = ${connection.escape(req.body.id_class)},
+                date = ${connection.escape(req.body.date)},
+                description = ${connection.escape(req.body.description)},
+                type = ${connection.escape(req.body.type)}
+            `;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json(err);
+                else res.json({msg: 'calendar registred', type: 'success', result: result, err: err });
+            });
+        }
+    })
 });
 
 router.put('/', (req, res) => {
-    const sql = `UPDATE CALENDAR_ASSISTANCE SET
-    type = 'success'
-    WHERE description = ${connection.escape(req.body.description)}`;
-    connection.query(sql, (err, result)=>{
-        if(err) res.json({msg: 'No justify', type: 'error', result: result, err: err});
-        else {
-            res.json({msg: 'Justify', type: 'success', result: result, err: err});            
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `UPDATE CALENDAR_ASSISTANCE SET
+            type = 'success'
+            WHERE description = ${connection.escape(req.body.description)}`;
+            connection.query(sql, (err, result)=>{
+                if(err) res.json({msg: 'No justify', type: 'error', result: result, err: err});
+                else {
+                    res.json({msg: 'Justify', type: 'success', result: result, err: err});            
+                }
+            });
         }
     });
 });

@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../database';
+import { checkToken } from './utils/token';
 const router = express.Router();
 const connection = db();
 
@@ -25,18 +26,23 @@ router.get('/:id', (req, res)=>{
 });
 
 router.post('/', (req, res)=>{
-    const sql = `INSERT INTO QUESTION SET
-        title = ${connection.escape(req.body.title)},
-        response_true = ${connection.escape(req.body.response_true)},
-        response_false_1 = ${connection.escape(req.body.response_false_1)},
-        response_false_2 = ${connection.escape(req.body.response_false_2)},
-        id_subject = ${connection.escape(req.body.subject)}
-    `;
-    connection.query(sql, (err, result)=>{
-        console.log(err);
-        if(err) res.json({msg: 'no insert question', type: 'error', result: result, err: err});
-        else res.json({msg: 'registrated', type: 'success', result: result, err: err});
-    });
+    let token = req.headers.authorization;
+    checkToken(token, (result) => {
+        if(!result){
+            const sql = `INSERT INTO QUESTION SET
+                title = ${connection.escape(req.body.title)},
+                response_true = ${connection.escape(req.body.response_true)},
+                response_false_1 = ${connection.escape(req.body.response_false_1)},
+                response_false_2 = ${connection.escape(req.body.response_false_2)},
+                id_subject = ${connection.escape(req.body.subject)}
+            `;
+            connection.query(sql, (err, result)=>{
+                console.log(err);
+                if(err) res.json({msg: 'no insert question', type: 'error', result: result, err: err});
+                else res.json({msg: 'registrated', type: 'success', result: result, err: err});
+            });
+        }
+    })
 });
 
 module.exports = router;

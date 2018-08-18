@@ -65,7 +65,7 @@ CREATE TABLE CLASS_TEACHER(
     FOREIGN KEY (id_class)  REFERENCES CLASS(id_class),
     FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher)
 );
-
+ 
 CREATE TABLE SUBJECT(
     id_subject INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100),
@@ -107,7 +107,7 @@ CREATE TABLE TEST_QUESTION(
     FOREIGN KEY (id_test) REFERENCES TEST(id_test),
     FOREIGN KEY (id_question) REFERENCES QUESTION(id_question)
 );
-
+ 
 CREATE TABLE CLASS_TEST(
     id_class INT,
     id_test INT,
