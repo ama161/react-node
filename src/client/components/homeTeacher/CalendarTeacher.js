@@ -19,7 +19,6 @@ class CalendarTeacher extends React.Component{
     }
 
     componentWillReceiveProps(){
-        console.log('componentWillReceiveProps')
         this.getByTeacher()
     }
 

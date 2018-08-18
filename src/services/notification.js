@@ -15,6 +15,7 @@ router.get('/teacher/:id', (req, res)=>{
     FROM NOTIFICATIONS
     INNER JOIN STUDENT ON STUDENT.id_student = NOTIFICATIONS.id_student
     INNER JOIN CLASS_TEACHER ON CLASS_TEACHER.id_class = STUDENT.id_class
+    INNER JOIN CLASS ON STUDENT.id_class = CLASS.id_class
     where CLASS_TEACHER.id_teacher = ${req.params.id}`;
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);
@@ -44,5 +45,16 @@ router.post('/', (req, res) => {
         else res.json({msg: 'notification registred', type: 'success', err: err, result: result});
     });
 });
+
+router.delete('/:id_student', (req, res) => {
+    const sql = `DELETE FROM NOTIFICATIONS
+    WHERE id_student = ${req.params.id_student}
+    AND description = ${connection.escape(req.body.description)}
+    `;
+    connection.query(sql, (err, result)=>{
+        if(err) res.json(err);
+        else res.json({msg: 'notification deleted', type: 'success', err: err, result: result});
+    });
+})
 
 module.exports = router;

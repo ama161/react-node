@@ -34,7 +34,6 @@ class Login extends React.Component{
                 sessionStorage.setItem('idUser', result.idUser);
                 userByRole()
                 .then((result) => {
-                    console.log(result);
                     if(result === 'admin')
                         this.props.history.push("/homeAdmin");
                     if(result === 'teacher')

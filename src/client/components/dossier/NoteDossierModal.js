@@ -23,14 +23,12 @@ class ClassTeacherModal extends React.Component{
     }
 
     componentWillMount(){
-        console.log(this.props.id_student)
         this.setState({
             viewModal: this.props.visible, id_teacher: this.props.id_teacher, language: sessionStorage.language, id_student: this.props.id_student
         })
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps.id_teacher)        
         this.setState({
             viewModal: nextProps.visible, id_teacher: nextProps.id_teacher, id_student: nextProps.id_student
         })

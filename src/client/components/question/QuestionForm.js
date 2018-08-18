@@ -22,7 +22,6 @@ class QuestionForm extends React.Component{
     }
 
     onChangeSubject(value){
-        console.log(value)
         this.setState({subject: value}
             , () => {
                 this.props.onChangeQuestion(this.state)

@@ -25,7 +25,6 @@ class CenterForm extends React.Component{
       }
       post(newCenter)
       .then(result => {
-          console.log(result)
         if(result.hasOwnProperty('msg'))
             message[result.type](result.msg)
       })

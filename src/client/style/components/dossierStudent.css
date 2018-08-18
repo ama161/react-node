@@ -9,6 +9,11 @@
     padding: 0.5em;
 }
 
+.dossierStudent-buttons div{
+    display: flex;
+    justify-content: space-around;
+}
+
 .dossierStudent-container-item{
     display: flex;
     align-items: baseline;

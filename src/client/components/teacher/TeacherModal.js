@@ -34,7 +34,6 @@ class TeacherModal extends React.Component{
     }
 
     onHandleOk(){
-        console.log(this.state.newTeacher);
         post(this.state.newTeacher, 'teacher')
         .then(result => {
             if(result.hasOwnProperty('msg'))

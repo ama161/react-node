@@ -20,7 +20,6 @@ class TestStudentModal extends React.Component{
     componentWillMount(){
         get(this.props.testId)
         .then(result => {
-            console.log(result);
             this.setState({
                 test: result.test, viewModal: this.props.visible, language: sessionStorage.language, arrayClass: result.class
             })

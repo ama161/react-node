@@ -32,7 +32,6 @@ class Modal extends React.Component{
     }
 
     render(){
-        console.log(this.props.width)
         return(
             <div>
                 <AntModal 

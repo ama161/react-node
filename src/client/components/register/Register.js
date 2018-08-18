@@ -17,7 +17,6 @@ class Register extends React.Component{
     }
     
     componentWillReceiveProps(){
-        console.log(this.props.user);
         if(this.props.user){
           this.setState({user: this.props.user})
         }

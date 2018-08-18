@@ -20,7 +20,6 @@ class DossierForm extends React.Component{
     }
 
     onChangeSubject(value){
-        console.log(value)
         this.setState({subject: value}
             , () => {
                 this.props.onChangeDossier(this.state)

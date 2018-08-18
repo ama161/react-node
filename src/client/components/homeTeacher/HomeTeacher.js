@@ -1,4 +1,5 @@
 import React from 'react'
+import {Alert, message} from 'antd'
 import { withRouter } from 'react-router'
 
 import language from '../../language/language'
@@ -11,7 +12,8 @@ import {getStudentsByClass, getStudentDossier} from '../../services/user'
 import DossierStudent from '../dossier/DossierStudent'
 import NoteDossierModal from '../dossier/NoteDossierModal';
 import CalendarTeacher from './CalendarTeacher';
-import { getByTeacher } from '../../services/notification';
+import { getByTeacher, deleteNotification } from '../../services/notification';
+import ParentInfoModal from './ParentInfoModal';
 
 class HomeTeacher extends React.Component{
     constructor(props){
@@ -27,6 +29,7 @@ class HomeTeacher extends React.Component{
             viewNoteDossierModal: false,
             viewCalendar: false,
             notifications: [],
+            viewParentModal: false,
         }
     }
 
@@ -39,6 +42,8 @@ class HomeTeacher extends React.Component{
                     let idTeacher = sessionStorage.idUser;
                     getClassTeacher(idTeacher)
                     .then(result => this.setState({class: result, language: sessionStorage.language}));
+                    getByTeacher(sessionStorage.idUser)
+                    .then(result => this.setState({notifications: result}))
                 }
             })
             .catch(() => {
@@ -65,9 +70,18 @@ class HomeTeacher extends React.Component{
     onStudentClick(id){
         getStudentDossier(id)
             .then(result => {
-                console.log(result);
                 this.setState({student: result, studentId: id})}
             ).catch(err => console.log('err'))
+    }
+
+    handleClose(item){
+        deleteNotification(item.id_student, item.description)
+        .then(result => {
+            if(result.hasOwnProperty('msg'))
+                message[result.type](result.msg)
+            if(result.type === 'success') this.onCancel();
+        })
+        .catch(err => console.log(err))
     }
 
     render(){
@@ -80,10 +94,20 @@ class HomeTeacher extends React.Component{
                         id_student={this.state.studentId}
                         id_teacher={sessionStorage.idUser}
                         onHandleCancel={() => {
-                            console.log('onHandleCancel')
                             this.setState({viewNoteDossierModal: false})
                             this.onStudentClick(this.state.studentId)
                         }}/>
+                    : null
+                }
+                {this.state.viewParentModal
+                    ? <ParentInfoModal
+                        visible={this.state.viewParentModal}
+                        id_student={this.state.studentId}
+                        onHandleCancel={() => {
+                            this.setState({viewParentModal: false})
+                            this.onStudentClick(this.state.studentId)
+                        }}
+                    />
                     : null
                 }
                 <Header onChangeLanguage={(language) => this.setState({language: language})}/>
@@ -100,8 +124,18 @@ class HomeTeacher extends React.Component{
                     </button>
                 </div>
                 <div className="notifications-container">
+                    <Alert 
+                        message={language[lan].deleteMessage} 
+                        type="error" 
+                        showIcon 
+                        closable/>
                     {this.state.notifications.map(item =>
-                        <Alert message={item.description + ' - ' + item.username} type="info" showIcon closable/>
+                        <Alert 
+                            message={item.description + ' - ' + item.username + ', ' + item.name} 
+                            type="info" 
+                            showIcon 
+                            closeText={language[lan].deleteNotification} 
+                            afterClose={() => this.handleClose(item)}/>
                     )}
                 </div>
                 {this.state.viewCalendar
@@ -135,7 +169,8 @@ class HomeTeacher extends React.Component{
                                 student={this.state.student} 
                                 visible={(this.state.studentId) ? true : false}
                                 onHandleCancel={() => this.setState({studentId: ''})}
-                                newNoteDossier={() => this.setState({viewNoteDossierModal: true})}/>
+                                newNoteDossier={() => this.setState({viewNoteDossierModal: true})}
+                                viewParent={() => this.setState({viewParentModal: true})}/>
                         : null
                     }
                 </div>

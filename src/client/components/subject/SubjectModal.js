@@ -38,7 +38,6 @@ class SubjectModal extends React.Component{
         if(this.state.id_subject){
             put(this.state.newSubject, this.state.id_subject)
             .then(result => {
-                console.log(result);
                 if(result.hasOwnProperty('msg'))
                     message[result.type](result.msg)
                 if(result.type === 'success') this.onCancel();
@@ -46,7 +45,6 @@ class SubjectModal extends React.Component{
         }else{
             post(this.state.newSubject)
             .then(result => {
-                console.log(result);
                 if(result.hasOwnProperty('msg'))
                     message[result.type](result.msg)
                 if(result.type === 'success') this.onCancel();

@@ -22,7 +22,6 @@ class SuccessAssistanceModal extends React.Component{
     }
 
     componentWillMount(){
-        console.log(this.props.infoDate)
         this.setState({viewModal: this.props.visible, infoDate: this.props.infoDate, language: sessionStorage.language})        
     }
 
@@ -36,10 +35,8 @@ class SuccessAssistanceModal extends React.Component{
     }
 
     onHandleOk(){
-        console.log('justify')
         putAssistance(this.state.infoDate.description)
         .then(result => {
-            console.log(result);
             if(result.hasOwnProperty('msg'))
                 message[result.type](result.msg)
             this.onCancel();

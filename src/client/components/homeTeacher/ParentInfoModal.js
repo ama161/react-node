@@ -23,7 +23,6 @@ class ParentInfoModal extends React.Component{
     componentWillMount(){
         getParentStudent(this.props.id_student)
         .then(result => {
-            console.log(result)
             this.setState({
                 viewModal: this.props.visible, 
                 id_student: this.props.id_student, 

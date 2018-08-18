@@ -62,39 +62,12 @@ class Calendar extends React.Component{
                 </div>
             );
         }
-        
-        // for (let i=0; i<this.state.dataCalendar.length; i++){
-        //     if(this.state.dataCalendar[i].date === date){
-        //         console.log(this.state.dataCalendar[i])
-        //         return (
-        //             <li>
-        //                 <Badge 
-        //                     status={this.state.dataCalendar[i].type} 
-        //                     text={this.state.dataCalendar[i].username + ' ' + this.state.dataCalendar[i].description} />
-        //             </li>
-        //         );
-        //     }
-        // }
-        
-        // let listData = getListData(value);
-        // return (
-        //     <ul className="events">
-        //     {
-        //         listData.map(item => (
-        //         <li key={item.content}>
-        //             <Badge status={item.type} text={item.content} />
-        //         </li>
-        //         ))
-        //     }
-        //     </ul>
-        // );
     }
 
     render(){
         return(
             <div className="calendar">
                 <CalendarANT 
-                    // fullscreen={false}
                     dateCellRender={this.dateCellRender}
                     onSelect={date => this.onSelect(date)}/>
             </div>

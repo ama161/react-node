@@ -24,10 +24,8 @@ class TestQuestionsModal extends React.Component{
     }
 
     componentWillMount(){
-        console.log('componentWillMount')
         get(this.props.testId)
         .then(result => {
-            console.log(result);
             this.setState({
                 viewModal: this.props.visible, 
                 language: sessionStorage.language, 
@@ -37,10 +35,8 @@ class TestQuestionsModal extends React.Component{
     }
 
     componentWillReceiveProps(nextProps){
-        console.log('componentWillReceiveProps')
         get(nextProps.testId)
         .then(result => {
-            console.log(result);
             this.setState({
                 viewModal: nextProps.visible, 
                 language: sessionStorage.language, 

@@ -34,7 +34,6 @@ class TestView extends React.Component{
             description: this.state.newTest.description
         }
 
-        console.log(newTest);
         post(newTest)
         .then(result => {
             if(result.hasOwnProperty('msg'))

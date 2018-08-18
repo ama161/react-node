@@ -18,10 +18,8 @@ class Register2 extends React.Component{
     }
 
     componentWillMount(){
-        console.log(this.props.location.search.split('?'));
         let idU = this.props.location.search.split('?')[2];
         get(idU).then(result => {
-            console.log(result);
             this.setState({email: result[0].email, user: result[0]})
         })
         .catch(err => this.props.history.push('/login'));

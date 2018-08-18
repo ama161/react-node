@@ -7,7 +7,6 @@ import {userByRole} from '../../functions/userByRole';
 import Header from '../utils/Header'
 import {getByRole, getStudentDossier} from '../../services/user'
 import {postTestStudent, getAllByStudent, putTestStudent} from '../../services/test';
-import ParentInfoModal from './ParentInfoModal'
 import DossierStudent from '../dossier/DossierStudent'
 import TestItem from '../test/TestItem';
 import TestQuestionsModal from '../test/TestQuestionsModal'
@@ -56,7 +55,6 @@ class HomeStudent extends React.Component{
     onHandleDossier(){
         getStudentDossier(sessionStorage.idUser)
             .then(result => {
-                console.log(result);
                 this.setState({studentDossier: result, studentId: sessionStorage.idUser})}
             ).catch(err => console.log('err'))
     }

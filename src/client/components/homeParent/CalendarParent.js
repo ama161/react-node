@@ -25,7 +25,6 @@ class CalendarParent extends React.Component{
     getByParents(){
         getByParent(sessionStorage.idUser)
         .then(result => {
-            console.log(result)
             this.setState({dataCalendar: result})
         })
         .catch(err => console.log(err))

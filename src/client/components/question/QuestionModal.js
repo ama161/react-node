@@ -38,7 +38,6 @@ class QuestionModal extends React.Component{
     }
 
     onHandleOk(){
-        console.log(this.state.newQuestion)
         post(this.state.newQuestion)
         .then(result => {
             if(result.hasOwnProperty('msg'))

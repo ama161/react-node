@@ -23,12 +23,10 @@ class ParentStudentModal extends React.Component{
     }
 
     componentWillMount(){
-        console.log(this.props.id_parent)
         this.setState({viewModal: this.props.visible, id_parent: this.props.id_parent, language: sessionStorage.language})
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps.id_parent)        
         this.setState({viewModal: nextProps.visible, id_parent: nextProps.id_parent})
     }
 

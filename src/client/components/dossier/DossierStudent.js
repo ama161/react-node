@@ -57,7 +57,8 @@ class DossierStudent extends React.Component{
             <Modal 
                 visible={this.state.viewModal}
                 onHandleCancel={() => this.onCancel()}
-                onHandleOk={() => this.onCancel()}>
+                onHandleOk={() => this.onCancel()}
+                className="big-modal">
                 {this.state.student
                     ? <div className="dossier-header">
                         <p id="student_icon" className={(this.state.student) ? "icon " + this.state.student.icon : null}></p>
@@ -72,24 +73,31 @@ class DossierStudent extends React.Component{
                     : null
                 }
                 
-                {this.props.history.location.pathname !== '/homeStudent/' || this.props.history.location.pathname !== '/homeStudent'
-                    ? <div>
-                        <button 
+                <div className="dossierStudent-buttons">
+                    {this.props.history.location.pathname === '/homeParent/' || this.props.history.location.pathname === '/homeParent'
+                        ?<button 
                             class="ant-btn ant-btn-primary newDossier-button" 
                             onClick={this.props.newNotification}>
-                            {language[lan].notification} {(this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher') ? language[lan].parent : language[lan].teacher}
+                            {language[lan].notification} {language[lan].teacher}
                         </button>
-                        {this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher'
-                            ? <button 
-                                class="ant-btn newDossier-button" 
+                        :null
+                    }
+                    {this.props.history.location.pathname === '/homeTeacher/' || this.props.history.location.pathname === '/homeTeacher'
+                        ? <div>
+                            <button 
+                                class="ant-btn ant-btn-primary newDossier-button" 
                                 onClick={this.props.newNoteDossier}>
                                 {language[lan].addEvaluation}
                             </button>
-                            : null
-                        }
-                    </div>
-                    : null
-                }
+                            <button 
+                                class="ant-btn newDossier-button" 
+                                onClick={this.props.viewParent}>
+                                {language[lan].infoParent}
+                            </button>
+                        </div>
+                        : null
+                    }
+                </div>
                 
                 <div className="dossierStudent-container">
                     {this.state.subjects

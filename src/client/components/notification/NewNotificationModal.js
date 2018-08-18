@@ -40,14 +40,12 @@ class NewNotificationModal extends React.Component{
     }
 
     onHandleOk(){
-        console.log(this.state)
         let notification = {
             id_student: this.state.studentId,
             description: this.state.description
         }
         post(notification)
         .then(result => {
-            console.log(result)
             if(result.hasOwnProperty('msg'))
                 message[result.type](result.msg)
             this.onCancel();
