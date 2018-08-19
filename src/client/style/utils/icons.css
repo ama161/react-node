@@ -60,7 +60,7 @@
     height: 90px;
 }
 
-.ant-steps-item-finish .ant-steps-item-icon, .ant-steps-item-process .ant-steps-item-icon{
+.capturas ant-steps-item-finish .ant-steps-item-icon, .ant-steps-item-process .ant-steps-item-icon{
     background: #97C6E1 !important;
     border-color: #97C6E1 !important;
 }
