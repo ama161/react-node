@@ -49,8 +49,8 @@
 
 .logo-primary{
     background-image: url("../../img/logo.png");
-    width: 400px;
-    height: 200px;
+    width: 100%;
+    margin: 20px 0;
 }
 
 .logo-header{

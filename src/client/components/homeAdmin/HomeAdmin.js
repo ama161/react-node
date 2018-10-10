@@ -20,6 +20,7 @@ import SubjectList from '../subject/SubjectList';
 import SubjectModal from '../subject/SubjectModal';
 import UserItem from '../utils/UserItem';
 import DossierStudent from '../dossier/DossierStudent';
+import CalendarWeekModal from '../calendarWeek/CalendarWeekModal';
 
 class HomeAdmin extends React.Component{
     constructor(props){
@@ -38,6 +39,8 @@ class HomeAdmin extends React.Component{
             viewParents: false,
             viewModalSubject: false,
             viewSubjects: false,
+            viewCalendarsWeek: false,
+            viewModalCalendarWeek: false,
             language: 0,
             students: {},
             student: null,
@@ -74,13 +77,15 @@ class HomeAdmin extends React.Component{
                     onHandleModalTeacher={() => this.setState({viewModalTeacher: true})}
                     onHandleModalParent={() => this.setState({viewModalParent: true})}
                     onHandleModalClass={() => this.setState({viewModalClass: true})}
-                    onHandleClass={() => this.setState({viewClass: true, viewStudents: false, viewTeachers: false, viewParents: false, viewSubjects: false})}
-                    onHandleStudents={() => this.setState({viewStudents: true, viewClass: false, viewTeachers: false, viewParents: false, viewSubjects: false})}
-                    onHandleTeachers={() => this.setState({viewTeachers: true, viewClass: false, viewStudents: false, viewParents: false, viewSubjects: false})}
-                    onHandleParents={() => this.setState({viewParents: true, viewClass: false, viewStudents: false, viewTeachers: false, viewSubjects: false})}
+                    onHandleClass={() => this.setState({viewClass: true, viewStudents: false, viewTeachers: false, viewParents: false, viewSubjects: false, viewCalendarsWeek: false})}
+                    onHandleStudents={() => this.setState({viewStudents: true, viewClass: false, viewTeachers: false, viewParents: false, viewSubjects: false, viewCalendarsWeek: false})}
+                    onHandleTeachers={() => this.setState({viewTeachers: true, viewClass: false, viewStudents: false, viewParents: false, viewSubjects: false, viewCalendarsWeek: false})}
+                    onHandleParents={() => this.setState({viewParents: true, viewClass: false, viewStudents: false, viewTeachers: false, viewSubjects: false, viewCalendarsWeek: false})}
                     onChangeLanguage={(language) => this.setState({language: language})}
                     onHandleModalSubject={() => this.setState({viewModalSubject: true})}
-                    onHandleSubject={() => this.setState({viewSubjects: true, viewParents: false, viewClass: false, viewStudents: false, viewTeachers: false})}/>
+                    onHandleSubject={() => this.setState({viewSubjects: true, viewParents: false, viewClass: false, viewStudents: false, viewTeachers: false, viewCalendarsWeek: false})}
+                    onHandleNewCalendarWeek={() => this.setState({viewModalCalendarWeek: true})}
+                    onHandleCalendarWeek={() => this.setState({viewCalendarsWeek: true, viewSubjects: false, viewParents: false, viewClass: false, viewStudents: false, viewTeachers: false})}/>
                     
                 <div className="homeAdmin-container-info">
                     
@@ -110,6 +115,11 @@ class HomeAdmin extends React.Component{
 
                     { this.state.viewModalParent
                         ? <ParentModal visible={this.state.viewModalParent} onHandleCancel={() => this.setState({viewModalParent: false})}/>
+                        : null
+                    }
+
+                    { this.state.viewModalCalendarWeek
+                        ? <CalendarWeekModal visible={this.state.viewModalCalendarWeek} onHandleCancel={() => this.setState({viewModalCalendarWeek: false})}/>
                         : null
                     }
 
@@ -154,6 +164,11 @@ class HomeAdmin extends React.Component{
 
                     { this.state.viewSubjects
                         ? <SubjectList/>
+                        : null
+                    }
+
+                    { this.state.viewCalendarsWeek
+                        ? <p>viewCalendarsWeek</p>
                         : null
                     }
                 </div>

@@ -1,6 +1,7 @@
 @import url("components/all.css");
 @import url("utils/all.css");
 @import '~antd/dist/antd.css';
+@import '~react-week-calendar/dist/style.css';
 
 html{
     font-family: HiraKakuPro-W3;

@@ -38,11 +38,14 @@
     "moment": "^2.22.2",
     "morgan": "^1.9.0",
     "mysql": "^2.16.0",
+    "node-gyp": "^3.8.0",
     "nodemailer": "^4.6.7",
     "rc-calendar": "^9.7.0",
     "react": "^16.4.1",
     "react-big-calendar": "^0.19.2",
     "react-dom": "^16.4.1",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "react-week-calendar": "^0.1.1",
+    "rebuild": "^0.1.2"
   }
 }

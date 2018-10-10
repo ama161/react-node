@@ -52,7 +52,10 @@ const language = [
         'test': 'Test',                
         'newTest': 'Nuevo Test',  
         'addQuestion': 'Añadir Pregunta',                
-        'newQuestion': 'Nueva Pregunta',                
+        'newQuestion': 'Nueva Pregunta',  
+        'calendarWeek': 'Calendario Semanal',              
+        'addCalendarWeek': 'Añadir',   
+        'viewCalendarWeek': 'Visualizar',              
     },
     {
         'welcome': 'Welcome',
@@ -107,9 +110,11 @@ const language = [
         'test': 'Test',                
         'newTest': 'New Test',                
         'addQuestion': 'Add Question',                
-        'newQuestion': 'New Question',                
+        'newQuestion': 'New Question',  
+        'calendarWeek': 'Calendar Week',   
+        'addCalendarWeek': 'Add',              
+        'viewCalendarWeek': 'View',              
     }
-
 ]
 
 export default language;

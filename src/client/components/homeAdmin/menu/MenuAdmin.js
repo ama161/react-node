@@ -37,7 +37,9 @@ class MenuAdmin extends React.Component {
         if(e.key === '8')  this.props.onHandleClass();  
         if(e.key === '9')  this.props.onHandleModalSubject();  
         if(e.key === '10')  this.props.onHandleSubject();  
-        if(e.key === '11')  this.onHandleLogout();  
+        if(e.key === '11')  this.props.onHandleNewCalendarWeek();  
+        if(e.key === '12')  this.props.onHandleCalendarWeek();  
+        if(e.key === '13')  this.onHandleLogout();  
     }
 
     onHandleLogout(){
@@ -82,7 +84,11 @@ class MenuAdmin extends React.Component {
                         <MenuItem key="9"><Icon type="folder-add" />{language[lan].addSubjects}</MenuItem>        
                         <MenuItem key="10"><Icon type="folder" />{language[lan].viewSubjects}</MenuItem>        
                     </SubMenu>
-                    <MenuItem key="11"><Icon type="logout" />{language[lan].logout}</MenuItem>   
+                    <SubMenu key="sub5" title={<span><Icon type="folder-open" /><span>{language[lan].calendarWeek}</span></span>}>
+                        <MenuItem key="11"><Icon type="folder-add" />{language[lan].addCalendarWeek}</MenuItem>        
+                        <MenuItem key="12"><Icon type="folder" />{language[lan].viewCalendarWeek}</MenuItem>        
+                    </SubMenu>
+                    <MenuItem key="13"><Icon type="logout" />{language[lan].logout}</MenuItem>   
                 </MenuItemGroup>
             </MenuANT>
         );

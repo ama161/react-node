@@ -13,7 +13,8 @@ import subjectRoutes from './services/subject';
 import testRoutes from './services/test';
 import questionRoutes from './services/question';
 import calendarRoutes from './services/calendar';
-import notificationRoutes from './services/notification'
+import notificationRoutes from './services/notification';
+import calendarWeekRoutes from './services/calendarWeek';
 
 //init packages
 const app = express();
@@ -41,6 +42,7 @@ app.use('/api/test', testRoutes);
 app.use('/api/question', questionRoutes);
 app.use('/api/calendar', calendarRoutes);
 app.use('/api/notification', notificationRoutes);
+app.use('/api/calendarWeek', calendarWeekRoutes);
 
 //start server
 app.listen(app.get('port'), ()=>{

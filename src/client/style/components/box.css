@@ -48,3 +48,9 @@
 .selectedUser{
     border-bottom: solid 4px #97C6E1;    
 }
+
+@media (max-width: 500px){
+    .box-blue{
+        width: 90%;
+    }
+}

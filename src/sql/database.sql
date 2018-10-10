@@ -145,6 +145,32 @@ CREATE TABLE NOTIFICATIONS(
     FOREIGN KEY (id_student) REFERENCES STUDENT(id_student)
 );
 
+CREATE TABLE DAY(
+    id_day INT PRIMARY KEY AUTO_INCREMENT,
+    label VARCHAR(100)
+);
+
+INSERT INTO DAY (label) VALUES ('LUNES'), ('MARTES'), ('MIERCOLES'), ('JUEVES'), ('VIERNES');
+
+CREATE TABLE TIME(
+    id_time INT PRIMARY KEY AUTO_INCREMENT,
+    label VARCHAR(100)
+);
+
+INSERT INTO TIME (label) VALUES ('09:00'), ('10:00'), ('11:00'), ('12:00'), ('13:00'), ('14:00'), ('15:00'), ('16:00'), ('17:00');
+
+CREATE TABLE CALENDAR_WEEK(
+    id_class INT,
+    id_day INT,
+    id_time INT,
+    id_subject INT,
+    PRIMARY KEY (id_class, id_day, id_time),
+    FOREIGN KEY (id_class) REFERENCES CLASS(id_class),
+    FOREIGN KEY (id_day) REFERENCES DAY(id_day),
+    FOREIGN KEY (id_time) REFERENCES TIME(id_time),
+    FOREIGN KEY (id_subject) REFERENCES SUBJECT(id_subject)
+);
+
 DESCRIBE users;
 
 SELECT * FROM users;
