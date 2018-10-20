@@ -19,8 +19,7 @@ class CellModal extends React.Component{
   
     handleSave(){
       const label = this.state.label;
-  
-      console.log('hola')
+      
       console.log(label)
       this.props.onSave({
         label,

@@ -24,7 +24,7 @@ class SelectSubject extends React.Component{
     render(){
         return(
             <Select 
-                placeholder="Select subject" 
+                placeholder="Subject" 
                 options={this.state.subjects} 
                 onHandleChange={this.props.onHandleChange}
                 id="id_subject"

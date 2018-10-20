@@ -4,6 +4,7 @@ import React from 'react';
 
 import language from '../../language/language';
 import CellModal from './CellModal';
+import CellEvent from './CellEvent';
 
 class CalendarWeek extends React.Component{
     constructor(props){
@@ -34,6 +35,7 @@ class CalendarWeek extends React.Component{
                 dayFormat={'dddd'}
                 onEventClick={() => console.log("onEventClick")}
                 modalComponent={CellModal}
+                eventComponent={CellEvent}
             />
         )
     }

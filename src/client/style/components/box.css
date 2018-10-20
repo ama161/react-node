@@ -12,7 +12,7 @@
 .box-blue{
     width: 50%;
     margin: auto;
-    background: #97C6E1;
+    background: #E1C0A2;
     margin-top: 5%;
 }
 
@@ -31,6 +31,11 @@
     display: flex;
     margin: 0.5em;
     align-items: center;
+}
+
+.boxClass{
+    display: flex;
+    justify-content: center;
 }
 
 .classList-container .box-brown{

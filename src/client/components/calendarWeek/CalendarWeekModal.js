@@ -2,8 +2,10 @@ import React from 'react';
 // import { message } from 'antd';
 
 import Modal from '../utils/Modal'
+import Input from '../utils/Input';
 import language from '../../language/language'
-import CalendarWeek from './CalendarWeek';
+import CalendarWeekTable from './CalendarWeekTable';
+import SelectClass from '../utils/select/SelectClass';
 
 class CalendarWeekModal extends React.Component{
     constructor(props){
@@ -15,15 +17,16 @@ class CalendarWeekModal extends React.Component{
         this.state={
             viewModal: false,
             language: 0,
+            class: '',
         }
     }
 
     componentWillMount(){
-        this.setState({viewModal: this.props.visible, language: sessionStorage.language})
+        this.setState({viewModal: this.props.visible, language: sessionStorage.language, class: this.props.classId})
     }
 
     componentWillReceiveProps(nextProps){
-        this.setState({viewModal: nextProps.visible, language: sessionStorage.language})
+        this.setState({viewModal: nextProps.visible, language: sessionStorage.language, class: nextProps.classId})
     }
 
     onCancel(){
@@ -33,6 +36,11 @@ class CalendarWeekModal extends React.Component{
 
     onHandleOk(){
         this.onCancel();
+    }
+
+    onChangeClass(event){
+        this.setState({class: event})
+        
     }
 
     render(){
@@ -48,7 +56,13 @@ class CalendarWeekModal extends React.Component{
                         {language[lan].addCalendarWeek} 
                     </button>
                 ]}>
-                <CalendarWeek/>
+                {/* <div className="form-item">
+                    <label>{language[lan].class}</label>
+                    <SelectClass onHandleChange={(value) => this.onChangeClass(value)}/>
+                </div> */}
+                <div className="calendarWeekModal-container">
+                    {this.state.class ? <CalendarWeekTable class={this.state.class}/> : null}
+                </div>
             </Modal>
         )
     }

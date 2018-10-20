@@ -1,3 +1,13 @@
+.homeStudent-buttons{
+    display: flex;
+    justify-content: start;
+    padding-top: 1%;
+}
+
+.homeStudent-buttons button{
+    margin: 1%;
+}
+
 .container-info{
     padding: 1% 5%;
     display: flex;

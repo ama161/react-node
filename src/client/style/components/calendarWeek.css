@@ -1,0 +1,7 @@
+.calendarWeekModal-container td{
+    padding: 0 !important;
+}
+
+.calendarWeekModal-container .ant-select, .ant-select-selection-selected-value{
+    width: 80px !important;
+}

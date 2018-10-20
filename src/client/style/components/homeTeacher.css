@@ -1,6 +1,11 @@
 .homeTeacher-container-buttons{
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
+    padding-top: 1%;
+}
+
+.homeTeacher-container-buttons button{
+    margin: 1%;
 }
 
 .homeTeacher-containerAssistanceModal-buttons{

@@ -5,3 +5,7 @@
 .homeAdmin-container-info{
     width: 100%;
 }
+
+.homeAdmin-container-info .ant-table-wrapper{
+    background-color: white;
+}

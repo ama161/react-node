@@ -84,8 +84,9 @@ class HomeAdmin extends React.Component{
                     onChangeLanguage={(language) => this.setState({language: language})}
                     onHandleModalSubject={() => this.setState({viewModalSubject: true})}
                     onHandleSubject={() => this.setState({viewSubjects: true, viewParents: false, viewClass: false, viewStudents: false, viewTeachers: false, viewCalendarsWeek: false})}
-                    onHandleNewCalendarWeek={() => this.setState({viewModalCalendarWeek: true})}
-                    onHandleCalendarWeek={() => this.setState({viewCalendarsWeek: true, viewSubjects: false, viewParents: false, viewClass: false, viewStudents: false, viewTeachers: false})}/>
+                    // onHandleNewCalendarWeek={() => this.setState({viewModalCalendarWeek: true})}
+                    // onHandleCalendarWeek={() => this.setState({viewCalendarsWeek: true, viewSubjects: false, viewParents: false, viewClass: false, viewStudents: false, viewTeachers: false})}
+                    />
                     
                 <div className="homeAdmin-container-info">
                     
@@ -118,10 +119,10 @@ class HomeAdmin extends React.Component{
                         : null
                     }
 
-                    { this.state.viewModalCalendarWeek
+                    {/* { this.state.viewModalCalendarWeek
                         ? <CalendarWeekModal visible={this.state.viewModalCalendarWeek} onHandleCancel={() => this.setState({viewModalCalendarWeek: false})}/>
                         : null
-                    }
+                    } */}
 
                     { this.state.viewClass
                         ? <div>
@@ -167,10 +168,10 @@ class HomeAdmin extends React.Component{
                         : null
                     }
 
-                    { this.state.viewCalendarsWeek
+                    {/* { this.state.viewCalendarsWeek
                         ? <p>viewCalendarsWeek</p>
                         : null
-                    }
+                    } */}
                 </div>
             </div>
         )

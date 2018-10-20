@@ -3,7 +3,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 1%;
-    /* background: #4C6370; */
+    background: white;
+}
+
+.header div{
+    display: inline-flex;
 }
 
 .header .language-container{

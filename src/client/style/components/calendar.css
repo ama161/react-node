@@ -1,3 +1,7 @@
+.calendar{
+    background: white;
+}
+
 .ant-fullcalendar-header {
     display: flex;
     justify-content: flex-end;

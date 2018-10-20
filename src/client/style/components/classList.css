@@ -9,7 +9,6 @@
     flex-direction: row;
     align-items: center;
     margin: 0.5em !important;
-    background: #4C6370 !important;
 }
 
 .classList-container .box p {
@@ -18,7 +17,7 @@
 
 .classList-container .box p:nth-child(2){
     margin: auto;
-    color: #97C6E1;
+    color: #4C6370;
     font-weight: bold;
     font-size: 1.5em;
 }

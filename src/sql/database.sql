@@ -147,28 +147,29 @@ CREATE TABLE NOTIFICATIONS(
 
 CREATE TABLE DAY(
     id_day INT PRIMARY KEY AUTO_INCREMENT,
-    label VARCHAR(100)
+    title VARCHAR(100),
+    dataIndex VARCHAR(100)
 );
 
-INSERT INTO DAY (label) VALUES ('LUNES'), ('MARTES'), ('MIERCOLES'), ('JUEVES'), ('VIERNES');
+INSERT INTO DAY (title, dataIndex) VALUES ('LUNES', 'LUNES'), ('MARTES', 'MARTES'), ('MIERCOLES', 'MIERCOLES'), ('JUEVES', 'JUEVES'), ('VIERNES', 'VIERNES');
 
-CREATE TABLE TIME(
-    id_time INT PRIMARY KEY AUTO_INCREMENT,
-    label VARCHAR(100)
-);
+-- CREATE TABLE TIME(
+--     id_time INT PRIMARY KEY AUTO_INCREMENT,
+--     label VARCHAR(100)
+-- );
 
-INSERT INTO TIME (label) VALUES ('09:00'), ('10:00'), ('11:00'), ('12:00'), ('13:00'), ('14:00'), ('15:00'), ('16:00'), ('17:00');
+-- INSERT INTO TIME (label) VALUES ('09:00'), ('10:00'), ('11:00'), ('12:00'), ('13:00'), ('14:00'), ('15:00'), ('16:00'), ('17:00');
 
 CREATE TABLE CALENDAR_WEEK(
     id_class INT,
-    id_day INT,
-    id_time INT,
-    id_subject INT,
-    PRIMARY KEY (id_class, id_day, id_time),
-    FOREIGN KEY (id_class) REFERENCES CLASS(id_class),
-    FOREIGN KEY (id_day) REFERENCES DAY(id_day),
-    FOREIGN KEY (id_time) REFERENCES TIME(id_time),
-    FOREIGN KEY (id_subject) REFERENCES SUBJECT(id_subject)
+    time VARCHAR(50),
+    monday VARCHAR(100),
+    tuesday VARCHAR(100),
+    wednesday VARCHAR(100),
+    thursday VARCHAR(100),
+    friday VARCHAR(100),
+    PRIMARY KEY (id_class, time),
+    FOREIGN KEY (id_class) REFERENCES CLASS(id_class)
 );
 
 DESCRIBE users;

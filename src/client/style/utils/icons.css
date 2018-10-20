@@ -48,16 +48,16 @@
 .icon-avatar-14{background-image: url("../../img/avatars/avatar-14.png");}
 
 .logo-primary{
-    background-image: url("../../img/logo.png");
+    background-image: url("../../img/Logo.png");
     width: 100%;
     margin: 20px 0;
 }
 
 .logo-header{
-    background-image: url("../../img/logo.png");
+    background-image: url("../../img/Logo.png");
     margin: 0;
-    width: 150px;
-    height: 90px;
+    width: 110px;
+    height: 50px;
 }
 
 .capturas ant-steps-item-finish .ant-steps-item-icon, .ant-steps-item-process .ant-steps-item-icon{
