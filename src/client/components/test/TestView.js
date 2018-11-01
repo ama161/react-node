@@ -48,7 +48,7 @@ class TestView extends React.Component{
             <div>
                 <Header onChangeLanguage={(language) => this.setState({language: language})}/>
                 {this.state.testForm
-                    ? <div>
+                    ? <div className="testView">
                         <TestForm 
                             onAddQuestion={(question) => {
                                 this.setState({questions: this.state.questions.concat([question])})
