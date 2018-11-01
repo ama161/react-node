@@ -6,6 +6,7 @@ import Input from '../utils/Input';
 import language from '../../language/language'
 import CalendarWeekTable from './CalendarWeekTable';
 import SelectClass from '../utils/select/SelectClass';
+import { put } from '../../services/calendarWeek';
 
 class CalendarWeekModal extends React.Component{
     constructor(props){
@@ -18,6 +19,7 @@ class CalendarWeekModal extends React.Component{
             viewModal: false,
             language: 0,
             class: '',
+            newData: []
         }
     }
 
@@ -35,12 +37,19 @@ class CalendarWeekModal extends React.Component{
     }
 
     onHandleOk(){
+        put(this.state.newData)
+        .then(result => console.log(result))
+        .catch(err => console.log(err))
         this.onCancel();
     }
 
     onChangeClass(event){
         this.setState({class: event})
         
+    }
+
+    onSubmit(newData){
+        this.setState({newData: newData})
     }
 
     render(){
@@ -61,7 +70,7 @@ class CalendarWeekModal extends React.Component{
                     <SelectClass onHandleChange={(value) => this.onChangeClass(value)}/>
                 </div> */}
                 <div className="calendarWeekModal-container">
-                    {this.state.class ? <CalendarWeekTable class={this.state.class}/> : null}
+                    {this.state.class ? <CalendarWeekTable class={this.state.class} onSubmit={(newData) => this.onSubmit(newData)}/> : null}
                 </div>
             </Modal>
         )

@@ -31,8 +31,8 @@ class Select extends React.Component{
                 onChange={this.handleChange}
                 filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             >
-                {Object.values(this.state.options).map((key, index) => 
-                    <Option value={key[this.props.id]}>{key[this.props.name]}</Option>
+                {Object.values(this.state.options).map((element, index) => 
+                    <Option value={element[this.props.id]}>{element[this.props.name]}</Option>
                 )}
             </SelectANT>
         )

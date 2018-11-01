@@ -1,7 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import {message} from 'antd';
-
+import {message, Icon} from 'antd';
 import language from '../../language/language'
 import {userByRole} from '../../functions/userByRole';
 import Header from '../utils/Header'
@@ -11,6 +10,7 @@ import DossierStudent from '../dossier/DossierStudent'
 import TestItem from '../test/TestItem';
 import TestQuestionsModal from '../test/TestQuestionsModal'
 import CalendarStudent from './CalendarStudent';
+import CalendarWeekModal from '../calendarWeek/CalendarWeekModal';
 
 class HomeStudent extends React.Component{
     constructor(props){
@@ -26,7 +26,8 @@ class HomeStudent extends React.Component{
             arrayClass: [],
             testId: '',
             modalQuestions: false,
-            viewCalendar: false
+            viewCalendar: false,
+            viewCalendarWeek: false
         }
     }
 
@@ -121,7 +122,8 @@ class HomeStudent extends React.Component{
                             <h2>
                                 {(this.state.student) ? this.state.student.class_name : null}
                             </h2>
-                            <p className={(this.state.student) ? "icon " + this.state.student.class_icon : null}></p>                            
+                            {/* <p className={(this.state.student) ? "icon " + this.state.student.class_icon : null}></p> */}
+                            <button class="ant-btn" onClick={() => this.setState({viewCalendarWeek: true})} title={language[lan].calendarWeek}><Icon type="calendar" theme="outlined" /></button>
                         </div>
                         <p className="container-info-data-parent" onClick={() => this.onHandleDossier()}>{language[lan].dossier}</p>
                     </div>
@@ -141,6 +143,14 @@ class HomeStudent extends React.Component{
                             student={this.state.studentDossier} 
                             visible={(this.state.studentId) ? true : false}
                             onHandleCancel={() => this.setState({studentId: '', studentDossier: null})}/>
+                    : null
+                }
+
+                { this.state.viewCalendarWeek
+                    ? <CalendarWeekModal
+                        visible={this.state.viewCalendarWeek} 
+                        onHandleCancel={() => this.setState({viewCalendarWeek: false})}
+                        classId={this.state.student.id_class}/>
                     : null
                 }
 

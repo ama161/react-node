@@ -5,6 +5,9 @@ import { Table as TableANT} from 'antd'
 import { post , getByClass} from '../../services/calendarWeek';
 import Input from '../utils/Input';
 import SelectSubject from '../utils/select/SelectSubject';
+import { getAll } from '../../services/subject';
+import { SSL_OP_CRYPTOPRO_TLSEXT_BUG } from 'constants';
+import { userByRole } from '../../functions/userByRole';
 
 class CalendarWeekTable extends React.Component{
     constructor(props){
@@ -15,14 +18,22 @@ class CalendarWeekTable extends React.Component{
         this.state={
             columns: [],
             times: [],
-            data: []
+            data: [],
+            newData:[],
+            isAdmin: false,
         }
     }
 
-    addInfo(day, element, subject){
-        console.log(day);
-        console.log(element);
-        console.log(subject);
+    addInfo(day, time, subject){
+        let aux = [];
+        aux = this.state.newData;
+        aux.forEach(e => {
+            if(e.time == time){
+                e[day] = subject;
+            }
+        });
+
+        this.setState({newData: aux}, () => this.props.onSubmit(aux));
     }
 
     data(c){
@@ -47,8 +58,19 @@ class CalendarWeekTable extends React.Component{
                         //         this.addInfo(element.title, record, event.target.value)
                         //     }
                         // />
-                        return <SelectSubject onHandleChange={(value) => this.addInfo(element.title, record, value)}/>
+
+                        if(text == '' && this.state.isAdmin == true){
+                            return <SelectSubject 
+                                    onHandleChange={(value) => this.addInfo(element.title, record.time, value)}
+                                />
                         }
+                        else{
+                            return Object.values(this.state.subjects).map(element => 
+                                element.id_subject == text ? element.name : ''
+                            );
+                        }
+                    }
+                        
                     });
             });
 
@@ -59,47 +81,55 @@ class CalendarWeekTable extends React.Component{
                             result.forEach(element => {
                                 data.push({
                                     id_class: element.id_class, 
-                                    friday: (element.friday !== "") ? element.friday : <button onClick={() => this.addInfo('friday', element)}>ADD</button>,
-                                    monday: (element.monday !== "") ? element.monday : <button onClick={() => this.addInfo('monday', element)}>ADD</button>,
-                                    thursday: (element.thursday !== "") ? element.thursday : <button onClick={() => this.addInfo('thursday', element)}>ADD</button>,
+                                    friday: element.friday,
+                                    monday: element.monday,
+                                    thursday: element.thursday,
                                     time: element.time,
-                                    tuesday: (element.tuesday !== "") ? element.tuesday : <button onClick={() => this.addInfo('tuesday', element)}>ADD</button>,
-                                    wednesday: (element.wednesday !== "") ? element.wednesday : <button onClick={() => this.addInfo('wednesday', element)}>ADD</button>,
+                                    tuesday: element.tuesday,
+                                    wednesday: element.wednesday
                                 });
                             });
-                            this.setState({columns: columns, data: data})
+                            this.setState({columns: columns, data: data, newData: data})
                         })
                     })
                 }
                 else{
                     result.forEach(element => {
-                        console.log(element.friday !== "")
                         data.push({
                             id_class: element.id_class, 
-                            friday: (element.friday !== "") ? element.friday : <button onClick={() => this.addInfo('friday', element)}>ADD</button>,
-                            monday: (element.monday !== "") ? element.monday : <button onClick={() => this.addInfo('monday', element)}>ADD</button>,
-                            thursday: (element.thursday !== "") ? element.thursday : <button onClick={() => this.addInfo('thursday', element)}>ADD</button>,
+                            friday: element.friday,
+                            monday: element.monday,
+                            thursday: element.thursday,
                             time: element.time,
-                            tuesday: (element.tuesday !== "") ? element.tuesday : <button onClick={() => this.addInfo('tuesday', element)}>ADD</button>,
-                            wednesday: (element.wednesday !== "") ? element.wednesday : <button onClick={() => this.addInfo('wednesday', element)}>ADD</button>,
+                            tuesday: element.tuesday,
+                            wednesday: element.wednesday,
                         });
                     });
-                    this.setState({columns: columns, data: data})
+                    this.setState({columns: columns, data: data, newData: data})
                 }
             })
         })
     }
 
     componentWillMount(){
-        this.data(this.props.class);
+        userByRole()
+            .then((result) => {
+                let isAdmin = false;
+                if(result === 'admin') isAdmin = true;
+
+                getAll()
+                    .then(result => {
+                        this.setState({subjects: result, isAdmin: isAdmin})
+                    });
+                    this.data(this.props.class);
+            })
     }
 
     componentWillReceiveProps(nextProps){
-        this.data(nextProps.class)
+        //this.data(nextProps.class)
     }
 
     render(){
-        console.log(this.state)
         if(this.state.columns){
             return(
                 <TableANT columns={this.state.columns} dataSource={this.state.data}/>

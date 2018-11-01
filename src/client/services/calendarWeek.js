@@ -84,6 +84,7 @@ export function post(id_class){
 }
 
 export function put(newCalendarWeek){
+    console.log(newCalendarWeek)
     const request = new Request(ROUTE, {
         method: 'PUT',
         mode: 'same-origin',

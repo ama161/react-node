@@ -26,7 +26,7 @@ router.get('/times', (req, res)=>{
 });
 
 router.get('/class/:id_class', (req, res)=>{
-    const sql = `SELECT * FROM CALENDAR_WEEK WHERE id_class = ${req.params.id_class}`;
+    const sql = `SELECT * FROM CALENDAR_WEEK WHERE id_class = ${req.params.id_class} order by time`;
 
     connection.query(sql, (err, result)=>{
         if(err) {
@@ -40,7 +40,7 @@ router.get('/class/:id_class', (req, res)=>{
 
 router.post('/:id_class', (req, res) => {
     let token = req.headers.authorization;
-    let times = ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+    let times = ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
     checkToken(token, (result) => {
         if(!result){
             times.forEach(element => {
@@ -67,31 +67,32 @@ router.post('/:id_class', (req, res) => {
 
 router.put('/', (req, res) => {
     let token = req.headers.authorization;
-    checkToken(token, (result) => {
-        if(!result){
-            //recibo objetos por horas y dentro tiene todos los dias, igual que cuando lo creo
+    // checkToken(token, (result) => {
+        // if(!result){
+            console.log(req.body)
+            let data = req.body;
 
-            let data = req.body.data;
-
-            data.forEach(element => {
+            for(let i = 0; i<data.length; i++){
                 const sql = `UPDATE CALENDAR_WEEK SET 
-                id_class = ${connection.escape(element.class)},
-                id_time = ${connection.escape(element.time)},
-                monday = ${connection.escape(element.monday)},
-                tuesday = ${connection.escape(element.tuesday)},
-                wednesday = ${connection.escape(element.wednesday)},
-                thursday = ${connection.escape(element.thursday)},
-                friday = ${connection.escape(element.friday)} 
+                    monday = ${connection.escape(data[i].monday)},
+                    tuesday = ${connection.escape(data[i].tuesday)},
+                    wednesday = ${connection.escape(data[i].wednesday)},
+                    thursday = ${connection.escape(data[i].thursday)},
+                    friday = ${connection.escape(data[i].friday)} 
+                    where id_class = ${connection.escape(data[i].id_class)}
+                    and time = ${connection.escape(data[i].time)}
                 `;
                 connection.query(sql, 
                 (err, result)=>{
-                    if(err) res.json(err);
-                    else res.json(result);
+                    if(err) res.json({msg: 'err questions', type: 'error', result: result, err: err});
+                    else {
+                        if(i === data.length - 1)
+                            res.json({msg: 'register calendar_week', type: 'success', result: result, err: err});                                
+                    }
                 });
-            });
-            
-        }
-    })
+            }
+        // }
+    // })
 });
 
 module.exports = router;

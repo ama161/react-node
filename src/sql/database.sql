@@ -151,7 +151,7 @@ CREATE TABLE DAY(
     dataIndex VARCHAR(100)
 );
 
-INSERT INTO DAY (title, dataIndex) VALUES ('LUNES', 'LUNES'), ('MARTES', 'MARTES'), ('MIERCOLES', 'MIERCOLES'), ('JUEVES', 'JUEVES'), ('VIERNES', 'VIERNES');
+INSERT INTO DAY (title, dataIndex) VALUES ('monday', 'monday'), ('tuesday', 'tuesday'), ('wednesday', 'wednesday'), ('thursday', 'thursday'), ('friday', 'friday');
 
 -- CREATE TABLE TIME(
 --     id_time INT PRIMARY KEY AUTO_INCREMENT,
