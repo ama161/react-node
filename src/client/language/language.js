@@ -24,7 +24,7 @@ const language = [
         'notification': 'Notificación', 
         'deleteNotification': 'Borrar Notificación',
         'makeParent': 'Cita con un Padre',
-        'deleteMessage': 'Si borra una notificación, esta será borrada permanentemente, asegurese de concertar una cita antes',
+        'deleteMessage': 'Si responde una notificación, esta será borrada permanentemente.',
         'responseTrue': 'Respuesta Correcta',
         'responseFalse': 'Respuesta Incorrecta',      
         'chatHOME': 'CONTACTA CON LOS PADRES DE TUS ALUMNOS EN CUALQUIER MOMENTO',
@@ -55,7 +55,8 @@ const language = [
         'newQuestion': 'Nueva Pregunta',  
         'calendarWeek': 'Calendario Semanal',              
         'addCalendarWeek': 'Añadir',   
-        'viewCalendarWeek': 'Visualizar',              
+        'viewCalendarWeek': 'Visualizar',   
+        'reply': 'Responder'           
     },
     {
         'welcome': 'Welcome',
@@ -83,7 +84,7 @@ const language = [
         'notification': 'Notification',
         'deleteNotification': 'Delete Notification',
         'makeParent': 'Make with Parent',
-        'deleteMessage': 'If you delete a notification, it will be permanently deleted, be sure to make an appointment before',
+        'deleteMessage': 'If you reply a notification, it will be permanently deleted.',
         'responseFalse': 'Incorrect Response',
         'chatHOME': 'CONTACT THE PARENTS OF YOUR STUDENTS AT ANY TIME',
         'classHOME': 'ORGANIZE ALL YOUR STUDENTS BY CLASSROOMS',
@@ -113,7 +114,8 @@ const language = [
         'newQuestion': 'New Question',  
         'calendarWeek': 'Calendar Week',   
         'addCalendarWeek': 'Add',              
-        'viewCalendarWeek': 'View',              
+        'viewCalendarWeek': 'View',      
+        'reply': 'Reply'        
     }
 ]
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import { message } from 'antd';
 
-import Input from '../utils/Input';
-import SelectStudent from '../utils/select/SelectStudent'
 import Modal from '../utils/Modal'
 import language from '../../language/language'
 import { post } from '../../services/notification';
+import NotificationForm from './NotificationForm';
+import { getTeachersStudent } from '../../services/user';
+import { userByRole } from '../../functions/userByRole';
 
 class NewNotificationModal extends React.Component{
     constructor(props){
@@ -18,7 +19,7 @@ class NewNotificationModal extends React.Component{
             viewModal: false,
             language: 0,
             studentId: '',
-            description: ''
+            notification: {}
         }
     }
 
@@ -40,17 +41,42 @@ class NewNotificationModal extends React.Component{
     }
 
     onHandleOk(){
-        let notification = {
-            id_student: this.state.studentId,
-            description: this.state.description
+        let notification;
+
+        if(this.props.notificationReply){
+            notification = {
+                id_student: this.props.notificationReply.id_student,
+                id_teacher: this.props.notificationReply.id_teacher,
+                id_parent: this.props.notificationReply.id_parent,
+                description: this.state.notification.description
+            }
         }
-        post(notification)
-        .then(result => {
-            if(result.hasOwnProperty('msg'))
-                message[result.type](result.msg)
-            this.onCancel();
-        })
-        .catch(err => console.log(err))
+        else{
+            notification = {
+                id_student: this.state.studentId,
+                id_teacher: this.state.notification.idTeacher,
+                id_parent: this.state.notification.idParent,
+                description: this.state.notification.description
+            }
+        }
+
+        userByRole()
+        .then((result) => {
+            let data = {
+                notification: notification,
+                userId: sessionStorage.idUser,
+                user: result
+            }
+
+            post(data)
+            .then(result => {
+                if(result.hasOwnProperty('msg'))
+                    message[result.type](result.msg)
+                this.onCancel();
+            })
+            .catch(err => console.log(err))
+
+        });
     }
     
     render(){
@@ -62,15 +88,11 @@ class NewNotificationModal extends React.Component{
                 onHandleOk={this.onHandleOk} 
                 visible={this.state.viewModal}
                 onHandleCancel={() => this.onCancel()}>
-                <div className="form-item">
-                    <label>{language[lan].description}</label>
-                    <textarea
-                        value = {this.state.description}
-                        onChange = {(event) => 
-                            this.setState({description: event.target.value})
-                        }
-                    />
-                </div>
+                <NotificationForm 
+                    onChange={(notification) => this.setState({notification: notification})}
+                    classId={this.props.classId}
+                    parentId={this.props.parentId}
+                    notificationReply={this.props.notificationReply}/>
                 
             </Modal>
         )

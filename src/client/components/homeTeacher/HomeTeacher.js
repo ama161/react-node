@@ -14,6 +14,7 @@ import NoteDossierModal from '../dossier/NoteDossierModal';
 import CalendarTeacher from './CalendarTeacher';
 import { getByTeacher, deleteNotification } from '../../services/notification';
 import ParentInfoModal from './ParentInfoModal';
+import NewNotificationModal from '../notification/NewNotificationModal';
 
 class HomeTeacher extends React.Component{
     constructor(props){
@@ -30,6 +31,9 @@ class HomeTeacher extends React.Component{
             viewCalendar: false,
             notifications: [],
             viewParentModal: false,
+            viewnewNotification: false,
+            notificationReply: null,
+            viewModalReply: false
         }
     }
 
@@ -75,11 +79,11 @@ class HomeTeacher extends React.Component{
     }
 
     handleClose(item){
+        this.setState({viewModalReply: true, notificationReply:item})
         deleteNotification(item.id_student, item.description)
         .then(result => {
             if(result.hasOwnProperty('msg'))
                 message[result.type](result.msg)
-            if(result.type === 'success') this.onCancel();
         })
         .catch(err => console.log(err))
     }
@@ -134,7 +138,7 @@ class HomeTeacher extends React.Component{
                             message={item.description + ' - ' + item.username + ', ' + item.name} 
                             type="info" 
                             showIcon 
-                            closeText={language[lan].deleteNotification} 
+                            closeText={language[lan].reply} 
                             afterClose={() => this.handleClose(item)}/>
                     )}
                 </div>
@@ -170,10 +174,33 @@ class HomeTeacher extends React.Component{
                                 visible={(this.state.studentId) ? true : false}
                                 onHandleCancel={() => this.setState({studentId: ''})}
                                 newNoteDossier={() => this.setState({viewNoteDossierModal: true})}
-                                viewParent={() => this.setState({viewParentModal: true})}/>
+                                viewParent={() => this.setState({viewParentModal: true})}
+                                newNotificationTeacher={() => this.setState({viewnewNotification: true})}/>
                         : null
                     }
                 </div>
+
+                {this.state.viewnewNotification
+                    ? <NewNotificationModal 
+                        studentId={this.state.studentId}
+                        // classId={this.state.student.student[0].id_class}
+                        parentId={this.state.student.student.id_parent}
+                        visible={this.state.viewnewNotification}
+                        onHandleCancel={() => {
+                            this.setState({viewnewNotification: false})
+                            this.onStudentClick(this.state.studentId)
+                        }}/>
+                    : null
+                }
+                {this.state.viewModalReply
+                    ? <NewNotificationModal 
+                        visible={this.state.viewModalReply}
+                        notificationReply={this.state.notificationReply}
+                        onHandleCancel={() => {
+                            this.setState({viewModalReply: false})
+                        }}/>
+                    : null
+                }
             </div>
         )
     }

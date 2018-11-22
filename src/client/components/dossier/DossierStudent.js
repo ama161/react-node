@@ -94,6 +94,11 @@ class DossierStudent extends React.Component{
                                 onClick={this.props.viewParent}>
                                 {language[lan].infoParent}
                             </button>
+                            <button 
+                                class="ant-btn ant-btn-primary newDossier-button" 
+                                onClick={this.props.newNotificationTeacher}>
+                                {language[lan].notification} {language[lan].parent}
+                            </button>
                         </div>
                         : null
                     }

@@ -43,10 +43,12 @@ router.get('/student/:id', (req, res)=>{
 });
 
 router.get('/student/dossier/:id', (req, res)=>{
-    const sql = `SELECT id_student, CLASS.id_class, STUDENT.icon, STUDENT.username, CLASS.name 
-    FROM STUDENT, CLASS
-    WHERE id_student = ${req.params.id}
-    AND STUDENT.id_class = CLASS.id_class`;
+    const sql = `SELECT id_parent, STUDENT.id_student, CLASS.id_class, STUDENT.icon, STUDENT.username, CLASS.name 
+    FROM STUDENT, CLASS, STUDENT_PARENT
+    WHERE STUDENT.id_student = ${req.params.id}
+    AND STUDENT.id_class = CLASS.id_class
+    AND STUDENT_PARENT.id_student = STUDENT.id_student`;
+
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);
         else {
@@ -121,7 +123,24 @@ router.get('/student/class/:id', (req, res)=>{
 });
 
 router.get('/teacher', (req, res)=>{
-    const sql = 'SELECT TEACHER.id_teacher, CLASS.id_class, CLASS.name as class_name, email, TEACHER.name as name FROM TEACHER LEFT JOIN USER ON TEACHER.id_teacher = id_user LEFT JOIN CLASS_TEACHER ON TEACHER.id_teacher = CLASS_TEACHER.id_teacher LEFT JOIN CLASS ON CLASS_TEACHER.id_class = CLASS.id_class';
+    const sql = 'SELECT TEACHER.id_teacher, CLASS.id_class, CLASS.name as class_name, email, TEACHER.name as name '
+    + 'FROM TEACHER LEFT JOIN USER ON TEACHER.id_teacher = id_user '
+    + 'LEFT JOIN CLASS_TEACHER ON TEACHER.id_teacher = CLASS_TEACHER.id_teacher '
+    + 'LEFT JOIN CLASS ON CLASS_TEACHER.id_class = CLASS.id_class';
+    console.log(sql);
+    connection.query(sql, (err, result)=>{
+        if(err) res.json(err);
+        else res.json(result);
+    });
+});
+
+router.get('/teacher/class/:id', (req, res)=>{
+    const sql = 'SELECT TEACHER.id_teacher, CLASS.id_class, CLASS.name as class_name, email, TEACHER.name as name '
+    + 'FROM TEACHER LEFT JOIN USER ON TEACHER.id_teacher = id_user '
+    + 'LEFT JOIN CLASS_TEACHER ON TEACHER.id_teacher = CLASS_TEACHER.id_teacher '
+    + 'LEFT JOIN CLASS ON CLASS_TEACHER.id_class = CLASS.id_class '
+    + 'where CLASS.id_class = ' + req.params.id;;
+    
     console.log(sql);
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);

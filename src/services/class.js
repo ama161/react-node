@@ -54,8 +54,8 @@ router.post('/', (req, res) => {
 
 router.post('/class-teacher', (req, res) => {
     let token = req.headers.authorization;
-    checkToken(token, (result) => {
-        if(!result){
+    // checkToken(token, (result) => {
+        // if(!result){
             const sql = `INSERT INTO CLASS_TEACHER SET 
                 id_teacher = ${connection.escape(req.body.id_teacher)},
                 id_class = ${connection.escape(req.body.id_class)}
@@ -66,8 +66,8 @@ router.post('/class-teacher', (req, res) => {
                 if(err) res.json(err);
                 else res.json({msg: 'class registred', type: 'success'});
             });
-        }
-    })
+        // }
+    // })
 });
 
 router.put('/:id', (req, res) => {

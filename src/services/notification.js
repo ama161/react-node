@@ -17,7 +17,8 @@ router.get('/teacher/:id', (req, res)=>{
     INNER JOIN STUDENT ON STUDENT.id_student = NOTIFICATIONS.id_student
     INNER JOIN CLASS_TEACHER ON CLASS_TEACHER.id_class = STUDENT.id_class
     INNER JOIN CLASS ON STUDENT.id_class = CLASS.id_class
-    where CLASS_TEACHER.id_teacher = ${req.params.id}`;
+    where CLASS_TEACHER.id_teacher = ${req.params.id}
+    AND user = 'parent'`;
     connection.query(sql, (err, result)=>{
         if(err) res.json(err);
         else res.json(result);
@@ -29,27 +30,45 @@ router.get('/parent/:id', (req, res)=>{
     FROM NOTIFICATIONS
     INNER JOIN STUDENT ON STUDENT.id_student = NOTIFICATIONS.id_student
     INNER JOIN STUDENT_PARENT ON STUDENT_PARENT.id_student = STUDENT.id_student
-    where STUDENT_PARENT.id_parent = ${req.params.id}`;
+    where STUDENT_PARENT.id_parent = ${req.params.id}
+    AND user = 'teacher'`;
     connection.query(sql, (err, result)=>{
-        if(err) res.json(err);
+        if(err) {
+            console.log(err)
+            res.json(err);
+        }
         else res.json(result);
     });
 });
 
 router.post('/', (req, res) => {
     let token = req.headers.authorization;
-    checkToken(token, (result) => {
-        if(!result){
+    //parentId => user.parent
+    console.log(req.body.user);
+    console.log(req.body.userId);
+    console.log(req.body.notification);
+    // checkToken(token, (result) => {
+        // if(!result){
             const sql = `INSERT INTO NOTIFICATIONS SET 
-                id_student = ${connection.escape(req.body.id_student)},
-                description = ${connection.escape(req.body.description)}
+                id_student = ${connection.escape(req.body.notification.id_student)},
+                description = ${connection.escape(req.body.notification.description)},
+                id_teacher = ${(req.body.user !== "teacher") ? req.body.notification.id_teacher : req.body.userId},
+                id_parent = ${(req.body.user !== "parent") ? req.body.notification.id_parent : req.body.userId},
+                user = '${req.body.user}'
             `;
+            console.log(sql);
             connection.query(sql, (err, result)=>{
-                if(err) res.json(err);
-                else res.json({msg: 'notification registred', type: 'success', err: err, result: result});
+                if(err) {
+                    console.log(err);
+                    res.json(err);
+                }
+                else {
+                    console.log(result);
+                    res.json({msg: 'notification registred', type: 'success', err: err, result: result});
+                }
             });
-        }
-    })
+        // }
+    // })
 });
 
 router.delete('/:id_student', (req, res) => {

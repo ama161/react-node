@@ -138,11 +138,23 @@ CREATE TABLE CALENDAR_ASSISTANCE(
     FOREIGN KEY (id_subject) REFERENCES SUBJECT(id_subject)
 );
 
+-- CREATE TABLE NOTIFICATIONS(
+--     id_student INT,
+--     description VARCHAR(50),
+--     PRIMARY KEY (description, id_student),
+--     FOREIGN KEY (id_student) REFERENCES STUDENT(id_student)
+-- );
+
 CREATE TABLE NOTIFICATIONS(
+    id_notification INT PRIMARY KEY AUTO_INCREMENT,
     id_student INT,
+    id_teacher INT,
+    id_parent INT,
     description VARCHAR(50),
-    PRIMARY KEY (description, id_student),
-    FOREIGN KEY (id_student) REFERENCES STUDENT(id_student)
+    user VARCHAR(50),
+    FOREIGN KEY (id_student) REFERENCES STUDENT(id_student),
+    FOREIGN KEY (id_teacher) REFERENCES TEACHER(id_teacher),
+    FOREIGN KEY (id_parent) REFERENCES PARENT(id_parent)
 );
 
 CREATE TABLE DAY(

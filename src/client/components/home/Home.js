@@ -43,7 +43,6 @@ class Home extends React.Component {
             <p>{language[lan].testHOME}</p>
           </Box>
         </div>
-
       </div>
       
     )

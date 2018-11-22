@@ -1,4 +1,5 @@
 const ROUTE = '/api/notification';
+import {userByRole} from '../functions/userByRole';
 
 const headers = new Headers({
     'Content-Type': 'application/json',
@@ -57,11 +58,13 @@ export function getByParent(parentId){
     });
 }
 
-export function post(newNotification){
+export function post(data){
+
+    console.log(data);
     const request = new Request(ROUTE, {
         method: 'POST',
         mode: 'same-origin',
-        body: JSON.stringify(newNotification),
+        body: JSON.stringify(data),
         credentials: 'same-origin',
         headers: headers
     });
@@ -69,6 +72,7 @@ export function post(newNotification){
     return new Promise((resolve, reject) => {
     fetch(request)
         .then((response) => {
+            console.log("then");
             if(!response.ok) {
                 throw response.json();
             }

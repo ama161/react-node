@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert } from 'antd';
+import { Alert, message} from 'antd';
 import { withRouter } from 'react-router'
 
 import language from '../../language/language'
@@ -10,7 +10,7 @@ import UserItem from '../utils/UserItem'
 import DossierStudent from '../dossier/DossierStudent'
 import CalendarParent from './CalendarParent';
 import NewNotificationModal from '../notification/NewNotificationModal';
-import { getByParent } from '../../services/notification';
+import { getByParent, deleteNotification } from '../../services/notification';
 
 class HomeParent extends React.Component{
     constructor(props){
@@ -25,6 +25,8 @@ class HomeParent extends React.Component{
             notifications: [],
             notificationsInfo:[],
             newNotification: false,
+            viewModalReply: false,
+            notificationReply: null,
         }
     }
 
@@ -61,17 +63,38 @@ class HomeParent extends React.Component{
             )
     }
 
+    handleClose(item){
+        this.setState({viewModalReply: true, notificationReply:item})
+        deleteNotification(item.id_student, item.description)
+        .then(result => {
+            if(result.hasOwnProperty('msg'))
+                message[result.type](result.msg)
+        })
+        .catch(err => console.log(err))
+    }
+
     render(){
         const lan = this.state.language;
         return(
             <div>
+                {this.state.viewModalReply
+                    ? <NewNotificationModal 
+                        visible={this.state.viewModalReply}
+                        notificationReply={this.state.notificationReply}
+                        classId={this.state.notificationReply.id_class}
+                        onHandleCancel={() => {
+                            this.setState({viewModalReply: false})
+                        }}/>
+                    : null
+                }
                 {this.state.newNotification
                     ? <NewNotificationModal 
                         studentId={this.state.studentId}
+                        classId={this.state.student.student[0].id_class}
                         visible={this.state.newNotification}
                         onHandleCancel={() => {
-                            this.onStudentClick(this.state.studentId)
                             this.setState({newNotification: false})
+                            this.onStudentClick(this.state.studentId)
                         }}/>
                     : null
                 }
@@ -85,8 +108,19 @@ class HomeParent extends React.Component{
                     {this.state.notifications.map(item =>
                         <Alert message={item.username + ' ' + item.name + ' ' + item.title + ' -> ' + item.note} type="warning" showIcon closable/>
                     )}
+                    <Alert 
+                        message={language[lan].deleteMessage} 
+                        type="error" 
+                        showIcon 
+                        closable/>
                     {this.state.notificationsInfo.map(item =>
-                        <Alert message={item.description + ' - ' + item.username} type="info" showIcon closable/>
+                        // <Alert message={item.description + ' - ' + item.username} type="info" showIcon closable/>
+                        <Alert 
+                            message={item.description + ' - ' + item.username} 
+                            type="info" 
+                            showIcon 
+                            closeText={language[lan].reply} 
+                            afterClose={() => this.handleClose(item)}/>
                     )}
                 </div>
                 {this.state.viewCalendar
